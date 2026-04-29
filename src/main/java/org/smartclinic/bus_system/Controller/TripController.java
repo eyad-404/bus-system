@@ -27,4 +27,28 @@ public class TripController {
     public ResponseEntity<TripResponseDTO> endTrip(@PathVariable Long tripId) {
         return ResponseEntity.ok(tripService.endTrip(tripId));
     }
+
+    @org.springframework.web.bind.annotation.GetMapping("/{tripId}/status")
+    public ResponseEntity<org.smartclinic.bus_system.DTOs.TripStatusResponseDTO> getTripStatus(@PathVariable Long tripId) {
+        return ResponseEntity.ok(tripService.getTripStatus(tripId));
+    }
+
+    @PutMapping("/{tripId}/current-station/{stationId}")
+    public ResponseEntity<TripResponseDTO> updateCurrentStation(@PathVariable Long tripId, @PathVariable Long stationId) {
+        return ResponseEntity.ok(tripService.updateCurrentStation(tripId, stationId));
+    }
+
+    @org.springframework.web.bind.annotation.GetMapping("/{tripId}/next-station")
+    public ResponseEntity<org.smartclinic.bus_system.DTOs.StationResponseDTO> getNextStation(@PathVariable Long tripId) {
+        org.smartclinic.bus_system.Entity.Station station = tripService.getNextStation(tripId);
+        if (station == null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(org.smartclinic.bus_system.MAPPER.StationMapper.toDTO(station));
+    }
+
+    @org.springframework.web.bind.annotation.GetMapping("/{tripId}/eta/{studentId}")
+    public ResponseEntity<org.smartclinic.bus_system.DTOs.EtaResponseDTO> getEta(@PathVariable Long tripId, @PathVariable Long studentId) {
+        return ResponseEntity.ok(tripService.getEtaForStudent(tripId, studentId));
+    }
 }

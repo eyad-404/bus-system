@@ -16,9 +16,11 @@ import java.util.List;
 public class RouteService {
 
     private final RouteRepository routeRepository;
+    private final org.smartclinic.bus_system.Repository.RouteStationRepository routeStationRepository;
 
-    public RouteService(RouteRepository routeRepository) {
+    public RouteService(RouteRepository routeRepository, org.smartclinic.bus_system.Repository.RouteStationRepository routeStationRepository) {
         this.routeRepository = routeRepository;
+        this.routeStationRepository = routeStationRepository;
     }
 
     @Transactional(readOnly = true)
@@ -90,6 +92,24 @@ public class RouteService {
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "Route not found"));
 
         routeRepository.delete(route);
+    }
+
+    @Transactional(readOnly = true)
+    public List<org.smartclinic.bus_system.DTOs.RouteStationResponseDTO> getRouteStations(Long routeId) {
+        if (!routeRepository.existsById(routeId)) {
+            throw new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Route not found");
+        }
+
+        return routeStationRepository.findByRouteIdOrderByOrderIndexAsc(routeId)
+                .stream()
+                .map(rs -> {
+                    org.smartclinic.bus_system.DTOs.RouteStationResponseDTO dto = new org.smartclinic.bus_system.DTOs.RouteStationResponseDTO();
+                    dto.setId(rs.getStation().getId());
+                    dto.setName(rs.getStation().getName());
+                    dto.setOrder(rs.getOrderIndex());
+                    return dto;
+                })
+                .toList();
     }
 
     private void validateUniqueCode(String code, Long currentId) {

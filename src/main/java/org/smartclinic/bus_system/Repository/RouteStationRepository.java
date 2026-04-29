@@ -9,5 +9,9 @@ public interface RouteStationRepository extends JpaRepository<RouteStation, Long
 
     List<RouteStation> findByRouteIdOrderByOrderIndexAsc(Long routeId);
 
+    java.util.Optional<RouteStation> findByRouteIdAndStationId(Long routeId, Long stationId);
+
+    java.util.Optional<RouteStation> findByRouteIdAndOrderIndex(Long routeId, Integer orderIndex);
+
     long countByRouteId(Long routeId);
 }

@@ -27,7 +27,7 @@ public class NotificationService {
     }
 
     @Transactional
-    public void notifyStudentsForStation(Station station) {
+    public void notifyStudentsForStation(Station station, org.smartclinic.bus_system.Entity.Trip trip, boolean isApproaching) {
         if (station == null || station.getId() == null) {
             return;
         }
@@ -40,23 +40,55 @@ public class NotificationService {
                 continue;
             }
 
-            Notification notification = new Notification();
-            notification.setUser(student.getUser());
-            notification.setStation(station);
-            notification.setType(NotificationType.ARRIVAL);
-            notification.setMessage("Bus arrived at " + station.getName());
-            notification.setRead(false);
-            notification.setCreatedAt(now);
-            notificationRepository.save(notification);
+            // Prevent duplicate notification logic - simplistic check (can be improved based on exact requirements)
+            // Just creating the notification for now as required.
+            createNotification(
+                    student.getUser(),
+                    trip,
+                    station,
+                    isApproaching ? NotificationType.ALERT : NotificationType.INFO,
+                    isApproaching ? "Bus Alert" : "Bus Arrival",
+                    isApproaching ? "Bus is near your station." : "Bus arrived at " + station.getName()
+            );
         }
     }
 
+    @Transactional
+    public NotificationResponseDTO createNotification(org.smartclinic.bus_system.Entity.User user, org.smartclinic.bus_system.Entity.Trip trip, Station station, NotificationType type, String title, String message) {
+        Notification notification = new Notification();
+        notification.setUser(user);
+        notification.setTrip(trip);
+        notification.setStation(station);
+        notification.setType(type);
+        notification.setTitle(title);
+        notification.setMessage(message);
+        notification.setRead(false);
+        notification.setCreatedAt(LocalDateTime.now());
+        
+        Notification saved = notificationRepository.save(notification);
+        return NotificationMapper.toDTO(saved);
+    }
+
     @Transactional(readOnly = true)
-    public List<NotificationResponseDTO> getNotificationsByUserId(Long userId) {
+    public List<NotificationResponseDTO> getUserNotifications(Long userId) {
         return notificationRepository.findByUserIdOrderByCreatedAtDesc(userId)
                 .stream()
                 .map(NotificationMapper::toDTO)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<NotificationResponseDTO> getNotificationsByUserId(Long userId) {
+        return getUserNotifications(userId);
+    }
+
+    @Transactional
+    public NotificationResponseDTO markAsRead(Long notificationId) {
+        Notification notification = notificationRepository.findById(notificationId)
+            .orElseThrow(() -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Notification not found"));
+        notification.setRead(true);
+        notificationRepository.save(notification);
+        return NotificationMapper.toDTO(notification);
     }
 
     @Transactional

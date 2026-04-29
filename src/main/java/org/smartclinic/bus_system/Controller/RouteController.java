@@ -53,4 +53,9 @@ public class RouteController {
         routeService.deleteRoute(routeId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{routeId}/stations")
+    public ResponseEntity<List<org.smartclinic.bus_system.DTOs.RouteStationResponseDTO>> getRouteStations(@PathVariable Long routeId) {
+        return ResponseEntity.ok(routeService.getRouteStations(routeId));
+    }
 }

@@ -18,5 +18,6 @@ public class Student {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "boarding_station_id")
     private Station boardingStation;
 }
