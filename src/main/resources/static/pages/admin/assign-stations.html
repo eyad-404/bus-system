@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assign Stations | Admin Panel</title>
+
+  <!-- Shared Global Styles & Admin Layout -->
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/admin.css">
+
+  <!-- Page Specific Styles -->
+  <link rel="stylesheet" href="../../assets/css/assign-stations.css">
+</head>
+
+<body>
+
+  <div class="dashboard-layout">
+
+    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+         SIDEBAR
+         â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <div class="sidebar__logo-icon">
+          <!-- Bus SVG -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h8v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10Zm3.5 1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm9 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3ZM6 6h12v5H6V6Z" />
+          </svg>
+        </div>
+        <div class="sidebar__brand">
+          <span class="sidebar__title">BUS SYSTEM</span>
+          <span class="sidebar__subtitle">Admin Panel</span>
+        </div>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="admin-dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+          </svg>
+          Dashboard
+        </a>
+        <a href="manage-users.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+          </svg>
+          Manage Users
+        </a>
+        <a href="manage-stations.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+          </svg>
+          Manage Stations
+        </a>
+        <a href="assign-stations.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+          </svg>
+          Assign Stations
+        </a>
+        <a href="assign-drivers.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+          </svg>
+          Assign Drivers
+        </a>
+        <a href="routes-management.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z" />
+          </svg>
+          Routes Management
+        </a>
+        <a href="trips-management.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" />
+          </svg>
+          Trips
+        </a>
+        <a href="admin-notifications.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z" />
+          </svg>
+          Notifications
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <a href="../common/login.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
+          </svg>
+          Logout
+        </a>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- NOTIFICATION SIDEBAR -->
+    <aside class="notification-sidebar" id="notificationSidebar">
+      <div class="notif-sidebar-header">
+        <h3>Notifications</h3>
+        <button id="closeNotifBtn" class="notif-close-btn">&times;</button>
+      </div>
+      <div class="notif-sidebar-content">
+        <div class="notif-sidebar-item">
+          <strong>System Update</strong>
+          <p>Route schedule updated for University Route.</p>
+          <span>10 min ago</span>
+        </div>
+        <div class="notif-sidebar-item">
+          <strong>New Driver Assigned</strong>
+          <p>Mohamed Ali has been assigned to Route R1.</p>
+          <span>1 hour ago</span>
+        </div>
+      </div>
+      <div class="notif-sidebar-footer">
+        <a href="admin-notifications.html">View all Notifications</a>
+      </div>
+    </aside>
+
+    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+         MAIN CONTENT WRAPPER
+         â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <main class="main-wrapper">
+
+      <!-- TOP NAVBAR -->
+      <header class="topbar">
+        <div class="page-title">
+          <button class="hamburger-btn" id="hamburgerBtn">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+            </svg>
+          </button>
+          <h1>Assign Stations</h1>
+          <p>Assign each student to a boarding station.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="notification-btn" id="notificationBtn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2Zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4a1.5 1.5 0 0 0-3 0v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2Z" />
+            </svg>
+            <span class="notification-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <div class="content">
+
+        <!-- FILTERS ROW -->
+        <div class="filters-container">
+          <div class="filter-group">
+            <div class="select-wrapper">
+              <label class="sr-only">Select Route</label>
+              <select class="filter-select custom-select">
+                <option value="">-- Select a route to begin --</option>
+                <option>Route R1 - University Route</option>
+                <option>Route R2 - City Center</option>
+              </select>
+            </div>
+
+            <div class="select-wrapper">
+              <label class="sr-only">Select Station</label>
+              <select class="filter-select custom-select">
+                <option>All Stations</option>
+                <option>University Gate</option>
+                <option>City Center</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="filter-group right-group">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input type="text" placeholder="Search students by name, ID or email...">
+            </div>
+            <button class="btn-export">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Export Assignments
+            </button>
+          </div>
+        </div>
+
+        <!-- SUMMARY CARDS -->
+        <div class="summary-cards">
+          <!-- Card 1 -->
+          <div class="stat-card">
+            <div class="stat-card-inner">
+              <div class="stat-icon icon-blue">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-val">120</div>
+                <div class="stat-label">Total Students</div>
+              </div>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="stat-card">
+            <div class="stat-card-inner">
+              <div class="stat-icon icon-green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-val">28 <span class="stat-percent green">(70%)</span></div>
+                <div class="stat-label">Assigned</div>
+              </div>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="stat-card">
+            <div class="stat-card-inner">
+              <div class="stat-icon icon-orange">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-val">12 <span class="stat-percent orange">(30%)</span></div>
+                <div class="stat-label">Unassigned</div>
+              </div>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="stat-card">
+            <div class="stat-card-inner">
+              <div class="stat-icon icon-purple">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-val">8</div>
+                <div class="stat-label">Total Stations</div>
+              </div>
+            </div>
+          </div>
+          <!-- Card 5 (Wider) -->
+          <div class="stat-card card-capacity">
+            <div class="stat-card-inner">
+              <div class="stat-icon icon-yellow">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h8v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10Zm3.5 1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm9 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3ZM6 6h12v5H6V6Z" />
+                </svg>
+              </div>
+              <div class="stat-info w-full">
+                <div class="stat-label">Passengers</div>
+                <div class="stat-val">28 <span class="stat-sub">Assigned</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="main-grid">
+
+          <!-- LEFT: Students List (70%) -->
+          <div class="grid-card students-panel">
+            <div class="panel-header">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+              </svg>
+              <h2>Students List</h2>
+            </div>
+
+            <div id="empty-state" style="display: none; padding: 60px 20px; text-align: center; color: #64748b;">
+              <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"
+                style="margin-bottom: 16px; opacity: 0.5;">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" />
+              </svg>
+              <h3 style="margin-bottom: 8px; color: #334155;">Select a route to begin</h3>
+              <p>Choose a route from the menu to assign students to stations.</p>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Assigned Station</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Row 1 -->
+                  <tr>
+                    <td>1001</td>
+                    <td>
+                      <div class="avatar-cell">
+                        <div class="avatar-circle">AA</div>
+                        <span>Ali Ahmed</span>
+                      </div>
+                    </td>
+                    <td>ali.ahmed@miu.edu.eg</td>
+                    <td>
+                      <select class="table-select assigned">
+                        <option>University Gate</option>
+                      </select>
+                    </td>
+                    <td><span class="badge badge-green"><svg viewBox="0 0 24 24">
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg> Assigned</span></td>
+                    <td>
+                      <button class="action-btn" aria-label="Reset">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                          <path d="M3 3v5h5" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Row 2 -->
+                  <tr>
+                    <td>1002</td>
+                    <td>
+                      <div class="avatar-cell">
+                        <div class="avatar-circle" style="background: #fce7f3; color: #db2777;">SM</div>
+                        <span>Sara Mohamed</span>
+                      </div>
+                    </td>
+                    <td>sara.mohamed@miu.edu.eg</td>
+                    <td>
+                      <select class="table-select assigned">
+                        <option>City Center</option>
+                      </select>
+                    </td>
+                    <td><span class="badge badge-green"><svg viewBox="0 0 24 24">
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg> Assigned</span></td>
+                    <td>
+                      <button class="action-btn" aria-label="Reset">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                          <path d="M3 3v5h5" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Row 3 -->
+                  <tr>
+                    <td>1003</td>
+                    <td>
+                      <div class="avatar-cell">
+                        <div class="avatar-circle" style="background: #e0e7ff; color: #4f46e5;">OK</div>
+                        <span>Omar Khaled</span>
+                      </div>
+                    </td>
+                    <td>omar.khaled@miu.edu.eg</td>
+                    <td>
+                      <select class="table-select assigned">
+                        <option>Airport Stop</option>
+                      </select>
+                    </td>
+                    <td><span class="badge badge-green"><svg viewBox="0 0 24 24">
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg> Assigned</span></td>
+                    <td>
+                      <button class="action-btn" aria-label="Reset">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                          <path d="M3 3v5h5" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Row 4 -->
+                  <tr>
+                    <td>1004</td>
+                    <td>
+                      <div class="avatar-cell">
+                        <div class="avatar-circle" style="background: #dcfce7; color: #16a34a;">MH</div>
+                        <span>Mariam Hassan</span>
+                      </div>
+                    </td>
+                    <td>mariam.hassan@miu.edu.eg</td>
+                    <td>
+                      <select class="table-select assigned">
+                        <option>Metro Station</option>
+                      </select>
+                    </td>
+                    <td><span class="badge badge-green"><svg viewBox="0 0 24 24">
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg> Assigned</span></td>
+                    <td>
+                      <button class="action-btn" aria-label="Reset">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                          <path d="M3 3v5h5" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Row 5 -->
+                  <tr>
+                    <td>1005</td>
+                    <td>
+                      <div class="avatar-cell">
+                        <div class="avatar-circle" style="background: #fef08a; color: #ca8a04;">YM</div>
+                        <span>Youssef Mostafa</span>
+                      </div>
+                    </td>
+                    <td>youssef.mostafa@miu.edu.eg</td>
+                    <td>
+                      <select class="table-select assigned">
+                        <option>Library Stop</option>
+                      </select>
+                    </td>
+                    <td><span class="badge badge-green"><svg viewBox="0 0 24 24">
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg> Assigned</span></td>
+                    <td>
+                      <button class="action-btn" aria-label="Reset">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                          <path d="M3 3v5h5" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Row 6 -->
+                  <tr>
+                    <td>1006</td>
+                    <td>
+                      <div class="avatar-cell">
+                        <div class="avatar-circle">HA</div>
+                        <span>Hana Ashraf</span>
+                      </div>
+                    </td>
+                    <td>hana.ashraf@miu.edu.eg</td>
+                    <td>
+                      <select class="table-select unassigned">
+                        <option>-- Select Station --</option>
+                      </select>
+                    </td>
+                    <td><span class="badge badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <circle cx="12" cy="12" r="10" />
+                          <polyline points="12 6 12 12 16 14" />
+                        </svg> Unassigned</span></td>
+                    <td>
+                      <button class="action-btn add" aria-label="Add">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Row 7 -->
+                  <tr>
+                    <td>1007</td>
+                    <td>
+                      <div class="avatar-cell">
+                        <div class="avatar-circle" style="background: #ffedd5; color: #ea580c;">MS</div>
+                        <span>Mariafa Salem</span>
+                      </div>
+                    </td>
+                    <td>mostafa.salem@miu.edu.eg</td>
+                    <td>
+                      <select class="table-select unassigned">
+                        <option>-- Select Station --</option>
+                      </select>
+                    </td>
+                    <td><span class="badge badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <circle cx="12" cy="12" r="10" />
+                          <polyline points="12 6 12 12 16 14" />
+                        </svg> Unassigned</span></td>
+                    <td>
+                      <button class="action-btn add" aria-label="Add">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Row 8 -->
+                  <tr>
+                    <td>1008</td>
+                    <td>
+                      <div class="avatar-cell">
+                        <div class="avatar-circle" style="background: #f3e8ff; color: #9333ea;">YA</div>
+                        <span>Yara Adel</span>
+                      </div>
+                    </td>
+                    <td>yara.adel@miu.edu.eg</td>
+                    <td>
+                      <select class="table-select unassigned">
+                        <option>-- Select Station --</option>
+                      </select>
+                    </td>
+                    <td><span class="badge badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <circle cx="12" cy="12" r="10" />
+                          <polyline points="12 6 12 12 16 14" />
+                        </svg> Unassigned</span></td>
+                    <td>
+                      <button class="action-btn add" aria-label="Add">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-row">
+              <div class="page-info">Showing 1 to 8 of 120 students</div>
+              <div class="pagination-controls">
+                <button class="page-btn"><svg viewBox="0 0 24 24">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg></button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn dots">...</button>
+                <button class="page-btn">15</button>
+                <button class="page-btn"><svg viewBox="0 0 24 24">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Stations Overview (30%) -->
+          <div class="grid-card stations-panel">
+            <div class="panel-header">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z" />
+              </svg>
+              <h2>Stations Overview</h2>
+            </div>
+
+            <div class="stations-table-wrap">
+              <table class="stations-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Station Name</th>
+                    <th>Passengers</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>University Gate</td>
+                    <td>12</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>City Center</td>
+                    <td>8</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>College Road</td>
+                    <td>6</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Airport Stop</td>
+                    <td>7</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Metro Station</td>
+                    <td>5</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>Library Stop</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td>7</td>
+                    <td>Park Street</td>
+                    <td>1</td>
+                  </tr>
+                  <tr style="color: #94a3b8; font-style: italic;">
+                    <td>8</td>
+                    <td>Main Gate</td>
+                    <td>0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+          </div>
+
+        </div>
+
+        <!-- BOTTOM SECTION -->
+        <div class="bottom-section">
+          <div class="tip-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18h6" />
+              <path d="M10 22h4" />
+              <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A6 6 0 1 0 7.5 11.5c.76.76 1.23 1.52 1.41 2.5" />
+            </svg>
+            <div class="tip-content">
+              <strong>Tip:</strong> Select a station from the dropdown to assign a student.<br>
+              You can change or unassign at any time.
+            </div>
+          </div>
+
+          <div class="bottom-actions">
+            <button class="btn-clear" onclick="return confirm('Are you sure you want to clear all assignments?');">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                <line x1="10" y1="11" x2="10" y2="17" />
+                <line x1="14" y1="11" x2="14" y2="17" />
+              </svg>
+              Clear All Assignments
+            </button>
+            <button class="btn-save">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                <polyline points="17 21 17 13 7 13 7 21" />
+                <polyline points="7 3 7 8 15 8" />
+              </svg>
+              Save Assignments
+            </button>
+          </div>
+        </div>
+
+      </div> <!-- end content -->
+    </main>
+
+  </div>
+
+  <div id="toast"
+    style="display: none; position: fixed; bottom: 24px; right: 24px; background: #22c55e; color: white; padding: 12px 24px; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-weight: 500; z-index: 9999;">
+    Assignments saved successfully
+  </div>
+
+  <script src="../../assets/js/components.js"></script>
+</body>
+
+</html>

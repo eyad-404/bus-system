@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Routes Management | Admin Panel</title>
+
+  <!-- Shared Global Styles & Admin Layout -->
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/admin.css">
+
+  <!-- Page Specific Styles -->
+  <link rel="stylesheet" href="../../assets/css/routes-management.css">
+</head>
+
+<body>
+
+  <div class="dashboard-layout">
+
+    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+         SIDEBAR
+         â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <div class="sidebar__logo-icon">
+          <!-- Bus SVG -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h8v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10Zm3.5 1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm9 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3ZM6 6h12v5H6V6Z" />
+          </svg>
+        </div>
+        <div class="sidebar__brand">
+          <span class="sidebar__title">BUS SYSTEM</span>
+          <span class="sidebar__subtitle">Admin Panel</span>
+        </div>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="admin-dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+          </svg>
+          Dashboard
+        </a>
+        <a href="manage-users.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+          </svg>
+          Manage Users
+        </a>
+        <a href="manage-stations.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+          </svg>
+          Manage Stations
+        </a>
+        <a href="assign-stations.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+          </svg>
+          Assign Stations
+        </a>
+        <a href="assign-drivers.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+          </svg>
+          Assign Drivers
+        </a>
+        <a href="routes-management.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z" />
+          </svg>
+          Routes Management
+        </a>
+        <a href="trips-management.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" />
+          </svg>
+          Trips
+        </a>
+        <a href="admin-notifications.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z" />
+          </svg>
+          Notifications
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <a href="../common/login.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
+          </svg>
+          Logout
+        </a>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- NOTIFICATION SIDEBAR -->
+    <aside class="notification-sidebar" id="notificationSidebar">
+      <div class="notif-sidebar-header">
+        <h3>Notifications</h3>
+        <button id="closeNotifBtn" class="notif-close-btn">&times;</button>
+      </div>
+      <div class="notif-sidebar-content">
+        <div class="notif-sidebar-item">
+          <strong>System Update</strong>
+          <p>Route schedule updated for University Route.</p>
+          <span>10 min ago</span>
+        </div>
+        <div class="notif-sidebar-item">
+          <strong>New Driver Assigned</strong>
+          <p>Mohamed Ali has been assigned to Route R1.</p>
+          <span>1 hour ago</span>
+        </div>
+      </div>
+      <div class="notif-sidebar-footer">
+        <a href="admin-notifications.html">View all Notifications</a>
+      </div>
+    </aside>
+
+    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+         MAIN CONTENT WRAPPER
+         â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <main class="main-wrapper">
+
+      <!-- TOP NAVBAR -->
+      <header class="topbar">
+        <div class="page-title">
+          <button class="hamburger-btn" id="hamburgerBtn">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+            </svg>
+          </button>
+          <h1>Routes Management</h1>
+          <p>Create, edit and manage routes and their station order.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="notification-btn" id="notificationBtn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2Zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4a1.5 1.5 0 0 0-3 0v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2Z" />
+            </svg>
+            <span class="notification-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <div class="content">
+
+        <!-- 1) ROUTES OVERVIEW CARDS -->
+        <div class="overview-section">
+          <div class="overview-header">
+            <h2 class="section-title">Routes Overview</h2>
+            <button class="btn-primary">
+              <svg viewBox="0 0 24 24">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+              Add New Route
+            </button>
+          </div>
+          <div class="overview-cards-grid">
+            <!-- Stat 1 -->
+            <div class="stat-card">
+              <div class="stat-icon icon-light-red">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M17 12h-5v5h5v-5ZM16 1v2H8V1H6v2H5C3.89 3 3.01 3.9 3.01 5L3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5c0-1.1-.9-2-2-2h-1V1h-2Zm3 18H5V8h14v11Z" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value">5</div>
+                <div class="stat-label">Total Routes</div>
+              </div>
+            </div>
+
+            <!-- Stat 2 -->
+            <div class="stat-card">
+              <div class="stat-icon icon-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M9 10h6" />
+                  <path d="M9 14h6" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value">4</div>
+                <div class="stat-label">Active Routes</div>
+              </div>
+            </div>
+
+            <!-- Stat 3 -->
+            <div class="stat-card">
+              <div class="stat-icon icon-orange">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="10" y1="15" x2="10" y2="9" />
+                  <line x1="14" y1="15" x2="14" y2="9" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value">1</div>
+                <div class="stat-label">Inactive Routes</div>
+              </div>
+            </div>
+
+            <!-- Stat 4 -->
+            <div class="stat-card">
+              <div class="stat-icon icon-green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value">96</div>
+                <div class="stat-label">Total Stations</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2) MAIN PANEL: FILTER & TABLE -->
+        <div class="main-panel grid-card">
+
+          <!-- FILTER BAR -->
+          <div class="filter-bar">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+              </svg>
+              <input type="text" placeholder="Search routes by name or code...">
+            </div>
+            <div class="select-wrapper">
+              <label class="sr-only">Status</label>
+              <select class="custom-select">
+                <option>All Status</option>
+                <option>Active</option>
+                <option>Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- ROUTES TABLE -->
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Route Code</th>
+                  <th>Route Name</th>
+                  <th>Stations</th>
+
+                  <th>Last Updated</th>
+                  <th class="actions-th">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Row 1 -->
+                <tr>
+                  <td><span class="route-badge">R1</span></td>
+                  <td>
+                    <div class="route-name">University Route</div>
+                    <div class="route-sub">Main campus to city</div>
+                  </td>
+                  <td>
+                    <div class="stations-count">24 Stations</div>
+                    <a href="#" class="view-order-link">View order</a>
+                  </td>
+
+                  <td>
+                    <div class="last-updated">May 12, 2025</div>
+                    <div class="time-sub">10:30 AM</div>
+                  </td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="action-btn" aria-label="View">
+                        <svg viewBox="0 0 24 24">
+                          <path
+                            d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                        </svg>
+                        <span>View</span>
+                      </button>
+                      <button class="action-btn" aria-label="Edit">
+                        <svg viewBox="0 0 24 24">
+                          <path
+                            d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                        </svg>
+                        <span>Edit</span>
+                      </button>
+                      <button class="action-btn delete" aria-label="Delete">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Row 2 -->
+                <tr>
+                  <td><span class="route-badge">R2</span></td>
+                  <td>
+                    <div class="route-name">City Route</div>
+                    <div class="route-sub">Downtown circular route</div>
+                  </td>
+                  <td>
+                    <div class="stations-count">18 Stations</div>
+                    <a href="#" class="view-order-link">View order</a>
+                  </td>
+
+                  <td>
+                    <div class="last-updated">May 10, 2025</div>
+                    <div class="time-sub">09:15 AM</div>
+                  </td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="action-btn" aria-label="View">
+                        <svg viewBox="0 0 24 24">
+                          <path
+                            d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                        </svg>
+                        <span>View</span>
+                      </button>
+                      <button class="action-btn" aria-label="Edit">
+                        <svg viewBox="0 0 24 24">
+                          <path
+                            d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                        </svg>
+                        <span>Edit</span>
+                      </button>
+                      <button class="action-btn delete" aria-label="Delete">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Row 3 -->
+                <tr>
+                  <td><span class="route-badge">R3</span></td>
+                  <td>
+                    <div class="route-name">Airport Route</div>
+                    <div class="route-sub">To and from airport</div>
+                  </td>
+                  <td>
+                    <div class="stations-count">16 Stations</div>
+                    <a href="#" class="view-order-link">View order</a>
+                  </td>
+
+                  <td>
+                    <div class="last-updated">May 8, 2025</div>
+                    <div class="time-sub">04:45 PM</div>
+                  </td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="action-btn" aria-label="View">
+                        <svg viewBox="0 0 24 24">
+                          <path
+                            d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                        </svg>
+                        <span>View</span>
+                      </button>
+                      <button class="action-btn" aria-label="Edit">
+                        <svg viewBox="0 0 24 24">
+                          <path
+                            d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                        </svg>
+                        <span>Edit</span>
+                      </button>
+                      <button class="action-btn delete" aria-label="Delete">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Row 4 -->
+                <tr>
+                  <td><span class="route-badge">R4</span></td>
+                  <td>
+                    <div class="route-name">Metro Route</div>
+                    <div class="route-sub">Metro to university</div>
+                  </td>
+                  <td>
+                    <div class="stations-count">22 Stations</div>
+                    <a href="#" class="view-order-link">View order</a>
+                  </td>
+
+                  <td>
+                    <div class="last-updated">May 5, 2025</div>
+                    <div class="time-sub">11:20 AM</div>
+                  </td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="action-btn" aria-label="View">
+                        <svg viewBox="0 0 24 24">
+                          <path
+                            d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                        </svg>
+                        <span>View</span>
+                      </button>
+                      <button class="action-btn" aria-label="Edit">
+                        <svg viewBox="0 0 24 24">
+                          <path
+                            d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                        </svg>
+                        <span>Edit</span>
+                      </button>
+                      <button class="action-btn delete" aria-label="Delete">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Row 5 -->
+                <tr>
+                  <td><span class="route-badge">R5</span></td>
+                  <td>
+                    <div class="route-name">Library Route</div>
+                    <div class="route-sub">Library to dorms</div>
+                  </td>
+                  <td>
+                    <div class="stations-count">16 Stations</div>
+                    <a href="#" class="view-order-link">View order</a>
+                  </td>
+
+                  <td>
+                    <div class="last-updated">May 2, 2025</div>
+                    <div class="time-sub">02:10 PM</div>
+                  </td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="action-btn" aria-label="View">
+                        <svg viewBox="0 0 24 24">
+                          <path
+                            d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                        </svg>
+                        <span>View</span>
+                      </button>
+                      <button class="action-btn" aria-label="Edit">
+                        <svg viewBox="0 0 24 24">
+                          <path
+                            d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                        </svg>
+                        <span>Edit</span>
+                      </button>
+                      <button class="action-btn delete" aria-label="Delete">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PAGINATION -->
+          <div class="pagination-row">
+            <div class="pagination-text">Showing 1 to 5 of 5 routes</div>
+            <div class="pagination-btns">
+              <button class="page-btn nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg></button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3) BOTTOM SECTION: CREATE ROUTE -->
+        <div class="create-route-section grid-card">
+          <div class="create-content">
+            <h2>Create New Route</h2>
+            <p>Start by creating a new route and then add stations in the desired order.</p>
+          </div>
+
+          <div class="create-illustration">
+            <div class="route-line-graphic">
+              <div class="marker start">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z" />
+                </svg>
+              </div>
+              <div class="dotted-line"></div>
+              <div class="marker end">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z" />
+                </svg>
+              </div>
+            </div>
+
+            <button class="btn-outline-primary">
+              <svg viewBox="0 0 24 24">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+              Create Route
+            </button>
+          </div>
+        </div>
+
+      </div> <!-- end content -->
+    </main>
+
+  </div>
+
+  <script src="../../assets/js/components.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trip Control â€” Bus System</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/trip-control.css" />
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <svg class="sidebar__logo-icon" viewBox="0 0 24 24"><path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" /></svg>
+        <div class="sidebar__brand">
+          <span class="sidebar__title">BUS SYSTEM</span>
+          <span class="sidebar__subtitle">Driver Portal</span>
+        </div>
+      </div>
+
+            <nav class="sidebar__nav">
+        <a href="trip-control.html" class="nav-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" /></svg>
+          Trip Control
+        </a>
+      </nav>
+
+              <div class="sidebar__footer">
+          <a href="../common/login.html" class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+            Logout
+          </a>
+        </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- NOTIFICATION SIDEBAR -->
+    <aside class="notification-sidebar" id="notificationSidebar">
+      <div class="notif-sidebar-header">
+        <h3>Notifications</h3>
+        <button id="closeNotifBtn" class="notif-close-btn">&times;</button>
+      </div>
+      <div class="notif-sidebar-content">
+        <div class="notif-sidebar-item">
+          <strong>Trip Started</strong>
+          <p>You started your assigned trip on University Route.</p>
+          <span>10 min ago</span>
+        </div>
+        <div class="notif-sidebar-item">
+          <strong>Route Update</strong>
+          <p>Traffic reported near Metro Station. Expect a 5-minute delay.</p>
+          <span>1 hour ago</span>
+        </div>
+      </div>
+      <div class="notif-sidebar-footer">
+        <a href="driver-dashboard.html">View all notifications</a>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOP NAVBAR -->
+      <header class="topbar">
+        <div class="page-title">
+          <button class="hamburger-btn" id="hamburgerBtn">
+            <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" /></svg>
+          </button>
+          <div class="page-title-text">
+            <h1>Trip Control</h1>
+            <p>Manage your trip by updating station progress.</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="notification-btn" id="notificationBtn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+            <span class="notification-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="content">
+
+        <!-- TOP CARDS -->
+        <div class="cards-grid">
+          <div class="stat-card">
+            <div class="stat-icon bg-red-soft text-red">
+              <svg viewBox="0 0 24 24"><path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10z" /></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Current Trip</span>
+              <strong class="stat-val">University Route (R1)</strong>
+              <span class="badge-status-in-progress">In Progress</span>
+            </div>
+          </div>
+          
+          <div class="stat-card highlight-card" style="border-bottom: 4px solid var(--blue); background: var(--blue-light);">
+            <div class="stat-icon bg-blue text-white" style="background: var(--blue); color: white;">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" /></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label" style="font-weight: 600; color: var(--blue-dark);">Current Station</span>
+              <strong class="stat-val text-blue">City Center (Station 3)</strong>
+              <span class="text-blue-light" style="font-weight: 500;">3 of 20</span>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon bg-green-soft text-green">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">ETA to Next Station</span>
+              <strong class="stat-val">~ 8 min</strong>
+              <span class="text-red-light">Metro Station (Station 4)</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon bg-orange-soft text-orange">
+              <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" /></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Passengers Onboard</span>
+              <strong class="stat-val">28</strong>
+              <span class="text-muted">Assigned</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN SECTION -->
+        <div class="main-grid">
+          
+          <!-- LEFT COLUMN -->
+          <div class="left-column">
+            
+            <!-- Current Station Card -->
+            <div class="card-box" style="border: 3px solid var(--blue); background: var(--blue-light); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15);">
+              <div class="card-header">
+                <h2 style="color: var(--blue-dark);">Current Station</h2>
+              </div>
+              
+              <div class="status-panel">
+                <div class="status-top">
+                  <div class="status-icon bg-blue text-white" style="background: var(--blue);"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+                  <div class="status-info">
+                    <span class="status-subtitle" style="color: var(--gray-dark);">The trip is currently at</span>
+                    <strong class="status-title text-blue" style="font-size: 1.8rem; font-weight: 800;">City Center <span class="status-num" style="font-size: 1rem; color: var(--blue-dark);">(Station 3)</span></strong>
+                    <span class="status-time">Last updated: 07:46 AM</span>
+                  </div>
+                </div>
+                
+                <div class="status-bottom">
+                  <div class="status-next">
+                    <span class="sb-label">Next Station</span>
+                    <strong class="sb-val">Metro Station <span class="sb-num">(Station 4)</span></strong>
+                  </div>
+                  <div class="status-eta">
+                    <span class="sb-label">ETA</span>
+                    <strong class="sb-val text-red">~ 8 min</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Update Trip Progress -->
+            <div class="card-box">
+              <div class="card-header">
+                <h2>Update Trip Progress</h2>
+              </div>
+
+              <div class="info-box-yellow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <p>Update stations in order. Skipping is not allowed.</p>
+              </div>
+
+              <div class="action-buttons-grid" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Primary Action -->
+                <button class="action-btn btn-green" style="background: var(--green); color: white; border: none; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); transform: scale(1.02);">
+                  <div class="btn-top" style="justify-content: center;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width: 28px; height: 28px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    <span style="font-size: 1.2rem; font-weight: 700;">Next</span>
+                  </div>
+                  <p style="text-align: center; color: rgba(255, 255, 255, 0.9);">Mark arrival at current station</p>
+                </button>
+
+                <!-- Danger Action -->
+                <button class="action-btn btn-red" style="background: white; color: var(--red); border: 2px solid var(--red-light); box-shadow: none; margin-top: 1rem;">
+                  <div class="btn-top" style="justify-content: center;">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                    <span style="font-weight: 600;">End Trip</span>
+                  </div>
+                  <p style="text-align: center; color: var(--gray);" class="mt-2">Complete and end the trip</p>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN -->
+          <div class="route-progress-card card-box">
+            <div class="card-header">
+              <h2>Route Progress</h2>
+              <div class="legend">
+                <span><i class="dot dot-green"></i> Completed</span>
+                <span><i class="dot dot-blue"></i> Current</span>
+                <span><i class="dot dot-gray"></i> Pending</span>
+              </div>
+            </div>
+
+            <div class="timeline">
+              
+              <div class="tl-item completed">
+                <div class="tl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="tl-content">
+                  <div class="tl-left">
+                    <span class="tl-num">1</span>
+                    <span class="tl-name">University Gate</span>
+                  </div>
+                  <div class="tl-right">
+                    <span class="tl-time">07:30 AM</span>
+                    <span class="badge-completed">Completed</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tl-item completed">
+                <div class="tl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="tl-content">
+                  <div class="tl-left">
+                    <span class="tl-num">2</span>
+                    <span class="tl-name">College Road</span>
+                  </div>
+                  <div class="tl-right">
+                    <span class="tl-time">07:38 AM</span>
+                    <span class="badge-completed">Completed</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tl-item current active-highlight">
+                <div class="tl-icon">3</div>
+                <div class="tl-content">
+                  <div class="tl-left">
+                    <span class="tl-num text-blue">3</span>
+                    <span class="tl-name text-blue">City Center <span class="badge-current-small">Current Station</span></span>
+                  </div>
+                  <div class="tl-right">
+                    <span class="tl-time text-blue">07:46 AM</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tl-item pending">
+                <div class="tl-icon">4</div>
+                <div class="tl-content">
+                  <div class="tl-left">
+                    <span class="tl-num">4</span>
+                    <span class="tl-name">Metro Station</span>
+                  </div>
+                  <div class="tl-right">
+                    <span class="tl-time">~ 07:54 AM</span>
+                    <span class="badge-pending">Pending</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tl-item pending">
+                <div class="tl-icon">5</div>
+                <div class="tl-content">
+                  <div class="tl-left">
+                    <span class="tl-num">5</span>
+                    <span class="tl-name">Library Stop</span>
+                  </div>
+                  <div class="tl-right">
+                    <span class="tl-time">~ 08:02 AM</span>
+                    <span class="badge-pending">Pending</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tl-dots">...</div>
+
+              <div class="tl-item pending last">
+                <div class="tl-icon">20</div>
+                <div class="tl-content">
+                  <div class="tl-left">
+                    <span class="tl-num">1</span> <!-- Mockup shows 20 1 Main Gate... presumably a typo in the mockup design, but I'll write 20 as expected -->
+                    <span class="tl-name">Main Gate</span>
+                  </div>
+                  <div class="tl-right">
+                    <span class="tl-time">~ 08:45 AM</span>
+                    <span class="badge-pending">Pending</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- BOTTOM REMINDERS -->
+        <div class="reminders-banner">
+          <div class="reminders-header">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+            <h2>Important Reminders</h2>
+          </div>
+          <ul>
+            <li>Update stations in order. Skipping stations is not allowed.</li>
+          </ul>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../../assets/js/components.js"></script>
+</body>
+</html>
+
+
+
+

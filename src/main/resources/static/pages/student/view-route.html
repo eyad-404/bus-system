@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Route â€” Bus System</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/view-route.css" />
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <svg class="sidebar__logo-icon" viewBox="0 0 24 24"><path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" /></svg>
+        <div class="sidebar__brand">
+          <span class="sidebar__title">BUS SYSTEM</span>
+          <span class="sidebar__subtitle">Student Portal</span>
+        </div>
+      </div>
+
+            <nav class="sidebar__nav">
+        <a href="student-dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" /></svg>
+          Dashboard
+        </a>
+        <a href="view-route.html" class="nav-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" /></svg>
+          View Route
+        </a>
+
+        <a href="student-notifications.html" class="nav-item">
+          <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z" /></svg>
+          Notifications
+        </a>
+      </nav>
+
+              <div class="sidebar__footer">
+          <a href="../common/login.html" class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+            Logout
+          </a>
+        </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- NOTIFICATION SIDEBAR -->
+    <aside class="notification-sidebar" id="notificationSidebar">
+      <div class="notif-sidebar-header">
+        <h3>Notifications</h3>
+        <button id="closeNotifBtn" class="notif-close-btn">&times;</button>
+      </div>
+      <div class="notif-sidebar-content">
+        <div class="notif-sidebar-item">
+          <strong>System Update</strong>
+          <p>Route schedule updated for University Route.</p>
+          <span>10 min ago</span>
+        </div>
+        <div class="notif-sidebar-item">
+          <strong>New Driver Assigned</strong>
+          <p>Mohamed Ali has been assigned to Route R1.</p>
+          <span>1 hour ago</span>
+        </div>
+      </div>
+      <div class="notif-sidebar-footer">
+        <a href="student-notifications.html">View all Notifications</a>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOP NAVBAR -->
+      <header class="topbar">
+        <div class="page-title">
+          <button class="hamburger-btn" id="hamburgerBtn">
+            <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" /></svg>
+          </button>
+          <div class="page-title-text">
+            <h1>View Route</h1>
+            <p>View all stations in order for your assigned route.</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="notification-btn" id="notificationBtn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+            <span class="notification-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="content">
+
+        <!-- TOP SECTION INFO CARDS -->
+        <div class="top-cards-row">
+          <div class="info-card route-card">
+            <div class="ic-icon bg-red-soft text-red"><svg viewBox="0 0 24 24"><path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10z"/></svg></div>
+            <div class="ic-text">
+              <strong>University Route (R1)</strong>
+              <span><span class="text-red font-medium">Total Stations:</span> 20</span>
+            </div>
+          </div>
+
+          <div class="info-card boarding-card">
+            <div class="ic-icon bg-red-dark text-white"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+            <div class="ic-text">
+              <span class="label">My Boarding Station</span>
+              <strong class="text-red">Airport Stop <span class="font-normal">(Station 6)</span></strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN TABLE / TIMELINE -->
+        <div class="table-card card-box">
+          <div class="card-header">
+            <h2>Route Stations</h2>
+            <div class="legend">
+              <span><i class="dot dot-green"></i> Completed</span>
+              <span><i class="dot dot-blue"></i> Current</span>
+              <span><i class="dot dot-gray"></i> Pending</span>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="stations-table">
+              <thead>
+                <tr>
+                  <th width="100">Order</th>
+                  <th>Station Name</th>
+                  <th>Status</th>
+                  <th>Est. Arrival Time</th>
+                  <th width="40"></th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                <tr class="completed-row">
+                  <td>
+                    <div class="timeline-cell completed">
+                      <div class="tc-icon">1</div>
+                      <div class="tc-line"></div>
+                    </div>
+                  </td>
+                  <td>University Gate</td>
+                  <td><span class="badge-completed">Completed</span></td>
+                  <td>07:30 AM</td>
+                  <td><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></td>
+                </tr>
+
+                <tr class="completed-row">
+                  <td>
+                    <div class="timeline-cell completed">
+                      <div class="tc-icon">2</div>
+                      <div class="tc-line"></div>
+                    </div>
+                  </td>
+                  <td>College Road</td>
+                  <td><span class="badge-completed">Completed</span></td>
+                  <td>07:38 AM</td>
+                  <td><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></td>
+                </tr>
+
+                <tr class="current-row">
+                  <td>
+                    <div class="timeline-cell current">
+                      <div class="tc-icon">3</div>
+                      <div class="tc-line"></div>
+                    </div>
+                  </td>
+                  <td><span class="text-blue font-medium">City Center</span></td>
+                  <td><span class="badge-current">Current Station</span></td>
+                  <td>07:46 AM</td>
+                  <td><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></td>
+                </tr>
+
+                <tr class="pending-row">
+                  <td>
+                    <div class="timeline-cell pending">
+                      <div class="tc-icon">4</div>
+                      <div class="tc-line"></div>
+                    </div>
+                  </td>
+                  <td>Metro Station</td>
+                  <td><span class="badge-pending">Pending</span></td>
+                  <td><span class="text-muted">~ 07:54 AM</span></td>
+                  <td><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></td>
+                </tr>
+
+                <tr class="pending-row">
+                  <td>
+                    <div class="timeline-cell pending">
+                      <div class="tc-icon">5</div>
+                      <div class="tc-line dashed"></div>
+                    </div>
+                  </td>
+                  <td>Library Stop</td>
+                  <td><span class="badge-pending">Pending</span></td>
+                  <td><span class="text-muted">~ 08:02 AM</span></td>
+                  <td><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></td>
+                </tr>
+
+                <tr class="pending-row gap-row">
+                  <td>
+                    <div class="timeline-cell gap">
+                      <div class="dots-vertical">...</div>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
+                <tr class="pending-row" style="background: rgba(239, 68, 68, 0.05); border-left: 4px solid var(--red);">
+                  <td>
+                    <div class="timeline-cell pending">
+                      <div class="tc-icon" style="background: var(--red); color: white; border-color: var(--red);">6</div>
+                      <div class="tc-line dashed"></div>
+                    </div>
+                  </td>
+                  <td><strong class="text-red">Airport Stop (My Station)</strong></td>
+                  <td><span class="badge-pending" style="color: var(--red); border-color: var(--red-light);">Boarding</span></td>
+                  <td><span class="text-red font-medium">~ 08:10 AM</span></td>
+                  <td><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></td>
+                </tr>
+
+                <tr class="pending-row gap-row">
+                  <td>
+                    <div class="timeline-cell gap">
+                      <div class="dots-vertical">...</div>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
+                <tr class="pending-row">
+                  <td>
+                    <div class="timeline-cell pending last">
+                      <div class="tc-icon">20</div>
+                    </div>
+                  </td>
+                  <td>Main Gate</td>
+                  <td><span class="badge-pending">Pending</span></td>
+                  <td><span class="text-muted">~ 08:45 AM</span></td>
+                  <td><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Bottom Note -->
+          <div class="info-box-blue mt-24">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Times are estimated based on the driver's updates.
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../../assets/js/components.js"></script>
+</body>
+</html>
+
+
+
+

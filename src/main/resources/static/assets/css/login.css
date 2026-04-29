@@ -1,0 +1,391 @@
+/* =============================================================
+   MIU Bus System — Login Page Stylesheet
+   File: /assets/css/login.css
+   =============================================================
+   TABLE OF CONTENTS
+   1. Variables
+   2. Reset & Base
+   3. Utilities
+   4. Navbar        .navbar
+   5. Layout        .login-container
+   6. Login Card    .login-card
+   7. Form          .form-group / .input-field / .form-row
+   8. Button        .btn-primary
+   ============================================================= */
+
+/* ─────────────────────────────────────────────────────────────
+   1. VARIABLES
+   ───────────────────────────────────────────────────────────── */
+:root {
+  /* Brand Colors */
+  --primary:         #e53935;
+  --primary-dark:    #c62828;
+  --primary-hover:   #ef5350;
+  --primary-alpha:   rgba(229, 57, 53, 0.10);
+
+  /* Backgrounds */
+  --bg-page:         #f4f6f9;
+  --bg-card:         #ffffff;
+
+  /* Typography */
+  --text:            #111827;
+  --text-secondary:  #6b7280;
+  
+  /* Borders */
+  --border:          #e5e7eb;
+
+  /* Error States */
+  --error:           #dc2626;
+  --error-bg:        #fff5f5;
+  --error-border:    #fca5a5;
+  --error-field:     #f87171;
+
+  /* Spacing Scale */
+  --spacing-xs:      4px;
+  --spacing-sm:      8px;
+  --spacing-md:      16px;
+  --spacing-lg:      24px;
+  --spacing-xl:      32px;
+
+  /* Border Radius */
+  --radius:          16px;
+  --radius-sm:       8px;
+  --radius-input:    10px;
+
+  /* Shadows */
+  --shadow-nav:      0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-card:     0 10px 25px rgba(0, 0, 0, 0.05);
+  --shadow-btn:      0 8px 20px rgba(229, 57, 53, 0.3);
+
+  /* Transitions */
+  --transition:      all 0.25s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   2. RESET & BASE
+   ───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-page);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3. UTILITIES
+   ───────────────────────────────────────────────────────────── */
+.text-center { text-align: center; }
+.flex { display: flex; }
+.align-center { align-items: center; }
+
+/* ─────────────────────────────────────────────────────────────
+   4. NAVBAR
+   ───────────────────────────────────────────────────────────── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-nav);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-xl);
+  z-index: 100;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-brand__icon {
+  width: 32px;
+  height: 32px;
+  background: var(--primary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-brand__icon svg {
+  width: 18px;
+  height: 18px;
+  fill: #fff;
+}
+
+.nav-brand__text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  color: var(--primary);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   5. LAYOUT
+   ───────────────────────────────────────────────────────────── */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 80px var(--spacing-lg) var(--spacing-lg); /* Account for navbar */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   6. LOGIN CARD
+   ───────────────────────────────────────────────────────────── */
+.login-card {
+  background: var(--bg-card);
+  width: 100%;
+  max-width: 380px;
+  padding: var(--spacing-xl);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.login-card__title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text);
+  text-align: center;
+  letter-spacing: -0.5px;
+  margin-bottom: var(--spacing-xs);
+}
+
+.login-card__subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Form-level error banner */
+.form-error {
+  display: none;
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  border-radius: var(--radius-sm);
+  padding: 10px var(--spacing-md);
+  font-size: 0.85rem;
+  color: var(--error);
+  margin-bottom: var(--spacing-md);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   7. FORM COMPONENTS
+   ───────────────────────────────────────────────────────────── */
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group__label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--spacing-sm);
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.input-wrap__icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.input-wrap__icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--text-secondary);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.input-field {
+  width: 100%;
+  height: 48px;
+  padding: 0 44px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-input);
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--bg-card);
+  transition: var(--transition);
+  outline: none;
+}
+
+.input-field::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.input-field:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-alpha);
+}
+
+.input-field--error {
+  border-color: var(--error-field);
+  background: var(--error-bg);
+}
+
+.toggle-pw {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  transition: var(--transition);
+}
+
+.toggle-pw:hover {
+  color: var(--primary);
+}
+
+.toggle-pw svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.field-error {
+  display: none;
+  font-size: 0.75rem;
+  color: var(--error);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.field-error::before {
+  content: '⚠ ';
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--spacing-sm) 0 var(--spacing-lg);
+}
+
+.form-row__remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.form-row__remember input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.form-row__remember span {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.form-row__forgot {
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.form-row__forgot:hover {
+  color: var(--primary-dark);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   8. BUTTON
+   ───────────────────────────────────────────────────────────── */
+.btn-primary {
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  border: none;
+  border-radius: var(--radius-input);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.btn-primary svg {
+  width: 20px;
+  height: 20px;
+  /* Stroke inherited via currentColor */
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-btn);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}

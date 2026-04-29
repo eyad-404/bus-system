@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Users â€” MIU Bus System</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Admin CSS -->
+  <link rel="stylesheet" href="../../assets/css/admin.css" />
+</head>
+
+<body>
+
+  <div class="dashboard-layout">
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+         SIDEBAR (LEFT - RED)
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Brand Logo -->
+      <div class="sidebar__header">
+        <svg class="sidebar__logo-icon" viewBox="0 0 24 24">
+          <path
+            d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" />
+        </svg>
+        <div class="sidebar__brand">
+          <span class="sidebar__title">BUS SYSTEM</span>
+          <span class="sidebar__subtitle">Admin Panel</span>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="sidebar__nav">
+        <a href="admin-dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+          </svg>
+          Dashboard
+        </a>
+        <a href="manage-users.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+          </svg>
+          Manage Users
+        </a>
+        <a href="manage-stations.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+          </svg>
+          Manage Stations
+        </a>
+        <a href="assign-stations.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+          </svg>
+          Assign Stations
+        </a>
+        <a href="assign-drivers.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+          </svg>
+          Assign Drivers
+        </a>
+        <a href="routes-management.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z" />
+          </svg>
+          Routes Management
+        </a>
+        <a href="trips-management.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" />
+          </svg>
+          Trips
+        </a>
+        <a href="admin-notifications.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z" />
+          </svg>
+          Notifications
+        </a>
+      </nav>
+
+      <!-- Logout -->
+      <div class="sidebar__footer">
+        <a href="../common/login.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
+          </svg>
+          Logout
+        </a>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- NOTIFICATION SIDEBAR -->
+    <aside class="notification-sidebar" id="notificationSidebar">
+      <div class="notif-sidebar-header">
+        <h3>Notifications</h3>
+        <button id="closeNotifBtn" class="notif-close-btn">&times;</button>
+      </div>
+      <div class="notif-sidebar-content">
+        <div class="notif-sidebar-item">
+          <strong>System Update</strong>
+          <p>Route schedule updated for University Route.</p>
+          <span>10 min ago</span>
+        </div>
+        <div class="notif-sidebar-item">
+          <strong>New Driver Assigned</strong>
+          <p>Mohamed Ali has been assigned to Route R1.</p>
+          <span>1 hour ago</span>
+        </div>
+      </div>
+      <div class="notif-sidebar-footer">
+        <a href="admin-notifications.html">View all Notifications</a>
+      </div>
+    </aside>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+         MAIN WRAPPER
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <div class="main-wrapper">
+
+      <!-- TOP NAVBAR -->
+      <header class="topbar">
+        <div class="page-title">
+          <button class="hamburger-btn" id="hamburgerBtn">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+            </svg>
+          </button>
+          <h1>Manage Users</h1>
+          <p>Add, edit or remove students and drivers</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="notification-btn" id="notificationBtn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span class="notification-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <main class="content">
+
+        <!-- Page Actions (Tabs & Add Button) -->
+        <div class="page-actions">
+          <div class="tabs">
+            <button class="tab-btn active" id="tab-students">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+              </svg>
+              Students
+            </button>
+            <button class="tab-btn" id="tab-drivers">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                <path d="M12 2L4 5v1h16V5l-8-3z" />
+              </svg>
+              Drivers
+            </button>
+          </div>
+          <button class="btn-add" id="btn-add-user">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" style="width:16px;height:16px;">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Add Student
+          </button>
+        </div>
+
+        <!-- Filters Row -->
+        <div class="filters-row">
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="text" id="search-input" placeholder="Search students by name, email or ID..." />
+          </div>
+        </div>
+
+        <!-- Users Table Card -->
+        <div class="card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- User Modal -->
+  <div class="modal-overlay" id="userModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+    <div class="modal-content" style="background:#fff; padding:24px; border-radius:12px; width:400px; max-width:90%;">
+      <h2 id="modalTitle" style="margin-top:0; margin-bottom:16px;">Add User</h2>
+      <form id="userForm">
+        <div id="modalError" style="color:#dc2626; margin-bottom:16px; font-size:14px; font-weight:500; display:none;"></div>
+        <input type="hidden" id="userId" />
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="display:block; margin-bottom:8px; font-weight:500;">Name</label>
+          <input type="text" id="userName" required style="width:100%; padding:10px; border:1px solid #d1d5db; border-radius:8px; box-sizing:border-box;" />
+        </div>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="display:block; margin-bottom:8px; font-weight:500;">Email</label>
+          <input type="email" id="userEmail" required style="width:100%; padding:10px; border:1px solid #d1d5db; border-radius:8px; box-sizing:border-box;" />
+        </div>
+        <div class="form-group" id="passwordGroup" style="margin-bottom:16px;">
+          <label style="display:block; margin-bottom:8px; font-weight:500;">Password</label>
+          <input type="password" id="userPassword" minlength="6" style="width:100%; padding:10px; border:1px solid #d1d5db; border-radius:8px; box-sizing:border-box;" />
+        </div>
+        <div class="modal-actions" style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px;">
+          <button type="button" id="btnCancelModal" style="padding:10px 16px; background:#f3f4f6; border:none; border-radius:8px; cursor:pointer; font-weight:600;">Cancel</button>
+          <button type="submit" style="padding:10px 16px; background:#e53935; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600;">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../../assets/js/components.js"></script>
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/userService.js"></script>
+  <script src="../../assets/js/userView.js"></script>
+  <script src="../../assets/js/userController.js"></script>
+</body>
+
+</html>

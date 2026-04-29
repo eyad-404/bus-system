@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trips Management â€” Admin Panel</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Global & Admin CSS -->
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/admin.css" />
+
+  <!-- Page Specific Styles -->
+  <link rel="stylesheet" href="../../assets/css/trips-management.css" />
+</head>
+
+<body>
+
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <svg class="sidebar__logo-icon" viewBox="0 0 24 24">
+          <path
+            d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" />
+        </svg>
+        <div class="sidebar__brand">
+          <span class="sidebar__title">BUS SYSTEM</span>
+          <span class="sidebar__subtitle">Admin Panel</span>
+        </div>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="admin-dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+          </svg>
+          Dashboard
+        </a>
+        <a href="manage-users.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+          </svg>
+          Manage Users
+        </a>
+        <a href="manage-stations.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+          </svg>
+          Manage Stations
+        </a>
+        <a href="assign-stations.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+          </svg>
+          Assign Stations
+        </a>
+        <a href="assign-drivers.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+          </svg>
+          Assign Drivers
+        </a>
+        <a href="routes-management.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z" />
+          </svg>
+          Routes Management
+        </a>
+        <a href="trips-management.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" />
+          </svg>
+          Trips
+        </a>
+        <a href="admin-notifications.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z" />
+          </svg>
+          Notifications
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <a href="../common/login.html" class="nav-item">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
+          </svg>
+          Logout
+        </a>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- NOTIFICATION SIDEBAR -->
+    <aside class="notification-sidebar" id="notificationSidebar">
+      <div class="notif-sidebar-header">
+        <h3>Notifications</h3>
+        <button id="closeNotifBtn" class="notif-close-btn">&times;</button>
+      </div>
+      <div class="notif-sidebar-content">
+        <div class="notif-sidebar-item">
+          <strong>System Update</strong>
+          <p>Route schedule updated for University Route.</p>
+          <span>10 min ago</span>
+        </div>
+        <div class="notif-sidebar-item">
+          <strong>New Driver Assigned</strong>
+          <p>Mohamed Ali has been assigned to Route R1.</p>
+          <span>1 hour ago</span>
+        </div>
+      </div>
+      <div class="notif-sidebar-footer">
+        <a href="admin-notifications.html">View all Notifications</a>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+
+      <!-- TOP NAVBAR -->
+      <header class="topbar">
+        <div class="page-title">
+          <button class="hamburger-btn" id="hamburgerBtn">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+            </svg>
+          </button>
+          <h1>Trips Management</h1>
+          <p>Monitor and manage all trips in the system.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="notification-btn" id="notificationBtn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span class="notification-badge">3</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <main class="content">
+
+        <!-- 1) SUMMARY CARDS -->
+        <div class="summary-grid">
+          <!-- Card 1 -->
+          <div class="stat-card">
+            <div class="stat-icon icon-blue">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <div class="stat-val">18</div>
+              <div class="stat-label">Total Trips</div>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="stat-card">
+            <div class="stat-icon icon-green">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <polygon points="10 8 16 12 10 16 10 8" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <div class="stat-val active-val">2</div>
+              <div class="stat-label active-label">Active Trips</div>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="stat-card">
+            <div class="stat-icon icon-purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="8 12 11 15 16 9" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <div class="stat-val">13</div>
+              <div class="stat-label">Completed Trips</div>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="stat-card">
+            <div class="stat-icon icon-yellow">
+              <svg viewBox="0 0 24 24">
+                <path d="M3 3v18h18" />
+                <path d="M7 14l5-5 4 4 5-5" />
+                <rect x="6" y="10" width="2" height="11" />
+                <rect x="11" y="6" width="2" height="15" />
+                <rect x="16" y="12" width="2" height="9" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <div class="stat-val">18</div>
+              <div class="stat-label">Total Stations (R1)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2) FILTER BAR -->
+        <div class="filters-bar">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="text" placeholder="Search trips by route or driver..." />
+          </div>
+          <div class="select-group">
+            <select class="custom-select">
+              <option>All Routes</option>
+            </select>
+            <select class="custom-select">
+              <option>All Drivers</option>
+            </select>
+            <select class="custom-select">
+              <option>All Status</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3) ACTIVE TRIPS TABLE -->
+        <div class="table-card trips-table-card">
+          <div class="table-card-header bg-red">
+            <div class="header-indicator dot-green"></div>
+            <h2>Active Trips</h2>
+          </div>
+          <div class="table-responsive">
+            <table class="trips-table">
+              <thead>
+                <tr>
+                  <th>Trip ID</th>
+                  <th>Route</th>
+                  <th>Driver</th>
+                  <th>Start Time</th>
+                  <th>Current Station</th>
+                  <th>Stations Completed</th>
+                  <th>Passengers</th>
+                  <th>ETA (Next Station)</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="trip-id-badge bg-red-light">T001</span></td>
+                  <td>
+                    <div class="td-stack">
+                      <strong>University Route</strong>
+                      <span class="text-muted">R1</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="driver-cell">
+                      <div class="avatar bg-red-light">MA</div>
+                      <span>Mohamed Ali</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-stack">
+                      <span>May 12, 2025</span>
+                      <span class="text-muted">07:30 AM</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="current-station-cell">
+                      <svg class="icon-pin" viewBox="0 0 24 24">
+                        <path
+                          d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                      </svg>
+                      <div class="td-stack">
+                        <div><strong>City Center</strong> <span class="badge-current">Current</span></div>
+                        <span class="text-muted">3 of 20</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-center">3 / 20</td>
+                  <td>
+                    <div class="capacity-cell">
+                      <div class="cap-text">28</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-stack">
+                      <span>07:46 AM</span>
+                      <span class="text-muted">~ 8 min</span>
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn-action">
+                      <svg viewBox="0 0 24 24">
+                        <path
+                          d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                      </svg>
+                      View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="trip-id-badge bg-red-light">T003</span></td>
+                  <td>
+                    <div class="td-stack">
+                      <strong>Airport Route</strong>
+                      <span class="text-muted">R3</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="driver-cell">
+                      <div class="avatar bg-red-light">SA</div>
+                      <span>Sarah Adel</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-stack">
+                      <span>May 12, 2025</span>
+                      <span class="text-muted">06:45 AM</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="current-station-cell">
+                      <svg class="icon-pin" viewBox="0 0 24 24">
+                        <path
+                          d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                      </svg>
+                      <div class="td-stack">
+                        <div><strong>Airport Stop</strong></div>
+                        <span class="text-muted">6 of 20</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-center">6 / 20</td>
+                  <td>
+                    <div class="capacity-cell">
+                      <div class="cap-text">23</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-stack">
+                      <span>07:52 AM</span>
+                      <span class="text-muted">~ 14 min</span>
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn-action">
+                      <svg viewBox="0 0 24 24">
+                        <path
+                          d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                      </svg>
+                      View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-footer">
+            Showing 1 to 2 of 2 active trips
+          </div>
+        </div>
+
+        <!-- 4) ACTIVE TRIP DETAILS -->
+        <div class="table-card trip-details-card">
+          <div class="table-card-header bg-green-light">
+            <div class="header-indicator dot-green"></div>
+            <h2 class="text-dark">Active Trip Details - T001 (University Route)</h2>
+          </div>
+
+          <div class="trip-details-grid">
+
+            <!-- LEFT: Trip Info -->
+            <div class="details-left">
+              <div class="info-row">
+                <svg class="info-icon" viewBox="0 0 24 24">
+                  <path
+                    d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" />
+                </svg>
+                <span class="info-label">Trip ID</span>
+                <span class="info-value text-right">T001</span>
+              </div>
+              <div class="info-row">
+                <svg class="info-icon" viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                </svg>
+                <span class="info-label">Route</span>
+                <span class="info-value text-right">University Route (R1)</span>
+              </div>
+              <div class="info-row">
+                <svg class="info-icon" viewBox="0 0 24 24">
+                  <path
+                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                </svg>
+                <span class="info-label">Driver</span>
+                <span class="info-value text-right">Mohamed Ali</span>
+              </div>
+              <div class="info-row">
+                <svg class="info-icon" viewBox="0 0 24 24">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <span class="info-label">Start Time</span>
+                <span class="info-value text-right">May 12, 2025 - 07:30 AM</span>
+              </div>
+              <div class="info-row capacity-row mt-4">
+                <div class="cap-header">
+                  <svg class="info-icon" viewBox="0 0 24 24">
+                    <path
+                      d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3z" />
+                  </svg>
+                  <span class="info-label">Passengers</span>
+                  <span class="info-value">28</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CENTER: Route Stations -->
+            <div class="details-center">
+              <div class="stations-header">
+                <h3>Route Stations (20 Total)</h3>
+                <div class="stations-legend">
+                  <span class="legend-item"><span class="icon-completed"><svg viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg></span> Completed</span>
+                  <span class="legend-item"><span class="icon-current"></span> Current</span>
+                  <span class="legend-item"><span class="icon-pending"></span> Pending</span>
+                </div>
+              </div>
+
+              <div class="timeline">
+
+                <div class="timeline-item completed">
+                  <div class="tl-icon"><svg viewBox="0 0 24 24">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg></div>
+                  <div class="tl-content">
+                    <span class="tl-name">University Gate</span>
+                    <span class="tl-time">07:30 AM</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item completed">
+                  <div class="tl-icon">2</div>
+                  <div class="tl-content">
+                    <span class="tl-name">College Road</span>
+                    <span class="tl-time">07:38 AM</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item current active-highlight">
+                  <div class="tl-icon">3</div>
+                  <div class="tl-content">
+                    <span class="tl-name text-blue">City Center <span class="badge-current-small">Current
+                        Station</span></span>
+                    <span class="tl-time text-blue">07:46 AM</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item pending">
+                  <div class="tl-icon">4</div>
+                  <div class="tl-content">
+                    <span class="tl-name">Metro Station</span>
+                    <span class="tl-time">Pending</span>
+                  </div>
+                </div>
+
+                <div class="timeline-item pending">
+                  <div class="tl-icon">5</div>
+                  <div class="tl-content">
+                    <span class="tl-name">Library Stop</span>
+                    <span class="tl-time">Pending</span>
+                  </div>
+                </div>
+
+                <div class="timeline-dots">...</div>
+
+                <div class="timeline-item pending last">
+                  <div class="tl-icon">20</div>
+                  <div class="tl-content">
+                    <span class="tl-name">Main Gate</span>
+                    <span class="tl-time">~ 08:45 AM (ETA)</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="eta-banner">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                Estimated arrival at next station: <strong>07:46 AM</strong> (8 min)
+              </div>
+            </div>
+
+            <!-- RIGHT: Trip Summary -->
+            <div class="details-right">
+              <h3>Trip Summary</h3>
+              <div class="summary-list">
+                <div class="sum-row">
+                  <span class="sum-label">Total Stations</span>
+                  <span class="sum-val">20</span>
+                </div>
+                <div class="sum-row">
+                  <span class="sum-label">Stations Completed</span>
+                  <span class="sum-val">3</span>
+                </div>
+                <div class="sum-row">
+                  <span class="sum-label">Remaining Stations</span>
+                  <span class="sum-val">17</span>
+                </div>
+                <div class="sum-row">
+                  <span class="sum-label">Estimated Arrival (Last Stop)</span>
+                  <span class="sum-val">~ 08:45 AM</span>
+                </div>
+                <div class="sum-row mt-3">
+                  <span class="sum-label">Status</span>
+                  <span class="badge-status-active">Active</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../../assets/js/components.js"></script>
+</body>
+
+</html>

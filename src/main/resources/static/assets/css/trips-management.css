@@ -1,0 +1,650 @@
+/* =============================================================
+   Trips Management Page Styles
+   File: /assets/css/trips-management.css
+   ============================================================= */
+
+/* ─────────────────────────────────────────────────────────────
+   SUMMARY CARDS
+   ───────────────────────────────────────────────────────────── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.icon-blue { background: #eff6ff; color: #3b82f6; fill: currentColor; }
+.icon-green { background: #ecfdf5; color: #10b981; stroke: currentColor; fill: none; }
+.icon-purple { background: #f5f3ff; color: #8b5cf6; stroke: currentColor; fill: none; }
+.icon-yellow { background: #fffbeb; color: #f59e0b; stroke: currentColor; fill: none; }
+
+/* Special override for active trips green icon which is solid/stroke mix */
+.icon-green svg { stroke-width: 2; }
+.icon-blue svg, .icon-yellow svg { stroke-width: 2; }
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-val {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.active-val { color: #10b981; }
+.active-label { color: #10b981; font-weight: 600; }
+
+/* ─────────────────────────────────────────────────────────────
+   FILTER BAR
+   ───────────────────────────────────────────────────────────── */
+.filters-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: var(--spacing-xl);
+  background: #fff;
+  padding: 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-box svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  stroke: var(--text-muted);
+  fill: none;
+  stroke-width: 2;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 14px 10px 42px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-box input:focus {
+  border-color: var(--primary);
+}
+
+.select-group {
+  display: flex;
+  gap: 12px;
+}
+
+.custom-select {
+  padding: 10px 36px 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  background: #fff url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 12px center;
+  background-size: 16px;
+  appearance: none;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TABLE CARD & HEADER
+   ───────────────────────────────────────────────────────────── */
+.table-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: var(--spacing-xl);
+}
+
+.table-card-header {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bg-red { background: #8b0000; color: #fff; }
+.bg-red h2 { color: #fff; font-size: 1.1rem; font-weight: 600; margin: 0; }
+
+.bg-green-light { background: #f0fdf4; border-bottom: 1px solid #bbf7d0; }
+.text-dark { color: var(--text-main); font-size: 1.1rem; font-weight: 600; margin: 0; }
+
+.dot-green {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ACTIVE TRIPS TABLE
+   ───────────────────────────────────────────────────────────── */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.trips-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 1000px;
+}
+
+.trips-table th {
+  padding: 14px 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  background: #f9fafb;
+}
+
+.trips-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.trips-table tr:last-child td {
+  border-bottom: none;
+}
+
+.trip-id-badge {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.bg-red-light { background: #fee2e2; color: #b91c1c; }
+
+.td-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.text-muted { color: var(--text-muted); font-size: 0.8rem; }
+.text-blue { color: #2563eb !important; font-weight: 600; }
+
+.driver-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.current-station-cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.icon-pin {
+  width: 18px;
+  height: 18px;
+  fill: #2563eb;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.badge-current {
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  font-weight: 600;
+}
+
+.text-center { text-align: center; }
+
+.capacity-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 120px;
+}
+
+.cap-text {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.cap-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cap-bar.large {
+  height: 8px;
+}
+
+.cap-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.cap-fill.green { background: #10b981; }
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.btn-action:hover {
+  background: #f9fafb;
+  color: var(--text-main);
+  border-color: #d1d5db;
+}
+
+.btn-action svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.table-footer {
+  padding: 16px 24px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background: #f9fafb;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ACTIVE TRIP DETAILS
+   ───────────────────────────────────────────────────────────── */
+.trip-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 24px;
+  padding: 24px;
+}
+
+/* LEFT COLUMN */
+.details-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-right: 24px;
+  border-right: 1px solid var(--border);
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.info-icon {
+  width: 18px;
+  height: 18px;
+  fill: var(--text-muted);
+  stroke: var(--text-muted);
+}
+
+/* Adjust fill vs stroke for info-icon depending on svg */
+.info-row:nth-child(4) .info-icon { fill: none; stroke-width: 2; stroke: var(--text-muted); }
+.info-row:not(:nth-child(4)) .info-icon { stroke: none; fill: var(--text-muted); }
+
+.info-label {
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.info-value {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.text-right { text-align: right; }
+.mt-4 { margin-top: 24px; }
+
+.capacity-row {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.cap-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* CENTER COLUMN */
+.details-center {
+  display: flex;
+  flex-direction: column;
+  padding-right: 24px;
+  border-right: 1px solid var(--border);
+}
+
+.stations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.stations-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.stations-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-completed { color: #10b981; display: flex; }
+.icon-completed svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 3; fill: none; }
+.icon-current { width: 10px; height: 10px; background: #3b82f6; border-radius: 50%; display: inline-block; }
+.icon-pending { width: 10px; height: 10px; border: 2px solid #d1d5db; border-radius: 50%; display: inline-block; }
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 12px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+}
+
+.timeline-item.last {
+  margin-bottom: 0;
+}
+
+.tl-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.timeline-item.completed .tl-icon {
+  background: #10b981;
+  color: #fff;
+}
+.timeline-item.completed .tl-icon svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 3; fill: none; }
+
+.timeline-item.current .tl-icon {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.timeline-item.pending .tl-icon {
+  background: #f3f4f6;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.tl-content {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  padding-top: 2px;
+}
+
+.tl-name {
+  font-size: 0.9rem;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tl-time {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.active-highlight {
+  background: #eff6ff;
+  padding: 8px;
+  border-radius: 8px;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+.active-highlight .tl-icon { margin-left: 8px; }
+
+.badge-current-small {
+  font-size: 0.7rem;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.timeline-dots {
+  padding-left: 45px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.eta-banner {
+  margin-top: 24px;
+  background: #ecfdf5;
+  padding: 12px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: #065f46;
+}
+
+.eta-banner svg {
+  width: 18px;
+  height: 18px;
+  stroke: #10b981;
+  fill: none;
+  stroke-width: 2;
+}
+
+/* RIGHT COLUMN */
+.details-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-right h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 24px;
+}
+
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sum-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.sum-label {
+  color: var(--text-secondary);
+}
+
+.sum-val {
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.mt-3 { margin-top: 16px; }
+
+.badge-status-active {
+  background: #dcfce7;
+  color: #16a34a;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVENESS
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .trip-details-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .details-left, .details-center {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 32px;
+  }
+  
+  .summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .select-group {
+    flex-direction: column;
+  }
+  
+  .search-box {
+    max-width: 100%;
+  }
+}

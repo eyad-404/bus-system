@@ -1,0 +1,242 @@
+/* =============================================================
+   Student Notifications Styles
+   File: /assets/css/student-notifications.css
+   ============================================================= */
+
+/* ─────────────────────────────────────────────────────────────
+   TOOLBAR & FILTERS
+   ───────────────────────────────────────────────────────────── */
+.notifications-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 12px;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+  transition: var(--transition, all 0.2s);
+}
+
+.tab-btn svg { width: 18px; height: 18px; }
+
+.tab-btn:hover { background: #f9fafb; }
+
+.tab-btn.active {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #b30000;
+}
+
+.tab-badge {
+  background: #b30000;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.tab-btn.text-red { color: #b91c1c; }
+.tab-btn.text-blue { color: #2563eb; }
+.tab-btn.text-gray { color: #4b5563; }
+
+.tab-badge.bg-red { background: #b91c1c; }
+.tab-badge.bg-blue { background: #2563eb; }
+.tab-badge.bg-gray { background: #9ca3af; }
+
+.mark-read-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #fecaca;
+  color: #b30000;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition, all 0.2s);
+}
+
+.mark-read-btn svg { width: 18px; height: 18px; }
+.mark-read-btn:hover { background: #fef2f2; }
+
+/* ─────────────────────────────────────────────────────────────
+   NOTIFICATIONS LIST
+   ───────────────────────────────────────────────────────────── */
+.card-box {
+  background: #fff;
+  border-radius: var(--radius, 12px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+}
+
+.notification-item {
+  display: flex;
+  gap: 20px;
+  padding: 24px;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.2s;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item.unread {
+  background: #fafafa;
+}
+
+.notif-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notif-icon svg { width: 24px; height: 24px; fill: currentColor; }
+.bg-red-soft svg, .bg-purple-soft svg, .bg-green-soft svg, .bg-gray-soft svg { fill: none; stroke: currentColor; stroke-width: 2; }
+
+.bg-red-soft { background: #fee2e2; }
+.text-red { color: #b91c1c; }
+
+.bg-blue-soft { background: #eff6ff; }
+.text-blue { color: #2563eb; }
+
+.bg-green-soft { background: #dcfce7; }
+.text-green { color: #16a34a; }
+
+.bg-purple-soft { background: #f3e8ff; }
+.text-purple { color: #9333ea; }
+
+.bg-orange-soft { background: #ffedd5; }
+.text-orange { color: #ea580c; }
+
+.bg-gray-soft { background: #f3f4f6; }
+.text-gray { color: #6b7280; }
+
+.notif-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notif-title { font-size: 1.05rem; color: #111827; }
+.notif-desc { font-size: 0.9rem; color: #4b5563; line-height: 1.5; margin: 0; }
+
+.notif-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  min-width: 100px;
+}
+
+.notif-time {
+  font-size: 0.85rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+.dot-red { background: #dc2626; }
+.dot-gray { background: #9ca3af; }
+
+.notif-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.unread-badge { background: #fee2e2; color: #b91c1c; }
+.read-badge { background: #f3f4f6; color: #6b7280; }
+
+/* ─────────────────────────────────────────────────────────────
+   PAGINATION
+   ───────────────────────────────────────────────────────────── */
+.pagination-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.text-muted { font-size: 0.9rem; color: #6b7280; }
+
+.pagination-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.page-btn {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: #4b5563;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-btn svg { width: 16px; height: 16px; }
+
+.page-btn:hover { background: #f9fafb; }
+.page-btn.active { background: #b30000; color: #fff; border-color: #b30000; }
+
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVENESS
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .notifications-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .filter-tabs {
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .notification-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .notif-meta {
+    align-items: flex-start;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+  .pagination-footer {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

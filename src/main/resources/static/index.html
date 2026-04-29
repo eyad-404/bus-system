@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="MIU Bus System — Smart bus tracking for students, drivers, and admins. Stay connected and informed in real time." />
+  <meta name="theme-color" content="#e53935" />
+
+  <title>MIU Bus System — Smart Bus Tracking Made Simple</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="./assets/css/main.css" />
+  <link rel="stylesheet" href="./assets/css/index.css" />
+</head>
+
+<body>
+  <!-- ════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════ -->
+  <header class="navbar" id="navbar" role="banner">
+    <div class="nav-inner">
+      <!-- Brand -->
+      <a href="/" class="nav-brand" aria-label="MIU Bus System Home">
+        <div class="nav-brand-icon" aria-hidden="true">
+          <!-- Bus SVG icon -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h8v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10Zm3.5 1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm9 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3ZM6 6h12v5H6V6Z" />
+          </svg>
+        </div>
+        <span class="nav-brand-text">MIU <span>Bus System</span></span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/" class="nav-link active" id="nav-home" aria-current="page">Home</a>
+        <div class="nav-auth-actions" id="nav-auth-actions">
+          <a href="/pages/common/login.html" class="nav-btn-login" id="nav-login-btn"
+            aria-label="Login to your account">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor">
+              <path
+                d="M12.65 10A6 6 0 1 0 10 12.65L17.35 20 19 18.35 17.35 16.7l1.3-1.3-1.4-1.41-1.3 1.3-1.41-1.4L17.35 10h-4.7ZM7 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
+            </svg>
+            Login
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ════════════════════════════════════════
+         HERO SECTION
+    ════════════════════════════════════════ -->
+    <section class="hero" id="hero" aria-labelledby="hero-heading">
+      <div class="hero-inner">
+        <!-- Left Column -->
+        <div class="hero-left">
+          <div class="hero-badge" aria-label="Live tracking available">
+            Live Tracking Active
+          </div>
+
+          <h1 class="hero-title" id="hero-heading">
+            Smart Bus Tracking<br />
+            Made <span class="highlight">Simple</span>
+          </h1>
+
+          <p class="hero-sub">
+            MIU Bus System helps students, drivers, and admins stay connected
+            and informed in real time. Know exactly where your bus is —
+            always.
+          </p>
+
+          <div class="hero-actions">
+            <a href="/pages/common/login.html" class="btn-primary" id="hero-login-btn"
+              aria-label="Login to your account">
+              Login to Your Account
+              <!-- Arrow icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8Z" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- Stats -->
+          <!-- <div class="hero-stats" aria-label="Quick statistics">
+            <div class="hero-stat">
+              <div class="hero-stat-num">12<span>+</span></div>
+              <div class="hero-stat-label">Active Buses</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">800<span>+</span></div>
+              <div class="hero-stat-label">Students Served</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">99<span>%</span></div>
+              <div class="hero-stat-label">Uptime</div>
+            </div>
+          </div> -->
+        </div>
+
+        <!-- Right Column -->
+        <div class="hero-right" aria-hidden="true">
+          <div class="hero-img-wrap">
+            <!-- Glow background -->
+            <div class="hero-img-glow"></div>
+
+            <!-- Floating chips -->
+            <!-- <div class="hero-chip chip-top-left">
+              <div class="hero-chip-dot"></div>
+              Bus #03 On Route
+            </div> -->
+
+            <!-- <div class="hero-chip chip-bottom-right">
+              <div class="hero-chip-dot"></div>
+              ETA: 3 minutes
+            </div> -->
+
+            <!-- Bus illustration -->
+            <img src="./assets/images/index-bus-illustration-3.png"
+              alt="Smart bus illustration showing real-time tracking" class="hero-img" id="hero-illustration"
+              loading="eager" fetchpriority="high" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         FEATURES SECTION
+    ════════════════════════════════════════ -->
+    <section class="features" id="features" aria-labelledby="features-heading">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <span class="section-eyebrow">Features</span>
+          <h2 class="section-title" id="features-heading">
+            Why Choose MIU Bus System?
+          </h2>
+          <p class="section-sub">
+            Everything you need to manage your campus bus experience, all in
+            one place.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <!-- Card 1: Real-time tracking -->
+          <div class="feature-card reveal" id="feature-tracking">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z" />
+              </svg>
+            </div>
+            <h3 class="feature-title">Track Bus in Real Time</h3>
+            <p class="feature-desc">
+              See live bus locations on a map and know exactly when your ride
+              will arrive at your stop.
+            </p>
+          </div>
+
+          <!-- Card 2: Station alerts -->
+          <div class="feature-card reveal" id="feature-alerts" style="transition-delay: 0.1s">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2Zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4a1.5 1.5 0 0 0-3 0v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2Z" />
+              </svg>
+            </div>
+            <h3 class="feature-title">Get Station Alerts</h3>
+            <p class="feature-desc">
+              Receive instant notifications when a bus is approaching your
+              station or if there are delays.
+            </p>
+          </div>
+
+          <!-- Card 3: Routes & Stations -->
+          <div class="feature-card reveal" id="feature-routes" style="transition-delay: 0.2s">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M17 12h-5v5h5v-5ZM16 1v2H8V1H6v2H5C3.89 3 3.01 3.9 3.01 5L3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5c0-1.1-.9-2-2-2h-1V1h-2Zm3 18H5V8h14v11Z" />
+              </svg>
+            </div>
+            <h3 class="feature-title">View Route &amp; Stations</h3>
+            <p class="feature-desc">
+              Browse all bus routes, schedules, and station stops in one
+              clean, easy-to-read interface.
+            </p>
+          </div>
+
+          <!-- Card 4: Secure & Reliable -->
+          <div class="feature-card reveal" id="feature-secure" style="transition-delay: 0.3s">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4Zm-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8Z" />
+              </svg>
+            </div>
+            <h3 class="feature-title">Secure &amp; Reliable</h3>
+            <p class="feature-desc">
+              Role-based access control ensures students, drivers, and admins
+              each see only what they need.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer class="footer" id="footer" role="contentinfo">
+    <div class="footer-inner">
+      <p class="footer-copy">
+        &copy; 2026 <strong>MIU Bus System</strong>. All rights reserved.
+      </p>
+      <p class="footer-right">
+        Designed for MIU Community
+        <span class="heart" aria-hidden="true">❤️</span>
+      </p>
+    </div>
+  </footer>
+
+  <style>
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .nav-auth-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-user-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-user-email {
+      font-size: 0.85rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    .nav-btn-logout {
+      background: #fff0f0;
+      color: #e53935;
+      border: 1px solid #fca5a5;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .nav-btn-logout:hover {
+      background: #e53935;
+      color: #fff;
+    }
+  </style>
+
+  <script src="./assets/js/api.js"></script>
+  <script src="./assets/js/auth.js"></script>
+  <script src="./assets/js/navbar.js"></script>
+  <script src="./assets/js/home.js"></script>
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+    );
+    revealEls.forEach((el) => observer.observe(el));
+  </script>
+</body>
+
+</html>
