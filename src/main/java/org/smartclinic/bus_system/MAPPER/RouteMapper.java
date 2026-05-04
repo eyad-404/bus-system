@@ -4,7 +4,7 @@ import org.smartclinic.bus_system.DTOs.RouteResponseDTO;
 import org.smartclinic.bus_system.Entity.Route;
 
 public class RouteMapper {
-    public static RouteResponseDTO toDTO(Route r) {
+    public static RouteResponseDTO toDTO(Route r){
         RouteResponseDTO dto = new RouteResponseDTO();
         dto.setId(r.getId());
         dto.setName(r.getName());

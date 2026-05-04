@@ -59,6 +59,20 @@ public class NotificationService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<NotificationResponseDTO> getNotificationsByUserId(Long userId) {
+        return getUserNotifications(userId);
+    }
+
+    @Transactional
+    public NotificationResponseDTO markAsRead(Long notificationId) {
+        Notification notification = notificationRepository.findById(notificationId)
+            .orElseThrow(() -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Notification not found"));
+        notification.setRead(true);
+        notificationRepository.save(notification);
+        return NotificationMapper.toDTO(notification);
+    }
+
     @Transactional
     public void markAllAsRead(Long userId) {
         notificationRepository.markAllAsRead(userId);

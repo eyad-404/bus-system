@@ -100,10 +100,26 @@ public class RouteService {
         List<Long> stationIds = routeStationRepository.findStationIdsByRouteId(id);
 
         routeRepository.delete(route);
+    }
 
         if (!stationIds.isEmpty()) {
             stationRepository.deleteAllById(stationIds);
+    @Transactional(readOnly = true)
+    public List<org.smartclinic.bus_system.DTOs.RouteStationResponseDTO> getRouteStations(Long routeId) {
+        if (!routeRepository.existsById(routeId)) {
+            throw new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Route not found");
         }
+
+        return routeStationRepository.findByRouteIdOrderByOrderIndexAsc(routeId)
+                .stream()
+                .map(rs -> {
+                    org.smartclinic.bus_system.DTOs.RouteStationResponseDTO dto = new org.smartclinic.bus_system.DTOs.RouteStationResponseDTO();
+                    dto.setId(rs.getStation().getId());
+                    dto.setName(rs.getStation().getName());
+                    dto.setOrder(rs.getOrderIndex());
+                    return dto;
+                })
+                .toList();
     }
 
     private void validateUniqueCode(String code, Long currentId) {

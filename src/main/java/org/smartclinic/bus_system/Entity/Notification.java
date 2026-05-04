@@ -29,6 +29,8 @@ public class Notification {
     @Enumerated(EnumType.STRING)
     private NotificationType type;
 
+    private String title;
+
     private String message;
 
     private boolean isRead;

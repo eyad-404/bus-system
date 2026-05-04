@@ -7,9 +7,13 @@ public class NotificationMapper {
     public static NotificationResponseDTO toDTO(Notification n){
         NotificationResponseDTO dto = new NotificationResponseDTO();
         dto.setId(n.getId());
+        dto.setTitle(n.getTitle());
         dto.setMessage(n.getMessage());
         dto.setRead(n.isRead());
-        dto.setType(n.getType().name());
+        if (n.getType() != null) {
+            dto.setType(n.getType().name());
+        }
+        dto.setCreatedAt(n.getCreatedAt());
         return dto;
     }
 }
