@@ -77,16 +77,18 @@ public class AdminController {
 
     @GetMapping("/students/search")
     public ResponseEntity<List<UserResponseDTO>> searchStudents(@RequestParam String query) {
-        return ResponseEntity.ok(userRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(query).stream()
-                .filter(u -> u.getRole() == Role.STUDENT)
-                .map(this::mapToDTO).collect(Collectors.toList()));
+        return ResponseEntity
+                .ok(userRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(query).stream()
+                        .filter(u -> u.getRole() == Role.STUDENT)
+                        .map(this::mapToDTO).collect(Collectors.toList()));
     }
 
     @GetMapping("/drivers/search")
     public ResponseEntity<List<UserResponseDTO>> searchDrivers(@RequestParam String query) {
-        return ResponseEntity.ok(userRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(query).stream()
-                .filter(u -> u.getRole() == Role.DRIVER)
-                .map(this::mapToDTO).collect(Collectors.toList()));
+        return ResponseEntity
+                .ok(userRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(query).stream()
+                        .filter(u -> u.getRole() == Role.DRIVER)
+                        .map(this::mapToDTO).collect(Collectors.toList()));
     }
 
     @GetMapping("/students/with-station")
@@ -97,8 +99,10 @@ public class AdminController {
             m.put("userId", student.getUser() != null ? student.getUser().getId() : null);
             m.put("name", student.getUser() != null ? student.getUser().getName() : "");
             m.put("email", student.getUser() != null ? student.getUser().getEmail() : "");
-            m.put("boardingStationId", student.getBoardingStation() != null ? student.getBoardingStation().getId() : null);
-            m.put("boardingStationName", student.getBoardingStation() != null ? student.getBoardingStation().getName() : null);
+            m.put("boardingStationId",
+                    student.getBoardingStation() != null ? student.getBoardingStation().getId() : null);
+            m.put("boardingStationName",
+                    student.getBoardingStation() != null ? student.getBoardingStation().getName() : null);
             return m;
         }).collect(Collectors.toList());
         return ResponseEntity.ok(result);

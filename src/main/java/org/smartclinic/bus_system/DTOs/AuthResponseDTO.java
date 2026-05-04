@@ -10,4 +10,5 @@ public class AuthResponseDTO {
     private String token;
     private String role;
     private boolean firstLogin;
+    private Long userId;
 }

@@ -18,15 +18,17 @@ public class AuthController {
 
     @PostMapping("/login")
     public AuthResponseDTO login(@RequestBody LoginRequestDTO request) {
-
-        System.out.println("🔥 LOGIN ENDPOINT HIT 🔥");
-
         return authService.login(request);
     }
 
     @PostMapping("/register-admin")
     public void registerAdmin(@RequestBody CreateUserDTO dto) {
         authService.registerAdmin(dto);
+    }
+
+    @GetMapping("/has-admin")
+    public boolean hasAdmin() {
+        return authService.hasAdmin();
     }
 
     @PostMapping("/change-password")
@@ -37,4 +39,4 @@ public class AuthController {
 
         authService.changePassword(email, request.getNewPassword());
     }
-}
+}

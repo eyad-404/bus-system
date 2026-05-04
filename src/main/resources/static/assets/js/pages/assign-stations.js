@@ -21,7 +21,7 @@
   function avatarColor(idx) { return AVATAR_COLORS[idx % AVATAR_COLORS.length]; }
 
   function loadRoutes() {
-    apiGet('/api/routes').then(function (routes) {
+    apiGet('/admin/routes').then(function (routes) {
       var sel = document.getElementById('routeSelect');
       sel.innerHTML = '<option value="">-- Select a route to begin --</option>';
       (routes || []).forEach(function (r) {
@@ -78,6 +78,21 @@
   function setEl(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; }
 
   function renderTable(students) {
+    var emptyState = document.getElementById('empty-state');
+    var tableContainer = document.querySelector('.table-responsive');
+    var pagination = document.querySelector('.pagination-row');
+
+    if (!currentRouteId) {
+      if (emptyState) emptyState.style.display = 'block';
+      if (tableContainer) tableContainer.style.display = 'none';
+      if (pagination) pagination.style.display = 'none';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+    if (tableContainer) tableContainer.style.display = 'block';
+    if (pagination) pagination.style.display = 'flex';
+
     var tbody = document.getElementById('studentsTableBody');
     var filterStn = (document.getElementById('stationSelect').value || '').toString();
     var q = searchQuery.toLowerCase();
@@ -88,7 +103,9 @@
       return matchSearch && matchStation;
     });
 
-    document.getElementById('pageInfo').textContent = 'Showing ' + visible.length + ' of ' + students.length + ' students';
+    var pageInfo = document.getElementById('pageInfo');
+    if (pageInfo) pageInfo.textContent = 'Showing ' + visible.length + ' of ' + students.length + ' students';
+    
     tbody.innerHTML = '';
     visible.forEach(function (student, idx) {
       tbody.appendChild(buildStudentRow(student, idx));
@@ -195,5 +212,33 @@
       searchQuery = this.value;
       renderTable(allStudents);
     });
+
+    var btnClear = document.querySelector('.btn-clear');
+    if (btnClear) {
+      btnClear.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (confirm('Are you sure you want to clear all assignments?')) {
+          var promises = allStudents.filter(function(s) { return !!s.boardingStationId; })
+            .map(function(s) { return apiDelete('/admin/students/' + s.studentId + '/assign-station'); });
+          if (promises.length > 0) {
+            Promise.all(promises).then(function() {
+              loadStudents();
+              showToast('All assignments cleared');
+            }).catch(handleError);
+          } else {
+            showToast('No assignments to clear');
+          }
+        }
+      });
+    }
+
+    var btnSave = document.querySelector('.btn-save');
+    if (btnSave) {
+      btnSave.addEventListener('click', function (e) {
+        e.preventDefault();
+        // The page auto-saves on change, so just show a confirmation.
+        showToast('Assignments saved successfully');
+      });
+    }
   });
 })();

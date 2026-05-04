@@ -173,7 +173,7 @@
               </div>
               <div class="stat-card__info">
                 <span class="stat-card__label">Total Students</span>
-                <span class="stat-card__value">120</span>
+                <span class="stat-card__value" id="statTotalStudents">—</span>
               </div>
             </div>
             <a href="#" class="stat-card__link">
@@ -197,7 +197,7 @@
               </div>
               <div class="stat-card__info">
                 <span class="stat-card__label">Total Drivers</span>
-                <span class="stat-card__value">15</span>
+                <span class="stat-card__value" id="statTotalDrivers">—</span>
               </div>
             </div>
             <a href="#" class="stat-card__link">
@@ -219,7 +219,7 @@
               </div>
               <div class="stat-card__info">
                 <span class="stat-card__label">Total Stations</span>
-                <span class="stat-card__value">30</span>
+                <span class="stat-card__value" id="statTotalRoutes">—</span>
               </div>
             </div>
             <a href="#" class="stat-card__link">
@@ -241,7 +241,7 @@
               </div>
               <div class="stat-card__info">
                 <span class="stat-card__label">Active Trips</span>
-                <span class="stat-card__value">5</span>
+                <span class="stat-card__value" id="statActiveTrips">—</span>
               </div>
             </div>
             <a href="#" class="stat-card__link">
@@ -267,67 +267,8 @@
                 </svg>
               </a>
             </div>
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Route</th>
-                    <th>Driver</th>
-                    <th>Current Station</th>
-                    <th>Next Station</th>
-                    <th>ETA</th>
-                    <th>Started At</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="badge-route">R1</span></td>
-                    <td>Ali Khan</td>
-                    <td>University Gate</td>
-                    <td>Main Gate</td>
-                    <td>10:15 AM</td>
-                    <td>08:15 AM</td>
-                    <td><span class="badge-status">Ongoing</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge-route">R2</span></td>
-                    <td>Usman Tariq</td>
-                    <td>City Center</td>
-                    <td>College Road</td>
-                    <td>09:55 AM</td>
-                    <td>08:25 AM</td>
-                    <td><span class="badge-status">Ongoing</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge-route">R3</span></td>
-                    <td>Ahmed Raza</td>
-                    <td>Airport Stop</td>
-                    <td>Metro Station</td>
-                    <td>09:40 AM</td>
-                    <td>08:10 AM</td>
-                    <td><span class="badge-status">Ongoing</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge-route">R4</span></td>
-                    <td>Fahad Ali</td>
-                    <td>Town Hall</td>
-                    <td>Park Avenue</td>
-                    <td>10:05 AM</td>
-                    <td>08:30 AM</td>
-                    <td><span class="badge-status">Ongoing</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge-route">R5</span></td>
-                    <td>Hamza Malik</td>
-                    <td>Main Gate</td>
-                    <td>Library Stop</td>
-                    <td>10:20 AM</td>
-                    <td>08:35 AM</td>
-                    <td><span class="badge-status">Ongoing</span></td>
-                  </tr>
-                </tbody>
-              </table>
+            <div id="activeTripsContainer" style="padding:16px;">
+              <p class="text-muted" style="text-align:center;">Loading active trips...</p>
             </div>
           </div>
 
@@ -342,74 +283,8 @@
                 </svg>
               </a>
             </div>
-            <div class="notification-list">
-
-              <div class="notification-item">
-                <div class="noti-icon">
-                  <svg viewBox="0 0 24 24">
-                    <path
-                      d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" />
-                  </svg>
-                </div>
-                <div class="noti-content">
-                  <p class="noti-message">Driver Ali Khan started a trip on Route R1.</p>
-                </div>
-                <span class="noti-time">10:30 AM</span>
-              </div>
-
-              <div class="notification-item">
-                <div class="noti-icon">
-                  <svg viewBox="0 0 24 24">
-                    <path
-                      d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                  </svg>
-                </div>
-                <div class="noti-content">
-                  <p class="noti-message">New station "Tech Park" was added to Route R2.</p>
-                </div>
-                <span class="noti-time">09:45 AM</span>
-              </div>
-
-              <div class="notification-item">
-                <div class="noti-icon">
-                  <svg viewBox="0 0 24 24">
-                    <path
-                      d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                  </svg>
-                </div>
-                <div class="noti-content">
-                  <p class="noti-message">Student Sara Ali assigned to Station Main Gate.</p>
-                </div>
-                <span class="noti-time">09:20 AM</span>
-              </div>
-
-              <div class="notification-item">
-                <div class="noti-icon">
-                  <svg viewBox="0 0 24 24">
-                    <path
-                      d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                    <path d="M12 2L4 5v1h16V5l-8-3z" />
-                  </svg>
-                </div>
-                <div class="noti-content">
-                  <p class="noti-message">Driver Usman Tariq assigned to Route R2.</p>
-                </div>
-                <span class="noti-time">Yesterday, 04:15 PM</span>
-              </div>
-
-              <div class="notification-item">
-                <div class="noti-icon">
-                  <svg viewBox="0 0 24 24">
-                    <path
-                      d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-                  </svg>
-                </div>
-                <div class="noti-content">
-                  <p class="noti-message">5 new students added to the system.</p>
-                </div>
-                <span class="noti-time">Yesterday, 11:20 AM</span>
-              </div>
-
+            <div id="recentActivityContainer" class="notification-list" style="padding:16px;">
+              <p class="text-muted" style="text-align:center;">Loading...</p>
             </div>
           </div>
 
@@ -469,7 +344,10 @@
     </div>
   </div>
 
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/auth.js"></script>
   <script src="../../assets/js/components.js"></script>
+  <script src="../../assets/js/pages/admin-dashboard.js"></script>
 </body>
 
 </html>

@@ -6,7 +6,7 @@ function updateNavForUser(user) {
     if (user.role === 'ADMIN') {
         dashboardLink = '/pages/admin/admin-dashboard.html';
     } else if (user.role === 'DRIVER') {
-        dashboardLink = '/pages/driver/driver-dashboard.html';
+        dashboardLink = '/pages/driver/trip-control.html';
     } else if (user.role === 'STUDENT') {
         dashboardLink = '/pages/student/student-dashboard.html';
     }

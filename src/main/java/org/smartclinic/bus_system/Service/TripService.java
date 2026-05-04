@@ -20,7 +20,10 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class TripService {
@@ -35,10 +38,10 @@ public class TripService {
     private int averageMinutes;
 
     public TripService(TripRepository tripRepository,
-                       RouteStationRepository routeStationRepository,
-                       TripProgressRepository tripProgressRepository,
-                       NotificationService notificationService,
-                       org.smartclinic.bus_system.Repository.StudentRepository studentRepository) {
+            RouteStationRepository routeStationRepository,
+            TripProgressRepository tripProgressRepository,
+            NotificationService notificationService,
+            org.smartclinic.bus_system.Repository.StudentRepository studentRepository) {
         this.tripRepository = tripRepository;
         this.routeStationRepository = routeStationRepository;
         this.tripProgressRepository = tripProgressRepository;
@@ -61,11 +64,11 @@ public class TripService {
         }
 
         // ✅ FIX: RouteStation instead of StationRepository
-        List<Station> orderedStations =
-                routeStationRepository.findByRouteIdOrderByOrderIndexAsc(trip.getRoute().getId())
-                        .stream()
-                        .map(RouteStation::getStation)
-                        .toList();
+        List<Station> orderedStations = routeStationRepository
+                .findByRouteIdOrderByOrderIndexAsc(trip.getRoute().getId())
+                .stream()
+                .map(RouteStation::getStation)
+                .toList();
 
         if (orderedStations.isEmpty()) {
             return endTrip(tripId);
@@ -112,7 +115,7 @@ public class TripService {
 
     protected void updateTripProgress(Trip trip, Station nextStation) {
 
-        tripProgressRepository.findOptionalByTripIdAndStatus(trip.getId(), ProgressStatus.CURRENT)
+        tripProgressRepository.findByTripIdAndStatus(trip.getId(), ProgressStatus.CURRENT)
                 .ifPresent(currentProgress -> {
                     currentProgress.setStatus(ProgressStatus.COMPLETED);
                     tripProgressRepository.save(currentProgress);
@@ -120,8 +123,8 @@ public class TripService {
 
         TripProgress nextProgress;
 
-        Optional<TripProgress> result =
-                tripProgressRepository.findByTripIdAndStationId(trip.getId(), nextStation.getId());
+        Optional<TripProgress> result = tripProgressRepository.findByTripIdAndStationId(trip.getId(),
+                nextStation.getId());
 
         if (result.isPresent()) {
             nextProgress = result.get();
@@ -145,13 +148,19 @@ public class TripService {
             return List.of();
         }
 
-        List<Station> orderedStations =
-                routeStationRepository.findByRouteIdOrderByOrderIndexAsc(trip.getRoute().getId())
-                        .stream()
-                        .map(RouteStation::getStation)
-                        .toList();
+        List<Station> orderedStations = routeStationRepository
+                .findByRouteIdOrderByOrderIndexAsc(trip.getRoute().getId())
+                .stream()
+                .map(RouteStation::getStation)
+                .toList();
 
         int currentIndex = trip.getCurrentStationIndex();
+
+        Map<Long, TripProgress> progressByStationId = tripProgressRepository
+                .findByTripId(trip.getId())
+                .stream()
+                .filter(tp -> tp.getStation() != null && tp.getStation().getId() != null)
+                .collect(Collectors.toMap(tp -> tp.getStation().getId(), Function.identity(), (a, b) -> b));
 
         List<StationProgressDTO> stationProgress = new ArrayList<>(orderedStations.size());
 
@@ -162,6 +171,11 @@ public class TripService {
             StationProgressDTO dto = new StationProgressDTO();
             dto.setStationId(station.getId());
             dto.setStationName(station.getName());
+
+            TripProgress tp = progressByStationId.get(station.getId());
+            if (tp != null && tp.getArrivalTime() != null) {
+                dto.setArrivalTime(tp.getArrivalTime());
+            }
 
             if (i < currentIndex) {
                 dto.setStatus(ProgressStatus.COMPLETED.name());
@@ -180,7 +194,8 @@ public class TripService {
     @Transactional(readOnly = true)
     public org.smartclinic.bus_system.DTOs.TripStatusResponseDTO getTripStatus(Long tripId) {
         Trip trip = tripRepository.findById(tripId)
-                .orElseThrow(() -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Trip not found"));
+                .orElseThrow(
+                        () -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Trip not found"));
 
         org.smartclinic.bus_system.DTOs.TripStatusResponseDTO statusDTO = new org.smartclinic.bus_system.DTOs.TripStatusResponseDTO();
         statusDTO.setTripId(trip.getId());
@@ -198,17 +213,53 @@ public class TripService {
         return statusDTO;
     }
 
+    @Transactional(readOnly = true)
+    public List<TripResponseDTO> getActiveTrips() {
+        return tripRepository.findAllByStatus(TripStatus.IN_PROGRESS)
+                .stream()
+                .map(trip -> {
+                    TripResponseDTO dto = TripMapper.toDTO(trip);
+                    dto.setStationProgress(buildStationProgress(trip));
+                    if (trip.getRoute() != null) {
+                        routeStationRepository
+                                .findByRouteIdAndOrderIndex(trip.getRoute().getId(), trip.getCurrentStationIndex())
+                                .ifPresent(rs -> dto.setCurrentStationName(rs.getStation().getName()));
+                    }
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<TripResponseDTO> getAllTrips() {
+        return tripRepository.findAll()
+                .stream()
+                .map(trip -> {
+                    TripResponseDTO dto = TripMapper.toDTO(trip);
+                    dto.setStationProgress(buildStationProgress(trip));
+                    if (trip.getRoute() != null) {
+                        routeStationRepository
+                                .findByRouteIdAndOrderIndex(trip.getRoute().getId(), trip.getCurrentStationIndex())
+                                .ifPresent(rs -> dto.setCurrentStationName(rs.getStation().getName()));
+                    }
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public TripResponseDTO updateCurrentStation(Long tripId, Long stationId) {
         Trip trip = tripRepository.findById(tripId)
-                .orElseThrow(() -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Trip not found"));
+                .orElseThrow(
+                        () -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Trip not found"));
 
         if (trip.getRoute() == null) {
             throw new org.smartclinic.bus_system.Exception.BadRequestException("Trip has no route assigned");
         }
 
         RouteStation rs = routeStationRepository.findByRouteIdAndStationId(trip.getRoute().getId(), stationId)
-                .orElseThrow(() -> new org.smartclinic.bus_system.Exception.BadRequestException("Station does not belong to trip route"));
+                .orElseThrow(() -> new org.smartclinic.bus_system.Exception.BadRequestException(
+                        "Station does not belong to trip route"));
 
         if (trip.getStatus() == TripStatus.NOT_STARTED) {
             trip.setStatus(TripStatus.IN_PROGRESS);
@@ -218,7 +269,7 @@ public class TripService {
         updateTripProgress(trip, rs.getStation());
 
         long totalStations = routeStationRepository.countByRouteId(trip.getRoute().getId());
-        if (rs.getOrderIndex() >= totalStations) {
+        if (totalStations > 0 && rs.getOrderIndex() >= totalStations - 1) {
             trip.setStatus(TripStatus.COMPLETED);
             trip.setEndTime(LocalDateTime.now());
         }
@@ -243,7 +294,8 @@ public class TripService {
     @Transactional(readOnly = true)
     public Station getNextStation(Long tripId) {
         Trip trip = tripRepository.findById(tripId)
-                .orElseThrow(() -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Trip not found"));
+                .orElseThrow(
+                        () -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Trip not found"));
 
         if (trip.getRoute() == null) {
             return null;
@@ -259,21 +311,26 @@ public class TripService {
     @Transactional(readOnly = true)
     public org.smartclinic.bus_system.DTOs.EtaResponseDTO getEtaForStudent(Long tripId, Long studentId) {
         Trip trip = tripRepository.findById(tripId)
-                .orElseThrow(() -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Trip not found"));
+                .orElseThrow(
+                        () -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Trip not found"));
 
         org.smartclinic.bus_system.Entity.Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Student not found"));
+                .orElseThrow(
+                        () -> new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Student not found"));
 
         if (student.getBoardingStation() == null) {
-            throw new org.smartclinic.bus_system.Exception.BadRequestException("Student has no boarding station assigned");
+            throw new org.smartclinic.bus_system.Exception.BadRequestException(
+                    "Student has no boarding station assigned");
         }
 
         if (trip.getRoute() == null) {
             throw new org.smartclinic.bus_system.Exception.BadRequestException("Trip has no route assigned");
         }
 
-        RouteStation studentRouteStation = routeStationRepository.findByRouteIdAndStationId(trip.getRoute().getId(), student.getBoardingStation().getId())
-                .orElseThrow(() -> new org.smartclinic.bus_system.Exception.BadRequestException("Student boarding station is not on the trip's route"));
+        RouteStation studentRouteStation = routeStationRepository
+                .findByRouteIdAndStationId(trip.getRoute().getId(), student.getBoardingStation().getId())
+                .orElseThrow(() -> new org.smartclinic.bus_system.Exception.BadRequestException(
+                        "Student boarding station is not on the trip's route"));
 
         int currentStationIndex = trip.getCurrentStationIndex();
         int studentOrder = studentRouteStation.getOrderIndex();
@@ -281,11 +338,11 @@ public class TripService {
         int remainingStations = studentOrder - currentStationIndex;
 
         if (remainingStations <= 0) {
-             org.smartclinic.bus_system.DTOs.EtaResponseDTO eta = new org.smartclinic.bus_system.DTOs.EtaResponseDTO();
-             eta.setStudentId(studentId);
-             eta.setTripId(tripId);
-             eta.setEtaMinutes(0); // Bus passed or is at station
-             return eta;
+            org.smartclinic.bus_system.DTOs.EtaResponseDTO eta = new org.smartclinic.bus_system.DTOs.EtaResponseDTO();
+            eta.setStudentId(studentId);
+            eta.setTripId(tripId);
+            eta.setEtaMinutes(0); // Bus passed or is at station
+            return eta;
         }
 
         int etaMinutes = remainingStations * averageMinutes;

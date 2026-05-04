@@ -1,6 +1,6 @@
 const ROUTES = {
     ADMIN: '/pages/admin/admin-dashboard.html',
-    DRIVER: '/pages/driver/driver-dashboard.html',
+    DRIVER: '/pages/driver/trip-control.html',
     STUDENT: '/pages/student/student-dashboard.html',
     LOGIN: '/pages/common/login.html',
     CHANGE_PASSWORD: '/pages/common/change-password.html',
@@ -12,6 +12,10 @@ function getToken() {
 
 function getRole() {
     return localStorage.getItem('role');
+}
+
+function getUserId() {
+    return localStorage.getItem('userId');
 }
 
 function getFirstLogin() {
@@ -39,6 +43,7 @@ function getCurrentUser() {
     return {
         email: payload.sub,
         role: payload.role || getRole(),
+        id: getUserId(),
     };
 }
 
@@ -78,6 +83,7 @@ async function login(email, password) {
     const data = await apiPost('/auth/login', { email, password });
     localStorage.setItem('token', data.token);
     localStorage.setItem('role', data.role);
+    localStorage.setItem('userId', data.userId);
     localStorage.setItem('firstLogin', data.firstLogin);
 
     if (data.firstLogin) {
@@ -101,6 +107,7 @@ async function registerAdmin(name, email, password) {
 function logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('userId');
     localStorage.removeItem('firstLogin');
     window.location.replace(ROUTES.LOGIN);
 }

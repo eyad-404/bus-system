@@ -36,7 +36,8 @@ public class AuthService {
         return new AuthResponseDTO(
                 token,
                 user.getRole().name(),
-                user.isFirstLogin()
+                user.isFirstLogin(),
+                user.getId()
         );
     }
 
@@ -56,6 +57,10 @@ public class AuthService {
         userRepository.save(user);
     }
 
+    public boolean hasAdmin() {
+        return userRepository.existsByRole(Role.ADMIN);
+    }
+
     public void changePassword(String email, String newPassword) {
 
         User user = userRepository.findByEmail(email)
@@ -66,4 +71,4 @@ public class AuthService {
 
         userRepository.save(user);
     }
-}
+}

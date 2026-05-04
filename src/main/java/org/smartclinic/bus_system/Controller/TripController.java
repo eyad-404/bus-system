@@ -1,21 +1,145 @@
 package org.smartclinic.bus_system.Controller;
 
+import org.smartclinic.bus_system.DTOs.EtaResponseDTO;
+import org.smartclinic.bus_system.DTOs.StationResponseDTO;
 import org.smartclinic.bus_system.DTOs.TripResponseDTO;
+import org.smartclinic.bus_system.DTOs.TripStatusResponseDTO;
+import org.smartclinic.bus_system.Entity.Driver;
+import org.smartclinic.bus_system.Entity.Route;
+import org.smartclinic.bus_system.Entity.Station;
+import org.smartclinic.bus_system.Entity.Trip;
+import org.smartclinic.bus_system.MAPPER.StationMapper;
+import org.smartclinic.bus_system.MAPPER.TripMapper;
+import org.smartclinic.bus_system.Repository.DriverRepository;
+import org.smartclinic.bus_system.Repository.RouteRepository;
+import org.smartclinic.bus_system.Repository.RouteStationRepository;
+import org.smartclinic.bus_system.Repository.TripRepository;
 import org.smartclinic.bus_system.Service.TripService;
+import org.smartclinic.bus_system.enums.TripStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/trips")
 public class TripController {
 
     private final TripService tripService;
+    private final DriverRepository driverRepository;
+    private final RouteRepository routeRepository;
+    private final TripRepository tripRepository;
+    private final RouteStationRepository routeStationRepository;
 
-    public TripController(TripService tripService) {
+    public TripController(TripService tripService,
+                          DriverRepository driverRepository,
+                          RouteRepository routeRepository,
+                          TripRepository tripRepository,
+                          RouteStationRepository routeStationRepository) {
         this.tripService = tripService;
+        this.driverRepository = driverRepository;
+        this.routeRepository = routeRepository;
+        this.tripRepository = tripRepository;
+        this.routeStationRepository = routeStationRepository;
+    }
+
+    @GetMapping("/my-trip")
+    public ResponseEntity<TripResponseDTO> getMyTrip(@RequestParam Long userId) {
+        Driver driver = driverRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Driver not found"));
+
+        Optional<Trip> inProgress = tripRepository.findByDriverIdAndStatus(driver.getId(), TripStatus.IN_PROGRESS);
+        if (inProgress.isPresent()) {
+            TripResponseDTO dto = TripMapper.toDTO(inProgress.get());
+            dto.setStationProgress(tripService.buildStationProgress(inProgress.get()));
+            if (inProgress.get().getRoute() != null) {
+                routeStationRepository
+                        .findByRouteIdAndOrderIndex(inProgress.get().getRoute().getId(), inProgress.get().getCurrentStationIndex())
+                        .ifPresent(rs -> dto.setCurrentStationName(rs.getStation().getName()));
+            }
+            return ResponseEntity.ok(dto);
+        }
+
+        Optional<Trip> notStarted = tripRepository.findByDriverIdAndStatus(driver.getId(), TripStatus.NOT_STARTED);
+        if (notStarted.isPresent()) {
+            TripResponseDTO dto = TripMapper.toDTO(notStarted.get());
+            dto.setStationProgress(tripService.buildStationProgress(notStarted.get()));
+            return ResponseEntity.ok(dto);
+        }
+
+        Route route = routeRepository.findByDriverId(driver.getId()).orElse(null);
+        if (route != null) {
+            TripResponseDTO dto = new TripResponseDTO();
+            dto.setRouteId(route.getId());
+            dto.setRouteName(route.getName());
+            dto.setRouteCode(route.getCode());
+            dto.setDriverId(driver.getId());
+            dto.setStatus("NOT_STARTED");
+            return ResponseEntity.ok(dto);
+        }
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/start")
+    @Transactional
+    public ResponseEntity<TripResponseDTO> startTrip(@RequestParam Long userId) {
+        Driver driver = driverRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Driver not found"));
+
+        Optional<Trip> existing = tripRepository.findByDriverIdAndStatus(driver.getId(), TripStatus.IN_PROGRESS);
+        if (existing.isPresent()) {
+            TripResponseDTO dto = TripMapper.toDTO(existing.get());
+            dto.setStationProgress(tripService.buildStationProgress(existing.get()));
+            return ResponseEntity.ok(dto);
+        }
+
+        Route route = routeRepository.findByDriverId(driver.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "No route assigned to driver"));
+
+        Optional<Trip> notStarted = tripRepository.findByDriverIdAndStatus(driver.getId(), TripStatus.NOT_STARTED);
+        Trip trip = notStarted.orElseGet(() -> {
+            Trip t = new Trip();
+            t.setRoute(route);
+            t.setDriver(driver);
+            return t;
+        });
+
+        trip.setStatus(TripStatus.IN_PROGRESS);
+        trip.setStartTime(LocalDateTime.now());
+        trip.setCurrentStationIndex(0);
+
+        Trip saved = tripRepository.save(trip);
+
+        TripResponseDTO dto = TripMapper.toDTO(saved);
+        dto.setStationProgress(tripService.buildStationProgress(saved));
+        if (saved.getRoute() != null) {
+            routeStationRepository
+                    .findByRouteIdAndOrderIndex(saved.getRoute().getId(), 0)
+                    .ifPresent(rs -> dto.setCurrentStationName(rs.getStation().getName()));
+        }
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<TripResponseDTO>> getActiveTrips() {
+        return ResponseEntity.ok(tripService.getActiveTrips());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TripResponseDTO>> getAllTrips() {
+        return ResponseEntity.ok(tripService.getAllTrips());
     }
 
     @PutMapping("/{tripId}/next")
@@ -28,8 +152,8 @@ public class TripController {
         return ResponseEntity.ok(tripService.endTrip(tripId));
     }
 
-    @org.springframework.web.bind.annotation.GetMapping("/{tripId}/status")
-    public ResponseEntity<org.smartclinic.bus_system.DTOs.TripStatusResponseDTO> getTripStatus(@PathVariable Long tripId) {
+    @GetMapping("/{tripId}/status")
+    public ResponseEntity<TripStatusResponseDTO> getTripStatus(@PathVariable Long tripId) {
         return ResponseEntity.ok(tripService.getTripStatus(tripId));
     }
 
@@ -38,17 +162,17 @@ public class TripController {
         return ResponseEntity.ok(tripService.updateCurrentStation(tripId, stationId));
     }
 
-    @org.springframework.web.bind.annotation.GetMapping("/{tripId}/next-station")
-    public ResponseEntity<org.smartclinic.bus_system.DTOs.StationResponseDTO> getNextStation(@PathVariable Long tripId) {
-        org.smartclinic.bus_system.Entity.Station station = tripService.getNextStation(tripId);
+    @GetMapping("/{tripId}/next-station")
+    public ResponseEntity<StationResponseDTO> getNextStation(@PathVariable Long tripId) {
+        Station station = tripService.getNextStation(tripId);
         if (station == null) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(org.smartclinic.bus_system.MAPPER.StationMapper.toDTO(station));
+        return ResponseEntity.ok(StationMapper.toDTO(station));
     }
 
-    @org.springframework.web.bind.annotation.GetMapping("/{tripId}/eta/{studentId}")
-    public ResponseEntity<org.smartclinic.bus_system.DTOs.EtaResponseDTO> getEta(@PathVariable Long tripId, @PathVariable Long studentId) {
+    @GetMapping("/{tripId}/eta/{studentId}")
+    public ResponseEntity<EtaResponseDTO> getEta(@PathVariable Long tripId, @PathVariable Long studentId) {
         return ResponseEntity.ok(tripService.getEtaForStudent(tripId, studentId));
     }
 }

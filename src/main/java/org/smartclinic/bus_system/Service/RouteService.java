@@ -5,8 +5,6 @@ import org.smartclinic.bus_system.DTOs.RouteResponseDTO;
 import org.smartclinic.bus_system.Entity.Route;
 import org.smartclinic.bus_system.MAPPER.RouteMapper;
 import org.smartclinic.bus_system.Repository.RouteRepository;
-import org.smartclinic.bus_system.Repository.RouteStationRepository;
-import org.smartclinic.bus_system.Repository.StationRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,15 +16,9 @@ import java.util.List;
 public class RouteService {
 
     private final RouteRepository routeRepository;
-    private final RouteStationRepository routeStationRepository;
-    private final StationRepository stationRepository;
 
-    public RouteService(RouteRepository routeRepository,
-                        RouteStationRepository routeStationRepository,
-                        StationRepository stationRepository) {
+    public RouteService(RouteRepository routeRepository) {
         this.routeRepository = routeRepository;
-        this.routeStationRepository = routeStationRepository;
-        this.stationRepository = stationRepository;
     }
 
     @Transactional(readOnly = true)
@@ -45,8 +37,7 @@ public class RouteService {
     public RouteResponseDTO getRouteById(Long id) {
 
         Route route = routeRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Route not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Route not found"));
 
         return RouteMapper.toDTO(route);
     }
@@ -73,8 +64,7 @@ public class RouteService {
     public RouteResponseDTO updateRoute(Long id, RouteRequestDTO requestDTO) {
 
         Route route = routeRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Route not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Route not found"));
 
         if (requestDTO == null ||
                 requestDTO.getName() == null || requestDTO.getName().isBlank() ||
@@ -94,32 +84,9 @@ public class RouteService {
     public void deleteRoute(Long id) {
 
         Route route = routeRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Route not found"));
-
-        List<Long> stationIds = routeStationRepository.findStationIdsByRouteId(id);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Route not found"));
 
         routeRepository.delete(route);
-    }
-
-        if (!stationIds.isEmpty()) {
-            stationRepository.deleteAllById(stationIds);
-    @Transactional(readOnly = true)
-    public List<org.smartclinic.bus_system.DTOs.RouteStationResponseDTO> getRouteStations(Long routeId) {
-        if (!routeRepository.existsById(routeId)) {
-            throw new org.smartclinic.bus_system.Exception.ResourceNotFoundException("Route not found");
-        }
-
-        return routeStationRepository.findByRouteIdOrderByOrderIndexAsc(routeId)
-                .stream()
-                .map(rs -> {
-                    org.smartclinic.bus_system.DTOs.RouteStationResponseDTO dto = new org.smartclinic.bus_system.DTOs.RouteStationResponseDTO();
-                    dto.setId(rs.getStation().getId());
-                    dto.setName(rs.getStation().getName());
-                    dto.setOrder(rs.getOrderIndex());
-                    return dto;
-                })
-                .toList();
     }
 
     private void validateUniqueCode(String code, Long currentId) {
@@ -129,8 +96,7 @@ public class RouteService {
             if (currentId == null || !existing.getId().equals(currentId)) {
                 throw new ResponseStatusException(
                         HttpStatus.CONFLICT,
-                        "Route code already exists"
-                );
+                        "Route code already exists");
             }
         });
     }
