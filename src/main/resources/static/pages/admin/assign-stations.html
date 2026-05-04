@@ -164,19 +164,15 @@
           <div class="filter-group">
             <div class="select-wrapper">
               <label class="sr-only">Select Route</label>
-              <select class="filter-select custom-select">
+              <select class="filter-select custom-select" id="routeSelect">
                 <option value="">-- Select a route to begin --</option>
-                <option>Route R1 - University Route</option>
-                <option>Route R2 - City Center</option>
               </select>
             </div>
 
             <div class="select-wrapper">
               <label class="sr-only">Select Station</label>
-              <select class="filter-select custom-select">
-                <option>All Stations</option>
-                <option>University Gate</option>
-                <option>City Center</option>
+              <select class="filter-select custom-select" id="stationSelect">
+                <option value="">All Stations</option>
               </select>
             </div>
           </div>
@@ -187,7 +183,7 @@
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
-              <input type="text" placeholder="Search students by name, ID or email...">
+              <input type="text" id="studentSearch" placeholder="Search students by name, ID or email...">
             </div>
             <button class="btn-export">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -213,7 +209,7 @@
                 </svg>
               </div>
               <div class="stat-info">
-                <div class="stat-val">120</div>
+                <div class="stat-val" id="statTotal">—</div>
                 <div class="stat-label">Total Students</div>
               </div>
             </div>
@@ -228,7 +224,7 @@
                 </svg>
               </div>
               <div class="stat-info">
-                <div class="stat-val">28 <span class="stat-percent green">(70%)</span></div>
+                <div class="stat-val" id="statAssigned">—</div>
                 <div class="stat-label">Assigned</div>
               </div>
             </div>
@@ -243,7 +239,7 @@
                 </svg>
               </div>
               <div class="stat-info">
-                <div class="stat-val">12 <span class="stat-percent orange">(30%)</span></div>
+                <div class="stat-val" id="statUnassigned">—</div>
                 <div class="stat-label">Unassigned</div>
               </div>
             </div>
@@ -314,233 +310,13 @@
                     <th>Actions</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <!-- Row 1 -->
-                  <tr>
-                    <td>1001</td>
-                    <td>
-                      <div class="avatar-cell">
-                        <div class="avatar-circle">AA</div>
-                        <span>Ali Ahmed</span>
-                      </div>
-                    </td>
-                    <td>ali.ahmed@miu.edu.eg</td>
-                    <td>
-                      <select class="table-select assigned">
-                        <option>University Gate</option>
-                      </select>
-                    </td>
-                    <td><span class="badge badge-green"><svg viewBox="0 0 24 24">
-                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                        </svg> Assigned</span></td>
-                    <td>
-                      <button class="action-btn" aria-label="Reset">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                          <path d="M3 3v5h5" />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Row 2 -->
-                  <tr>
-                    <td>1002</td>
-                    <td>
-                      <div class="avatar-cell">
-                        <div class="avatar-circle" style="background: #fce7f3; color: #db2777;">SM</div>
-                        <span>Sara Mohamed</span>
-                      </div>
-                    </td>
-                    <td>sara.mohamed@miu.edu.eg</td>
-                    <td>
-                      <select class="table-select assigned">
-                        <option>City Center</option>
-                      </select>
-                    </td>
-                    <td><span class="badge badge-green"><svg viewBox="0 0 24 24">
-                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                        </svg> Assigned</span></td>
-                    <td>
-                      <button class="action-btn" aria-label="Reset">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                          <path d="M3 3v5h5" />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Row 3 -->
-                  <tr>
-                    <td>1003</td>
-                    <td>
-                      <div class="avatar-cell">
-                        <div class="avatar-circle" style="background: #e0e7ff; color: #4f46e5;">OK</div>
-                        <span>Omar Khaled</span>
-                      </div>
-                    </td>
-                    <td>omar.khaled@miu.edu.eg</td>
-                    <td>
-                      <select class="table-select assigned">
-                        <option>Airport Stop</option>
-                      </select>
-                    </td>
-                    <td><span class="badge badge-green"><svg viewBox="0 0 24 24">
-                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                        </svg> Assigned</span></td>
-                    <td>
-                      <button class="action-btn" aria-label="Reset">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                          <path d="M3 3v5h5" />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Row 4 -->
-                  <tr>
-                    <td>1004</td>
-                    <td>
-                      <div class="avatar-cell">
-                        <div class="avatar-circle" style="background: #dcfce7; color: #16a34a;">MH</div>
-                        <span>Mariam Hassan</span>
-                      </div>
-                    </td>
-                    <td>mariam.hassan@miu.edu.eg</td>
-                    <td>
-                      <select class="table-select assigned">
-                        <option>Metro Station</option>
-                      </select>
-                    </td>
-                    <td><span class="badge badge-green"><svg viewBox="0 0 24 24">
-                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                        </svg> Assigned</span></td>
-                    <td>
-                      <button class="action-btn" aria-label="Reset">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                          <path d="M3 3v5h5" />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Row 5 -->
-                  <tr>
-                    <td>1005</td>
-                    <td>
-                      <div class="avatar-cell">
-                        <div class="avatar-circle" style="background: #fef08a; color: #ca8a04;">YM</div>
-                        <span>Youssef Mostafa</span>
-                      </div>
-                    </td>
-                    <td>youssef.mostafa@miu.edu.eg</td>
-                    <td>
-                      <select class="table-select assigned">
-                        <option>Library Stop</option>
-                      </select>
-                    </td>
-                    <td><span class="badge badge-green"><svg viewBox="0 0 24 24">
-                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                        </svg> Assigned</span></td>
-                    <td>
-                      <button class="action-btn" aria-label="Reset">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                          <path d="M3 3v5h5" />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Row 6 -->
-                  <tr>
-                    <td>1006</td>
-                    <td>
-                      <div class="avatar-cell">
-                        <div class="avatar-circle">HA</div>
-                        <span>Hana Ashraf</span>
-                      </div>
-                    </td>
-                    <td>hana.ashraf@miu.edu.eg</td>
-                    <td>
-                      <select class="table-select unassigned">
-                        <option>-- Select Station --</option>
-                      </select>
-                    </td>
-                    <td><span class="badge badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                          stroke-width="2">
-                          <circle cx="12" cy="12" r="10" />
-                          <polyline points="12 6 12 12 16 14" />
-                        </svg> Unassigned</span></td>
-                    <td>
-                      <button class="action-btn add" aria-label="Add">
-                        <svg viewBox="0 0 24 24">
-                          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Row 7 -->
-                  <tr>
-                    <td>1007</td>
-                    <td>
-                      <div class="avatar-cell">
-                        <div class="avatar-circle" style="background: #ffedd5; color: #ea580c;">MS</div>
-                        <span>Mariafa Salem</span>
-                      </div>
-                    </td>
-                    <td>mostafa.salem@miu.edu.eg</td>
-                    <td>
-                      <select class="table-select unassigned">
-                        <option>-- Select Station --</option>
-                      </select>
-                    </td>
-                    <td><span class="badge badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                          stroke-width="2">
-                          <circle cx="12" cy="12" r="10" />
-                          <polyline points="12 6 12 12 16 14" />
-                        </svg> Unassigned</span></td>
-                    <td>
-                      <button class="action-btn add" aria-label="Add">
-                        <svg viewBox="0 0 24 24">
-                          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Row 8 -->
-                  <tr>
-                    <td>1008</td>
-                    <td>
-                      <div class="avatar-cell">
-                        <div class="avatar-circle" style="background: #f3e8ff; color: #9333ea;">YA</div>
-                        <span>Yara Adel</span>
-                      </div>
-                    </td>
-                    <td>yara.adel@miu.edu.eg</td>
-                    <td>
-                      <select class="table-select unassigned">
-                        <option>-- Select Station --</option>
-                      </select>
-                    </td>
-                    <td><span class="badge badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                          stroke-width="2">
-                          <circle cx="12" cy="12" r="10" />
-                          <polyline points="12 6 12 12 16 14" />
-                        </svg> Unassigned</span></td>
-                    <td>
-                      <button class="action-btn add" aria-label="Add">
-                        <svg viewBox="0 0 24 24">
-                          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody id="studentsTableBody"></tbody>
               </table>
             </div>
 
             <!-- Pagination -->
             <div class="pagination-row">
-              <div class="page-info">Showing 1 to 8 of 120 students</div>
+              <div class="page-info" id="pageInfo">Loading...</div>
               <div class="pagination-controls">
                 <button class="page-btn"><svg viewBox="0 0 24 24">
                     <polyline points="15 18 9 12 15 6" />
@@ -576,48 +352,7 @@
                     <th>Passengers</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>University Gate</td>
-                    <td>12</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>City Center</td>
-                    <td>8</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>College Road</td>
-                    <td>6</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>Airport Stop</td>
-                    <td>7</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>Metro Station</td>
-                    <td>5</td>
-                  </tr>
-                  <tr>
-                    <td>6</td>
-                    <td>Library Stop</td>
-                    <td>4</td>
-                  </tr>
-                  <tr>
-                    <td>7</td>
-                    <td>Park Street</td>
-                    <td>1</td>
-                  </tr>
-                  <tr style="color: #94a3b8; font-style: italic;">
-                    <td>8</td>
-                    <td>Main Gate</td>
-                    <td>0</td>
-                  </tr>
-                </tbody>
+                <tbody id="stationsPanelBody"><tr><td colspan="3" style="text-align:center;color:#94a3b8;padding:24px;">Select a route</td></tr></tbody>
               </table>
             </div>
 
@@ -672,6 +407,8 @@
   </div>
 
   <script src="../../assets/js/components.js"></script>
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/pages/assign-stations.js"></script>
 </body>
 
 </html>

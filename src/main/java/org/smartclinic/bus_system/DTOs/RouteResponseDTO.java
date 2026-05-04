@@ -9,4 +9,6 @@ public class RouteResponseDTO {
     private Long id;
     private String name;
     private String code;
+    private Long driverId;
+    private String driverName;
 }

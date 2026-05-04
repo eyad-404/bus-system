@@ -5,6 +5,8 @@ import org.smartclinic.bus_system.DTOs.RouteResponseDTO;
 import org.smartclinic.bus_system.Entity.Route;
 import org.smartclinic.bus_system.MAPPER.RouteMapper;
 import org.smartclinic.bus_system.Repository.RouteRepository;
+import org.smartclinic.bus_system.Repository.RouteStationRepository;
+import org.smartclinic.bus_system.Repository.StationRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +18,15 @@ import java.util.List;
 public class RouteService {
 
     private final RouteRepository routeRepository;
+    private final RouteStationRepository routeStationRepository;
+    private final StationRepository stationRepository;
 
-    public RouteService(RouteRepository routeRepository) {
+    public RouteService(RouteRepository routeRepository,
+                        RouteStationRepository routeStationRepository,
+                        StationRepository stationRepository) {
         this.routeRepository = routeRepository;
+        this.routeStationRepository = routeStationRepository;
+        this.stationRepository = stationRepository;
     }
 
     @Transactional(readOnly = true)
@@ -89,7 +97,13 @@ public class RouteService {
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "Route not found"));
 
+        List<Long> stationIds = routeStationRepository.findStationIdsByRouteId(id);
+
         routeRepository.delete(route);
+
+        if (!stationIds.isEmpty()) {
+            stationRepository.deleteAllById(stationIds);
+        }
     }
 
     private void validateUniqueCode(String code, Long currentId) {

@@ -17,7 +17,8 @@ public class RouteStation {
     @ManyToOne
     private Route route;
 
-    @ManyToOne
+    @OneToOne
+    @JoinColumn(name = "station_id", unique = true)
     private Station station;
 
     private int orderIndex;

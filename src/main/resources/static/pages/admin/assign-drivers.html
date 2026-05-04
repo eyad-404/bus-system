@@ -143,7 +143,7 @@
             </svg>
           </button>
           <h1>Assign Drivers</h1>
-          <p>Assign drivers to trips and manage their active assignments.</p>
+          <p>Assign drivers to routes and manage their assignments.</p>
         </div>
         <div class="topbar-actions">
           <button class="notification-btn" id="notificationBtn" aria-label="Notifications">
@@ -159,305 +159,75 @@
       <!-- CONTENT AREA -->
       <div class="content">
 
-        <div
-          style="background: #e0f2fe; color: #0369a1; padding: 12px 16px; border-radius: 8px; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;">
-          <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;">
-            <path
-              d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-          </svg>
-          Each trip requires one assigned driver.
+        <!-- STAT CARDS -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:24px;">
+          <div class="stat-card"><div class="stat-card-inner">
+            <div class="stat-icon icon-light-red">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+            </div>
+            <div class="stat-info"><div class="stat-value" id="statTotalRoutes">—</div><div class="stat-label">Total Routes</div></div>
+          </div></div>
+          <div class="stat-card"><div class="stat-card-inner">
+            <div class="stat-icon icon-light-red">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="stat-info"><div class="stat-value" id="statAssigned">—</div><div class="stat-label">Routes Assigned</div></div>
+          </div></div>
+          <div class="stat-card"><div class="stat-card-inner">
+            <div class="stat-icon icon-light-red">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-info"><div class="stat-value" id="statUnassigned">—</div><div class="stat-label">Unassigned Routes</div></div>
+          </div></div>
+          <div class="stat-card"><div class="stat-card-inner">
+            <div class="stat-icon icon-light-red">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <div class="stat-info"><div class="stat-value" id="statFreeDrivers">—</div><div class="stat-label">Available Drivers</div></div>
+          </div></div>
         </div>
 
-        <!-- FILTER BAR -->
-        <div class="filters-bar">
-          <div class="filter-group">
-            <div class="select-wrapper">
-              <label class="sr-only">Select Trip</label>
-              <select class="filter-select custom-select">
-                <option>Trip T1</option>
-                <option>Trip T2</option>
-                <option>Trip T3</option>
-                <option>Trip T4</option>
-                <option>Trip T5</option>
-              </select>
-            </div>
-
-            <div class="select-wrapper">
-              <label class="sr-only">Select Driver</label>
-              <select class="filter-select custom-select">
-                <option>All Drivers</option>
-                <option>Mohamed Ali</option>
-                <option>Ahmed Hassan</option>
-                <option>Sarah Adel</option>
-                <option>Omar Mostafa</option>
-                <option>Khaled Ayman</option>
-              </select>
-            </div>
-
-            <div class="select-wrapper">
-              <label class="sr-only">Assignment Status</label>
-              <select class="filter-select custom-select">
-                <option>All Status</option>
-                <option>Active</option>
-                <option>Inactive</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="filter-actions">
-            <button class="btn-primary btn-add-driver">
-              <svg viewBox="0 0 24 24">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-              </svg>
-              Assign Driver
-            </button>
-          </div>
-        </div>
-
-        <!-- TWO COLUMN LAYOUT: TABLES (Left) & OVERVIEW (Right) -->
+        <!-- TWO COLUMN LAYOUT -->
         <div class="drivers-layout">
-
-          <!-- LEFT COLUMN: Tables -->
           <div class="tables-column">
 
-            <!-- CURRENT ASSIGNMENTS TABLE -->
+            <!-- ROUTES WITH ASSIGNED DRIVERS -->
             <div class="grid-card">
               <div class="panel-header">
-                <h2>Current Assignments</h2>
+                <h2>Routes with Assigned Drivers</h2>
               </div>
-
               <div class="table-responsive">
                 <table class="data-table">
                   <thead>
                     <tr>
-                      <th>Trip</th>
+                      <th>Route Code</th>
+                      <th>Route Name</th>
                       <th>Driver</th>
                       <th>Email</th>
-                      <th>Assigned On</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <!-- Row 1 -->
-                    <tr>
-                      <td><span class="route-badge">T1</span></td>
-                      <td>
-                        <div class="avatar-cell">
-                          <div class="avatar-circle">MA</div>
-                          <span>Mohamed Ali</span>
-                        </div>
-                      </td>
-                      <td>mohamed.ali@miu.edu.eg</td>
-                      <td>May 12, 2025</td>
-                      <td>
-                        <div class="action-btns">
-                          <button class="action-btn" aria-label="Edit">
-                            <svg viewBox="0 0 24 24">
-                              <path
-                                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-                            </svg>
-                          </button>
-                          <button class="action-btn delete" aria-label="Delete">
-                            <svg viewBox="0 0 24 24">
-                              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                            </svg>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <!-- Row 2 -->
-                    <tr>
-                      <td><span class="route-badge">T2</span></td>
-                      <td>
-                        <div class="avatar-cell">
-                          <div class="avatar-circle">AH</div>
-                          <span>Ahmed Hassan</span>
-                        </div>
-                      </td>
-                      <td>ahmed.hassan@miu.edu.eg</td>
-                      <td>May 10, 2025</td>
-                      <td>
-                        <div class="action-btns">
-                          <button class="action-btn" aria-label="Edit">
-                            <svg viewBox="0 0 24 24">
-                              <path
-                                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-                            </svg>
-                          </button>
-                          <button class="action-btn delete" aria-label="Delete">
-                            <svg viewBox="0 0 24 24">
-                              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                            </svg>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <!-- Row 3 -->
-                    <tr>
-                      <td><span class="route-badge">T3</span></td>
-                      <td>
-                        <div class="avatar-cell">
-                          <div class="avatar-circle">SA</div>
-                          <span>Sarah Adel</span>
-                        </div>
-                      </td>
-                      <td>sarah.adel@miu.edu.eg</td>
-                      <td>May 8, 2025</td>
-                      <td>
-                        <div class="action-btns">
-                          <button class="action-btn" aria-label="Edit">
-                            <svg viewBox="0 0 24 24">
-                              <path
-                                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-                            </svg>
-                          </button>
-                          <button class="action-btn delete" aria-label="Delete">
-                            <svg viewBox="0 0 24 24">
-                              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                            </svg>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <!-- Row 4 -->
-                    <tr>
-                      <td><span class="route-badge">T4</span></td>
-                      <td>
-                        <div class="avatar-cell">
-                          <div class="avatar-circle">OM</div>
-                          <span>Omar Mostafa</span>
-                        </div>
-                      </td>
-                      <td>omar.mostafa@miu.edu.eg</td>
-                      <td>May 6, 2025</td>
-                      <td>
-                        <div class="action-btns">
-                          <button class="action-btn" aria-label="Edit">
-                            <svg viewBox="0 0 24 24">
-                              <path
-                                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-                            </svg>
-                          </button>
-                          <button class="action-btn delete" aria-label="Delete">
-                            <svg viewBox="0 0 24 24">
-                              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                            </svg>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <!-- Row 5 -->
-                    <tr>
-                      <td><span class="route-badge">T5</span></td>
-                      <td>
-                        <div class="avatar-cell">
-                          <div class="avatar-circle">KA</div>
-                          <span>Khaled Ayman</span>
-                        </div>
-                      </td>
-                      <td>khaled.ayman@miu.edu.eg</td>
-                      <td>May 4, 2025</td>
-                      <td>
-                        <div class="action-btns">
-                          <button class="action-btn" aria-label="Edit">
-                            <svg viewBox="0 0 24 24">
-                              <path
-                                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-                            </svg>
-                          </button>
-                          <button class="action-btn delete" aria-label="Delete">
-                            <svg viewBox="0 0 24 24">
-                              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                            </svg>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody id="assignedTableBody"></tbody>
                 </table>
               </div>
             </div>
 
-            <!-- AVAILABLE DRIVERS TABLE -->
+            <!-- AVAILABLE DRIVERS -->
             <div class="grid-card margin-top">
               <div class="panel-header">
                 <h2>Available Drivers (Not Assigned)</h2>
               </div>
-
               <div class="table-responsive">
                 <table class="data-table">
                   <thead>
                     <tr>
-                      <th style="width: 50px;">
-                        <input type="checkbox" class="table-checkbox" aria-label="Select all">
-                      </th>
                       <th>Driver</th>
                       <th>Email</th>
+                      <th>Assign to Route</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <!-- Row 1 -->
-                    <tr>
-                      <td><input type="checkbox" class="table-checkbox" aria-label="Select row"></td>
-                      <td>
-                        <div class="avatar-cell">
-                          <div class="avatar-circle">MS</div>
-                          <span>Mostafa Salem</span>
-                        </div>
-                      </td>
-                      <td>mostafa.salem@miu.edu.eg</td>
-                      <td>
-                        <button class="btn-outline-assign">
-                          <svg viewBox="0 0 24 24">
-                            <path
-                              d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                          </svg>
-                          Assign
-                        </button>
-                      </td>
-                    </tr>
-                    <!-- Row 2 -->
-                    <tr>
-                      <td><input type="checkbox" class="table-checkbox" aria-label="Select row"></td>
-                      <td>
-                        <div class="avatar-cell">
-                          <div class="avatar-circle">YA</div>
-                          <span>Youssef Ahmed</span>
-                        </div>
-                      </td>
-                      <td>youssef.ahmed@miu.edu.eg</td>
-                      <td>
-                        <button class="btn-outline-assign">
-                          <svg viewBox="0 0 24 24">
-                            <path
-                              d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                          </svg>
-                          Assign
-                        </button>
-                      </td>
-                    </tr>
-                    <!-- Row 3 -->
-                    <tr>
-                      <td><input type="checkbox" class="table-checkbox" aria-label="Select row"></td>
-                      <td>
-                        <div class="avatar-cell">
-                          <div class="avatar-circle">HA</div>
-                          <span>Hassan Ali</span>
-                        </div>
-                      </td>
-                      <td>hassan.ali@miu.edu.eg</td>
-                      <td>
-                        <button class="btn-outline-assign">
-                          <svg viewBox="0 0 24 24">
-                            <path
-                              d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                          </svg>
-                          Assign
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody id="availableTableBody"></tbody>
                 </table>
               </div>
             </div>
@@ -473,7 +243,11 @@
 
   </div>
 
+  <div id="adToast" style="display:none;position:fixed;bottom:24px;right:24px;color:#fff;padding:12px 24px;border-radius:8px;font-weight:600;font-size:.9rem;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,.15);"></div>
+
   <script src="../../assets/js/components.js"></script>
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/pages/assign-drivers.js"></script>
 </body>
 
 </html>
