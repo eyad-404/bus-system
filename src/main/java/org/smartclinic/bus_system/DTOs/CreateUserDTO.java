@@ -11,4 +11,5 @@ public class CreateUserDTO {
     private String email;
     private String password;
     private String role;
+    private Long routeId;
 }

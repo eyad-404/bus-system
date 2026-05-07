@@ -43,10 +43,10 @@ public class TripController {
     private final RouteStationRepository routeStationRepository;
 
     public TripController(TripService tripService,
-                          DriverRepository driverRepository,
-                          RouteRepository routeRepository,
-                          TripRepository tripRepository,
-                          RouteStationRepository routeStationRepository) {
+            DriverRepository driverRepository,
+            RouteRepository routeRepository,
+            TripRepository tripRepository,
+            RouteStationRepository routeStationRepository) {
         this.tripService = tripService;
         this.driverRepository = driverRepository;
         this.routeRepository = routeRepository;
@@ -65,7 +65,8 @@ public class TripController {
             dto.setStationProgress(tripService.buildStationProgress(inProgress.get()));
             if (inProgress.get().getRoute() != null) {
                 routeStationRepository
-                        .findByRouteIdAndOrderIndex(inProgress.get().getRoute().getId(), inProgress.get().getCurrentStationIndex())
+                        .findByRouteIdAndOrderIndex(inProgress.get().getRoute().getId(),
+                                inProgress.get().getCurrentStationIndex())
                         .ifPresent(rs -> dto.setCurrentStationName(rs.getStation().getName()));
             }
             return ResponseEntity.ok(dto);
@@ -93,43 +94,8 @@ public class TripController {
     }
 
     @PostMapping("/start")
-    @Transactional
     public ResponseEntity<TripResponseDTO> startTrip(@RequestParam Long userId) {
-        Driver driver = driverRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Driver not found"));
-
-        Optional<Trip> existing = tripRepository.findByDriverIdAndStatus(driver.getId(), TripStatus.IN_PROGRESS);
-        if (existing.isPresent()) {
-            TripResponseDTO dto = TripMapper.toDTO(existing.get());
-            dto.setStationProgress(tripService.buildStationProgress(existing.get()));
-            return ResponseEntity.ok(dto);
-        }
-
-        Route route = routeRepository.findByDriverId(driver.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "No route assigned to driver"));
-
-        Optional<Trip> notStarted = tripRepository.findByDriverIdAndStatus(driver.getId(), TripStatus.NOT_STARTED);
-        Trip trip = notStarted.orElseGet(() -> {
-            Trip t = new Trip();
-            t.setRoute(route);
-            t.setDriver(driver);
-            return t;
-        });
-
-        trip.setStatus(TripStatus.IN_PROGRESS);
-        trip.setStartTime(LocalDateTime.now());
-        trip.setCurrentStationIndex(0);
-
-        Trip saved = tripRepository.save(trip);
-
-        TripResponseDTO dto = TripMapper.toDTO(saved);
-        dto.setStationProgress(tripService.buildStationProgress(saved));
-        if (saved.getRoute() != null) {
-            routeStationRepository
-                    .findByRouteIdAndOrderIndex(saved.getRoute().getId(), 0)
-                    .ifPresent(rs -> dto.setCurrentStationName(rs.getStation().getName()));
-        }
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(tripService.startTrip(userId));
     }
 
     @GetMapping("/active")
@@ -158,7 +124,8 @@ public class TripController {
     }
 
     @PutMapping("/{tripId}/current-station/{stationId}")
-    public ResponseEntity<TripResponseDTO> updateCurrentStation(@PathVariable Long tripId, @PathVariable Long stationId) {
+    public ResponseEntity<TripResponseDTO> updateCurrentStation(@PathVariable Long tripId,
+            @PathVariable Long stationId) {
         return ResponseEntity.ok(tripService.updateCurrentStation(tripId, stationId));
     }
 

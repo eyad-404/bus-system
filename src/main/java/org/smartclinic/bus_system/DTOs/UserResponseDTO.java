@@ -10,4 +10,6 @@ public class UserResponseDTO {
     private String name;
     private String email;
     private String role;
+    private Long routeId;
+    private String routeName;
 }

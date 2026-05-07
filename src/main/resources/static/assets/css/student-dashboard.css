@@ -381,3 +381,40 @@
   .tl-content { flex-direction: column; align-items: flex-start; gap: 8px; }
   .tl-right { width: 100%; min-width: 0; justify-content: flex-start; gap: 24px; }
 }
+
+@media (max-width: 480px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .stat-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .quick-actions-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .action-card {
+    padding: 16px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .legend {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+

@@ -1325,6 +1325,82 @@ ul {
   }
 }
 
+@media (max-width: 480px) {
+  .topbar {
+    padding: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .page-title h1 {
+    font-size: 1.25rem;
+  }
+
+  .page-title p {
+    display: none;
+  }
+
+  .content {
+    padding: 0 16px 24px;
+  }
+
+  .stat-card__value {
+    font-size: 1.5rem;
+  }
+
+  .card-header {
+    padding: 16px;
+  }
+
+  .page-actions {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    flex: 1;
+    justify-content: center;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+
+  .btn-add {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Data table card-style on very small screens */
+  .data-table thead {
+    display: none;
+  }
+
+  .data-table,
+  .data-table tbody,
+  .data-table tr,
+  .data-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .data-table tr {
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    background: var(--bg-card);
+  }
+
+  .data-table td {
+    border: none;
+    padding: 6px 0;
+  }
+}
+
 /* =============================================================
    NOTIFICATION SIDEBAR
    ============================================================= */

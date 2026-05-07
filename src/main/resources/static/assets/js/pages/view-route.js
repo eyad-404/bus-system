@@ -31,7 +31,18 @@
         // ETA
         if (student.studentId && myTrip.id) {
           apiGet('/api/trips/' + myTrip.id + '/eta/' + student.studentId).then(function (eta) {
-            if (etaEl) etaEl.textContent = eta && eta.etaMinutes != null ? '~ ' + eta.etaMinutes + ' min' : 'At stop';
+            var currentEta = eta ? eta.etaMinutes : null;
+            if (etaEl) etaEl.textContent = currentEta != null ? '~ ' + currentEta + ' min' : 'At stop';
+            
+            if (window.etaInterval) clearInterval(window.etaInterval);
+            if (currentEta != null && currentEta > 0) {
+              window.etaInterval = setInterval(function() {
+                currentEta--;
+                if (currentEta < 0) currentEta = 0;
+                if (etaEl) etaEl.textContent = '~ ' + currentEta + ' min';
+                if (currentEta <= 0) clearInterval(window.etaInterval);
+              }, 60000);
+            }
           }).catch(function () {
             if (etaEl) etaEl.textContent = '~ 5 min';
           });
@@ -75,9 +86,18 @@
       else if (isCurrent) statusBadge = '<span class="badge-current-small">Current</span>';
       else statusBadge = '<span class="badge-pending">Pending</span>';
 
-      var timeText = isCompleted && s.arrivalTime
-        ? new Date(s.arrivalTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-        : (isCurrent ? 'Now' : (isPending ? '~ 5 min ea.' : '—'));
+      var timeText = '';
+      if (isCompleted && s.arrivalTime) {
+        timeText = new Date(s.arrivalTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      } else if (isCurrent) {
+        timeText = 'Now';
+      } else if (isPending) {
+        var remaining = i - currentIdx;
+        var futureMs = Date.now() + (remaining * 5 * 60000);
+        timeText = '~ ' + new Date(futureMs).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      } else {
+        timeText = '—';
+      }
 
       var tr = document.createElement('tr');
       if (isCurrent) tr.style.background = 'rgba(59,130,246,0.05)';

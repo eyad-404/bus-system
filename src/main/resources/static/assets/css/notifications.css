@@ -513,3 +513,94 @@
     gap: 16px;
   }
 }
+
+@media (max-width: 480px) {
+  .summary-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-val {
+    font-size: 1.4rem;
+  }
+
+  .filters-bar {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .search-box {
+    max-width: 100%;
+  }
+
+  .select-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .custom-select,
+  .date-select {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .date-picker-wrap {
+    width: 100%;
+  }
+
+  .btn-outline-red {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .page-info {
+    display: none;
+  }
+
+  .pagination-controls {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Card-style table on phones */
+  .notifications-table thead {
+    display: none;
+  }
+
+  .notifications-table,
+  .notifications-table tbody,
+  .notifications-table tr,
+  .notifications-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .notifications-table tr {
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    background: #fff;
+  }
+
+  .notifications-table td {
+    border: none;
+    padding: 6px 0;
+    text-align: left;
+  }
+
+  .notifications-table td:first-child {
+    padding-top: 0;
+  }
+
+  .notifications-table td:last-child {
+    padding-bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .notif-indicator {
+    display: none;
+  }
+}
+

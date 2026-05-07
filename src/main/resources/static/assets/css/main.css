@@ -454,3 +454,15 @@ a {
   font-weight: 600;
   text-decoration: none;
 }
+
+.notif-sidebar-item.unread {
+  background: #fff8f8;
+  border-radius: 8px;
+  padding: 8px;
+  margin: -8px;
+}
+
+.notif-sidebar-item:hover {
+  background: #f9fafb;
+  border-radius: 8px;
+}

@@ -229,3 +229,53 @@
   .info-card { padding: 20px; flex-direction: column; align-items: flex-start; gap: 16px; }
   .ic-text strong { font-size: 1.1rem; }
 }
+
+@media (max-width: 480px) {
+  .card-box {
+    padding: 20px 16px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .legend {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Card-style table on phones */
+  .stations-table thead {
+    display: none;
+  }
+
+  .stations-table,
+  .stations-table tbody,
+  .stations-table tr,
+  .stations-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .stations-table tr {
+    margin-bottom: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px;
+    background: #fff;
+  }
+
+  .stations-table td {
+    border: none;
+    padding: 6px 0;
+  }
+
+  .info-box-blue {
+    font-size: 0.85rem;
+    padding: 12px;
+  }
+}
+

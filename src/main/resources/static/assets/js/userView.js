@@ -18,6 +18,7 @@ const UserView = {
                     </div>
                 </td>
                 <td>${this._escapeHtml(user.email || '-')}</td>
+                ${type === 'STUDENT' ? `<td>${this._escapeHtml(user.routeName || '-')}</td>` : ''}
                 <td>
                     <div class="action-btns">
                         <button class="action-btn btn-edit" data-id="${user.id || user.userId}" title="Edit">
@@ -74,6 +75,7 @@ const UserView = {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
+                ${type === 'STUDENT' ? '<th>Route</th>' : ''}
                 <th>Actions</th>
             `;
         }
@@ -86,6 +88,8 @@ const UserView = {
         const passwordGroup = document.getElementById('passwordGroup');
         const passwordInput = document.getElementById('userPassword');
         const modalError = document.getElementById('modalError');
+        const routeGroup = document.getElementById('routeGroup');
+        const userRoute = document.getElementById('userRoute');
 
         if (!modal || !form) return;
 
@@ -96,19 +100,39 @@ const UserView = {
         }
         title.textContent = user ? `Edit ${type === 'STUDENT' ? 'Student' : 'Driver'}` : `Add ${type === 'STUDENT' ? 'Student' : 'Driver'}`;
 
+        if (routeGroup) {
+            routeGroup.style.display = type === 'STUDENT' ? 'block' : 'none';
+        }
+
         if (user) {
             document.getElementById('userId').value = user.id || user.userId || '';
             document.getElementById('userName').value = user.name || '';
             document.getElementById('userEmail').value = user.email || '';
+            if (userRoute && type === 'STUDENT') {
+                userRoute.value = user.routeId || '';
+            }
             if (passwordGroup) passwordGroup.style.display = 'none';
             if (passwordInput) passwordInput.required = false;
         } else {
             document.getElementById('userId').value = '';
+            if (userRoute) userRoute.value = '';
             if (passwordGroup) passwordGroup.style.display = 'block';
             if (passwordInput) passwordInput.required = true;
         }
 
         modal.style.display = 'flex';
+    },
+
+    populateRoutes(routes) {
+        const routeSelect = document.getElementById('userRoute');
+        if (!routeSelect) return;
+        routeSelect.innerHTML = '<option value="">-- No Route --</option>';
+        routes.forEach(r => {
+            const opt = document.createElement('option');
+            opt.value = r.id;
+            opt.textContent = `${r.code} - ${r.name}`;
+            routeSelect.appendChild(opt);
+        });
     },
 
     hideModal() {

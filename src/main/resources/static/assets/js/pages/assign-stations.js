@@ -68,11 +68,24 @@
   }
 
   function updateStats() {
-    var assigned = allStudents.filter(function (s) { return s.boardingStationId; }).length;
-    var unassigned = allStudents.length - assigned;
-    setEl('statTotal', allStudents.length);
+    var baseStudents = currentRouteId 
+      ? allStudents.filter(function(s) { return s.routeId && s.routeId.toString() === currentRouteId.toString(); }) 
+      : allStudents;
+
+    var assigned = baseStudents.filter(function (s) { return s.boardingStationId; }).length;
+    var unassigned = baseStudents.length - assigned;
+    
+    setEl('statTotal', baseStudents.length);
     setEl('statAssigned', assigned);
     setEl('statUnassigned', unassigned);
+
+    if (currentRouteId) {
+      setEl('statTotalStations', routeStations.length);
+      setEl('statPassengers', assigned);
+    } else {
+      setEl('statTotalStations', '—');
+      setEl('statPassengers', '—');
+    }
   }
 
   function setEl(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; }
@@ -100,7 +113,8 @@
     var visible = students.filter(function (s) {
       var matchSearch = !q || s.name.toLowerCase().indexOf(q) !== -1 || (s.email || '').toLowerCase().indexOf(q) !== -1;
       var matchStation = !filterStn || (s.boardingStationId && s.boardingStationId.toString() === filterStn);
-      return matchSearch && matchStation;
+      var matchRoute = s.routeId && s.routeId.toString() === currentRouteId.toString();
+      return matchSearch && matchStation && matchRoute;
     });
 
     var pageInfo = document.getElementById('pageInfo');
@@ -110,6 +124,8 @@
     visible.forEach(function (student, idx) {
       tbody.appendChild(buildStudentRow(student, idx));
     });
+
+    updateStats();
   }
 
   function buildStudentRow(student, idx) {

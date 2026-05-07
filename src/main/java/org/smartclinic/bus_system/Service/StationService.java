@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -52,9 +53,19 @@ public class StationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Station name is required");
         }
 
-        Station station = new Station();
-        station.setName(dto.getName().trim());
-        station = stationRepository.save(station);
+        Station station = stationRepository.findByNameIgnoreCase(dto.getName().trim())
+                .orElseGet(() -> {
+                    Station newStation = new Station();
+                    newStation.setName(dto.getName().trim());
+                    return stationRepository.save(newStation);
+                });
+
+        if (station.getId() != null) {
+            Optional<RouteStation> existingRs = routeStationRepository.findByRouteIdAndStationId(routeId, station.getId());
+            if (existingRs.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Station already exists in this route");
+            }
+        }
 
         int nextOrder = routeStationRepository.findMaxOrderIndexByRouteId(routeId).orElse(0) + 1;
 

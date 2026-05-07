@@ -4,6 +4,88 @@
    ============================================================= */
 
 /* ─────────────────────────────────────────────────────────────
+   DYNAMIC NOTIFICATION ITEMS (rendered by JS)
+   ───────────────────────────────────────────────────────────── */
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  transition: background 0.2s;
+  background: #fff;
+  position: relative;
+}
+
+.notif-item:last-child {
+  border-bottom: none;
+}
+
+.notif-item:hover {
+  background: #f9fafb;
+}
+
+.notif-item.unread {
+  background: #fafeff;
+  border-left: 3px solid #2563eb;
+}
+
+.notif-item.unread:hover {
+  background: #f0f7ff;
+}
+
+.notif-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notif-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+.bg-blue-light { background: #dbeafe; color: #2563eb; }
+.bg-gray-light { background: #f3f4f6; color: #4b5563; }
+.text-blue { color: #2563eb; }
+
+.notif-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notif-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.notif-msg {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.notif-time {
+  font-size: 0.78rem;
+  color: #9ca3af;
+}
+
+.unread-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2563eb;
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+
+/* ─────────────────────────────────────────────────────────────
    TOOLBAR & FILTERS
    ───────────────────────────────────────────────────────────── */
 .notifications-toolbar {
@@ -240,3 +322,40 @@
     gap: 16px;
   }
 }
+
+@media (max-width: 480px) {
+  .tab-btn {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  .mark-read-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .notification-item {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .notif-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .notif-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .notif-title {
+    font-size: 0.95rem;
+  }
+
+  .pagination-controls {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+

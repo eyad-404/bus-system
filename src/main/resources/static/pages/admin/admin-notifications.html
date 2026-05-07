@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Notifications â€” Admin Panel</title>
+  <title>Notifications — Admin Panel</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -85,7 +85,7 @@
           </svg>
           Trips
         </a>
-        <a href="admin-notifications.html" class="nav-item">
+        <a href="admin-notifications.html" class="nav-item active">
           <svg viewBox="0 0 24 24">
             <path
               d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z" />
@@ -113,16 +113,7 @@
         <button id="closeNotifBtn" class="notif-close-btn">&times;</button>
       </div>
       <div class="notif-sidebar-content">
-        <div class="notif-sidebar-item">
-          <strong>System Update</strong>
-          <p>Route schedule updated for University Route.</p>
-          <span>10 min ago</span>
-        </div>
-        <div class="notif-sidebar-item">
-          <strong>New Driver Assigned</strong>
-          <p>Mohamed Ali has been assigned to Route R1.</p>
-          <span>1 hour ago</span>
-        </div>
+        <!-- Dynamically populated by components.js -->
       </div>
       <div class="notif-sidebar-footer">
         <a href="admin-notifications.html">View all Notifications</a>
@@ -149,7 +140,7 @@
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
-            <span class="notification-badge">5</span>
+            <span class="notification-badge" id="unreadBadge"></span>
           </button>
         </div>
       </header>
@@ -159,7 +150,7 @@
 
         <!-- 1) SUMMARY CARDS -->
         <div class="summary-grid-2">
-          <!-- Card 1 -->
+          <!-- Card 1: Unread Count -->
           <div class="stat-card">
             <div class="stat-icon icon-red-soft">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -168,12 +159,12 @@
               </svg>
             </div>
             <div class="stat-info">
-              <div class="stat-val">5</div>
+              <div class="stat-val" id="summaryUnreadCount">—</div>
               <div class="stat-label">Unread Notifications</div>
-              <a href="#" class="stat-link text-red">View unread</a>
+              <a href="#" id="filterUnreadBtn" class="stat-link text-red">View unread</a>
             </div>
           </div>
-          <!-- Card 2 -->
+          <!-- Card 2: Total Count -->
           <div class="stat-card">
             <div class="stat-icon icon-blue-soft">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -183,9 +174,9 @@
               </svg>
             </div>
             <div class="stat-info">
-              <div class="stat-val">28</div>
+              <div class="stat-val" id="summaryTotalCount">—</div>
               <div class="stat-label">All Notifications</div>
-              <a href="#" class="stat-link text-blue">View all</a>
+              <a href="#" id="filterAllBtn" class="stat-link text-blue">View all</a>
             </div>
           </div>
         </div>
@@ -197,28 +188,16 @@
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
-            <input type="text" placeholder="Search notifications..." />
+            <input type="text" id="searchInput" placeholder="Search notifications..." />
           </div>
           <div class="select-group">
-            <select class="custom-select">
-              <option>All Types</option>
+            <select class="custom-select" id="filterStatus">
+              <option value="all">All Status</option>
+              <option value="unread">Unread</option>
+              <option value="read">Read</option>
             </select>
-            <select class="custom-select">
-              <option>All Status</option>
-            </select>
-            <div class="date-picker-wrap">
-              <svg class="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
-              <select class="custom-select date-select">
-                <option>May 6, 2025 - May 12, 2025</option>
-              </select>
-            </div>
           </div>
-          <button class="btn-outline-red">
+          <button class="btn-outline-red" id="markAllReadBtn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
               <polyline points="22 4 12 14.01 9 11.01" />
@@ -234,207 +213,17 @@
               <thead>
                 <tr class="bg-red text-white">
                   <th style="border-top-left-radius: 8px;">Notification</th>
-                  <th>Type</th>
                   <th>Time</th>
                   <th>Status</th>
                   <th style="border-top-right-radius: 8px;">Actions</th>
                 </tr>
               </thead>
-              <tbody>
-
-                <!-- TODAY GROUP -->
-                <tr style="background: #f8fafc;">
-                  <td colspan="5"
-                    style="padding: 12px 16px; font-weight: 600; font-size: 12px; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px;">
-                    Today</td>
-                </tr>
-
-                <!-- Row 1: Unread, Info (Blue), Trip (Bus) -->
-                <tr class="unread-row hover-bg" style="font-weight: 600; background: #f0f9ff;">
-                  <td>
-                    <div class="notif-cell">
-                      <div class="notif-indicator unread-dot" style="background: #3b82f6;"></div>
-                      <div class="icon-circle bg-blue-light" style="color: #3b82f6;">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                          <path
-                            d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h8v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10Zm3.5 1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm9 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3ZM6 6h12v5H6V6Z" />
-                        </svg>
-                      </div>
-                      <div class="notif-text">
-                        <strong>Trip In Progress</strong>
-                        <p style="font-weight: 400; color: #334155;">University Trip T001 started by Mohamed Ali.</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge" style="background: #e0f2fe; color: #0284c7;">Info</span></td>
-                  <td>
-                    <div class="time-stack">
-                      <span>10:30 AM</span>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-unread">Unread</span></td>
-                  <td>
-                    <button class="btn-dots">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="12" r="2" />
-                        <circle cx="12" cy="5" r="2" />
-                        <circle cx="12" cy="19" r="2" />
-                      </svg>
-                    </button>
-                  </td>
-                </tr>
-
-                <!-- Row 2: Unread, Success (Green), Station (Location) -->
-                <tr class="unread-row hover-bg" style="font-weight: 600; background: #f0fdf4;">
-                  <td>
-                    <div class="notif-cell">
-                      <div class="notif-indicator unread-dot" style="background: #22c55e;"></div>
-                      <div class="icon-circle bg-green-light" style="color: #22c55e;">
-                        <svg viewBox="0 0 24 24">
-                          <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                        </svg>
-                      </div>
-                      <div class="notif-text">
-                        <strong>Station Reached</strong>
-                        <p style="font-weight: 400; color: #334155;">Trip T001 reached City Center.</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge" style="background: #dcfce7; color: #16a34a;">Success</span></td>
-                  <td>
-                    <div class="time-stack">
-                      <span>09:15 AM</span>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-unread">Unread</span></td>
-                  <td>
-                    <button class="btn-dots">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="12" r="2" />
-                        <circle cx="12" cy="5" r="2" />
-                        <circle cx="12" cy="19" r="2" />
-                      </svg>
-                    </button>
-                  </td>
-                </tr>
-
-                <!-- YESTERDAY GROUP -->
-                <tr style="background: #f8fafc;">
-                  <td colspan="5"
-                    style="padding: 12px 16px; font-weight: 600; font-size: 12px; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px;">
-                    Yesterday</td>
-                </tr>
-
-                <!-- Row 3: Read, Alert (Red), Trip (Bus) -->
-                <tr class="hover-bg" style="opacity: 0.75;">
-                  <td>
-                    <div class="notif-cell">
-                      <div class="notif-indicator"></div>
-                      <div class="icon-circle bg-red-light" style="color: #ef4444;">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                          <path
-                            d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h8v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10Zm3.5 1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm9 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3ZM6 6h12v5H6V6Z" />
-                        </svg>
-                      </div>
-                      <div class="notif-text">
-                        <strong>Trip Delayed</strong>
-                        <p class="text-muted">Trip T003 is late by 15 minutes.</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge" style="background: #fee2e2; color: #dc2626;">Alert</span></td>
-                  <td>
-                    <div class="time-stack">
-                      <span class="text-muted">Yesterday, 04:15 PM</span>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-read" style="background: #f1f5f9; color: #64748b;">Read</span></td>
-                  <td>
-                    <button class="btn-dots">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="12" r="2" />
-                        <circle cx="12" cy="5" r="2" />
-                        <circle cx="12" cy="19" r="2" />
-                      </svg>
-                    </button>
-                  </td>
-                </tr>
-
-                <!-- Row 4: Read, Success (Green), User (User) -->
-                <tr class="hover-bg" style="opacity: 0.75;">
-                  <td>
-                    <div class="notif-cell">
-                      <div class="notif-indicator"></div>
-                      <div class="icon-circle bg-green-light" style="color: #22c55e;">
-                        <svg viewBox="0 0 24 24">
-                          <path
-                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                        </svg>
-                      </div>
-                      <div class="notif-text">
-                        <strong>Students Assigned</strong>
-                        <p class="text-muted">8 students assigned to Airport Stop.</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge" style="background: #dcfce7; color: #16a34a;">Success</span></td>
-                  <td>
-                    <div class="time-stack">
-                      <span class="text-muted">Yesterday, 02:30 PM</span>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-read" style="background: #f1f5f9; color: #64748b;">Read</span></td>
-                  <td>
-                    <button class="btn-dots">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="12" r="2" />
-                        <circle cx="12" cy="5" r="2" />
-                        <circle cx="12" cy="19" r="2" />
-                      </svg>
-                    </button>
-                  </td>
-                </tr>
-
-                <!-- OLDER GROUP -->
-                <tr style="background: #f8fafc;">
-                  <td colspan="5"
-                    style="padding: 12px 16px; font-weight: 600; font-size: 12px; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px;">
-                    Older</td>
-                </tr>
-
-                <!-- Row 5: Read, Info (Blue), User (User) -->
-                <tr class="hover-bg" style="opacity: 0.75;">
-                  <td>
-                    <div class="notif-cell">
-                      <div class="notif-indicator"></div>
-                      <div class="icon-circle bg-blue-light" style="color: #3b82f6;">
-                        <svg viewBox="0 0 24 24">
-                          <path
-                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                        </svg>
-                      </div>
-                      <div class="notif-text">
-                        <strong>Driver Assigned</strong>
-                        <p class="text-muted">Sarah Adel assigned to Trip T003.</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge" style="background: #e0f2fe; color: #0284c7;">Info</span></td>
-                  <td>
-                    <div class="time-stack">
-                      <span class="text-muted">2 days ago</span>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-read" style="background: #f1f5f9; color: #64748b;">Read</span></td>
-                  <td>
-                    <button class="btn-dots">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="12" r="2" />
-                        <circle cx="12" cy="5" r="2" />
-                        <circle cx="12" cy="19" r="2" />
-                      </svg>
-                    </button>
+              <tbody id="notificationsContainer">
+                <!-- Dynamically populated by admin-notifications.js -->
+                <tr>
+                  <td colspan="4" style="text-align:center; padding: 48px; color: #94a3b8;">
+                    <div style="font-size:2rem; margin-bottom:12px;">🔔</div>
+                    <p>Loading notifications...</p>
                   </td>
                 </tr>
               </tbody>
@@ -443,21 +232,9 @@
 
           <!-- 4) PAGINATION -->
           <div class="pagination-footer">
-            <span class="page-info">Showing 1 to 6 of 28 notifications</span>
-            <div class="pagination-controls">
-              <button class="page-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="15 18 9 12 15 6" />
-                </svg></button>
-              <button class="page-btn active">1</button>
-              <button class="page-btn">2</button>
-              <button class="page-btn">3</button>
-              <button class="page-btn">4</button>
-              <button class="page-btn">5</button>
-              <button class="page-btn dots">...</button>
-              <button class="page-btn outline">Next <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg></button>
+            <span class="page-info" id="pageInfo">Loading...</span>
+            <div class="pagination-controls" id="paginationContainer">
+              <!-- Pagination injected by JS -->
             </div>
           </div>
         </div>
@@ -468,6 +245,7 @@
 
   <script src="../../assets/js/api.js"></script>
   <script src="../../assets/js/auth.js"></script>
+  <script>requireAuth('ADMIN');</script>
   <script src="../../assets/js/components.js"></script>
   <script src="../../assets/js/pages/admin-notifications.js"></script>
 </body>

@@ -21,7 +21,12 @@ async function apiPost(url, body) {
 
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(errorText || `Request failed with status ${response.status}`);
+        let errMsg = errorText;
+        try {
+            const errObj = JSON.parse(errorText);
+            errMsg = errObj.message || errObj.error || errorText;
+        } catch (e) {}
+        throw new Error(errMsg || `Request failed with status ${response.status}`);
     }
 
     const text = await response.text();
@@ -45,7 +50,12 @@ async function apiGet(url) {
 
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(errorText || `Request failed with status ${response.status}`);
+        let errMsg = errorText;
+        try {
+            const errObj = JSON.parse(errorText);
+            errMsg = errObj.message || errObj.error || errorText;
+        } catch (e) {}
+        throw new Error(errMsg || `Request failed with status ${response.status}`);
     }
 
     const text = await response.text();
@@ -73,7 +83,12 @@ async function apiPut(url, body) {
 
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(errorText || `Request failed with status ${response.status}`);
+        let errMsg = errorText;
+        try {
+            const errObj = JSON.parse(errorText);
+            errMsg = errObj.message || errObj.error || errorText;
+        } catch (e) {}
+        throw new Error(errMsg || `Request failed with status ${response.status}`);
     }
 
     const text = await response.text();
@@ -100,7 +115,12 @@ async function apiDelete(url) {
 
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(errorText || `Request failed with status ${response.status}`);
+        let errMsg = errorText;
+        try {
+            const errObj = JSON.parse(errorText);
+            errMsg = errObj.message || errObj.error || errorText;
+        } catch (e) {}
+        throw new Error(errMsg || `Request failed with status ${response.status}`);
     }
 
     const text = await response.text();

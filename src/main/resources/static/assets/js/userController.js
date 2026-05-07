@@ -8,7 +8,17 @@ const UserController = {
 
     async init() {
         this.bindEvents();
+        await this.loadRoutes();
         await this.handleTabSwitch('STUDENT');
+    },
+
+    async loadRoutes() {
+        try {
+            const routes = await apiGet('/admin/routes');
+            UserView.populateRoutes(routes || []);
+        } catch (e) {
+            console.error(e);
+        }
     },
 
     bindEvents() {
@@ -92,21 +102,24 @@ const UserController = {
         const email = document.getElementById('userEmail').value;
         const passwordInput = document.getElementById('userPassword');
         const password = passwordInput ? passwordInput.value : '';
+        const routeSelect = document.getElementById('userRoute');
+        const routeId = routeSelect && routeSelect.value ? parseInt(routeSelect.value, 10) : null;
 
         const submitBtn = document.querySelector('#userForm button[type="submit"]');
         if (submitBtn) submitBtn.disabled = true;
 
         try {
             if (id) {
-                // Update existing user (no password sent typically for simple edit)
-                await UserService.updateUser(this.state.currentType, id, { name, email });
+                // Update existing user
+                await UserService.updateUser(this.state.currentType, id, { name, email, routeId });
             } else {
                 // Create new user
                 await UserService.createUser(this.state.currentType, { 
                     name, 
                     email, 
                     password, 
-                    role: this.state.currentType 
+                    role: this.state.currentType,
+                    routeId
                 });
             }
 

@@ -468,3 +468,49 @@
     gap: 24px;
   }
 }
+
+@media (max-width: 480px) {
+  .stat-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .stat-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .stat-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .card-box {
+    padding: 16px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .legend {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .status-panel {
+    padding: 16px;
+  }
+
+  .reminders-banner {
+    padding: 16px;
+  }
+
+  .action-btn {
+    padding: 12px;
+  }
+}
+

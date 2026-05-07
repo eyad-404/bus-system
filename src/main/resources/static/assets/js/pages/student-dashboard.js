@@ -42,8 +42,19 @@
         if (student.studentId && myTrip.id) {
           apiGet('/api/trips/' + myTrip.id + '/eta/' + student.studentId).then(function (eta) {
             if (eta) {
-              setEl('etaMinutes', eta.etaMinutes != null ? eta.etaMinutes + ' min' : 'At your stop');
+              var currentEta = eta.etaMinutes;
+              setEl('etaMinutes', currentEta != null ? currentEta + ' min' : 'At your stop');
               setEl('etaStation', student.boardingStationName || '—');
+              
+              if (window.etaInterval) clearInterval(window.etaInterval);
+              if (currentEta != null && currentEta > 0) {
+                window.etaInterval = setInterval(function() {
+                  currentEta--;
+                  if (currentEta < 0) currentEta = 0;
+                  setEl('etaMinutes', currentEta + ' min');
+                  if (currentEta <= 0) clearInterval(window.etaInterval);
+                }, 60000);
+              }
             }
           }).catch(function () {
             setEl('etaMinutes', '~ 5 min');
@@ -145,9 +156,16 @@
         var badge = isCurrent ? ' <span class="badge-current-small">Current</span>' : '';
         var statusBadge = isCompleted ? '<span class="badge-completed">Completed</span>' : (isCurrent ? '' : '<span class="badge-pending">Pending</span>');
         
-        var timeText = isCompleted && s.arrivalTime
-          ? new Date(s.arrivalTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-          : (isCurrent ? 'Now' : 'Pending');
+        var timeText = '';
+        if (isCompleted && s.arrivalTime) {
+          timeText = new Date(s.arrivalTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        } else if (isCurrent) {
+          timeText = 'Now';
+        } else {
+          var remaining = i - currentIdx;
+          var futureMs = Date.now() + (remaining * 5 * 60000);
+          timeText = '~ ' + new Date(futureMs).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        }
 
         var div = document.createElement('div');
         div.className = cls;

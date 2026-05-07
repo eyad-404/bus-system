@@ -19,7 +19,7 @@ function updateNavForUser(user) {
         <span class="nav-user-badge" id="nav-user-badge" style="background:${color}20;color:${color};border:1px solid ${color}40;">
             ${user.role}
         </span>
-        <span class="nav-user-email" id="nav-user-email">${user.email}</span>
+        <span class="nav-user-email" id="nav-user-email" style="font-weight:600; color:#374151;">${user.name || user.email}</span>
         <button class="nav-btn-logout" id="nav-logout-btn" onclick="logout()">Logout</button>
     `;
 }

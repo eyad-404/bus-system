@@ -64,6 +64,48 @@ public class NotificationService {
         }
     }
 
+    @Transactional
+    public void notifyAllStudentsOnRoute(org.smartclinic.bus_system.Entity.Route route, Trip trip, String title,
+            String message) {
+        if (route == null || route.getId() == null)
+            return;
+
+        List<org.smartclinic.bus_system.Entity.RouteStation> routeStations = ((org.smartclinic.bus_system.Repository.RouteStationRepository) org.springframework.web.context.support.WebApplicationContextUtils
+                .getWebApplicationContext(
+                        org.springframework.web.context.request.RequestContextHolder.currentRequestAttributes() == null
+                                ? null
+                                : ((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder
+                                        .currentRequestAttributes()).getRequest().getServletContext())
+                .getBean(org.smartclinic.bus_system.Repository.RouteStationRepository.class))
+                .findByRouteIdOrderByOrderIndexAsc(route.getId());
+
+        List<Long> stationIds = routeStations.stream().map(rs -> rs.getStation().getId()).toList();
+        List<Student> students = studentRepository.findAll();
+        LocalDateTime now = LocalDateTime.now();
+
+        for (Student student : students) {
+            boolean matchesRoute = false;
+            if (student.getRoute() != null && student.getRoute().getId().equals(route.getId())) {
+                matchesRoute = true;
+            } else if (student.getBoardingStation() != null
+                    && stationIds.contains(student.getBoardingStation().getId())) {
+                matchesRoute = true;
+            }
+
+            if (matchesRoute && student.getUser() != null) {
+                Notification notification = new Notification();
+                notification.setUser(student.getUser());
+                notification.setTrip(trip);
+                notification.setType(NotificationType.ALERT);
+                notification.setTitle(title);
+                notification.setMessage(message);
+                notification.setRead(false);
+                notification.setCreatedAt(now);
+                notificationRepository.save(notification);
+            }
+        }
+    }
+
     @Transactional(readOnly = true)
     public List<NotificationResponseDTO> getNotificationsByUserId(Long userId) {
         return notificationRepository.findByUserIdOrderByCreatedAtDesc(userId)

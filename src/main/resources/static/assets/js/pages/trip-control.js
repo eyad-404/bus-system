@@ -57,11 +57,12 @@
     var section = document.getElementById('noTripSection');
     if (section) {
       section.innerHTML =
-        '<div class="card-box" style="text-align:center;padding:48px 24px;border:2px solid var(--green);background:var(--green-soft);">' +
-          '<div style="font-size:3rem;margin-bottom:16px;">✅</div>' +
-          '<h2 style="margin-bottom:8px;color:var(--green-dark);">Ready to Start?</h2>' +
-          '<p class="text-muted" style="margin-bottom:24px;">Your route <strong>' + escHtml(trip.routeName) + '</strong> is ready. Press Start when you begin.</p>' +
-          '<button id="startTripBtn" class="action-btn btn-green" style="background:var(--green);color:white;border:none;padding:14px 32px;border-radius:10px;font-size:1.1rem;font-weight:700;cursor:pointer;">' +
+        '<div class="card-box" style="text-align:center;padding:64px 24px;border:none;background:linear-gradient(135deg, #10b981 0%, #047857 100%);color:white;box-shadow:0 20px 40px rgba(16,185,129,0.2); border-radius: 24px; position:relative; overflow:hidden;">' +
+          '<div style="position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%); pointer-events:none;"></div>' +
+          '<div style="font-size:5rem;margin-bottom:24px; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));">🚌</div>' +
+          '<h2 style="margin-bottom:12px; font-size: 2.2rem; font-weight:800; letter-spacing:-0.5px;">Ready to Roll!</h2>' +
+          '<p style="margin-bottom:32px; font-size: 1.1rem; opacity:0.9; max-width: 400px; margin-left:auto; margin-right:auto;">Your route <strong>' + escHtml(trip.routeName) + '</strong> is fully configured and ready for boarding.</p>' +
+          '<button id="startTripBtn" class="action-btn" style="background:white;color:#047857;border:none;padding:16px 40px;border-radius:12px;font-size:1.25rem;font-weight:800;cursor:pointer; box-shadow:0 10px 20px rgba(0,0,0,0.15); transition:transform 0.2s, box-shadow 0.2s;">' +
             '🚀 Start Trip' +
           '</button>' +
         '</div>';
@@ -122,13 +123,24 @@
       var cls = 'timeline-item ' + (isCompleted ? 'completed' : isCurrent ? 'current active-highlight' : 'pending');
       var icon = isCompleted ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : (i + 1);
       var badge = isCurrent ? ' <span class="badge-current-small">Current</span>' : '';
+      var timeText = '';
+      if (isCompleted && s.arrivalTime) {
+        timeText = new Date(s.arrivalTime).toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
+      } else if (isCurrent) {
+        timeText = 'Current';
+      } else {
+        var remaining = i - currentIdx;
+        var futureMs = Date.now() + (remaining * 5 * 60000);
+        timeText = '~ ' + new Date(futureMs).toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
+      }
+
       var div = document.createElement('div');
       div.className = cls;
       div.innerHTML =
         '<div class="tl-icon">' + icon + '</div>' +
         '<div class="tl-content">' +
           '<span class="tl-name ' + (isCurrent ? 'text-blue' : '') + '">' + escHtml(s.stationName) + badge + '</span>' +
-          '<span class="tl-time ' + (isCurrent ? 'text-blue' : '') + '">' + (isCompleted ? (s.arrivalTime ? new Date(s.arrivalTime).toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'}) : '✓') : (isCurrent ? 'Current' : 'Pending')) + '</span>' +
+          '<span class="tl-time ' + (isCurrent ? 'text-blue' : '') + '">' + timeText + '</span>' +
         '</div>';
       container.appendChild(div);
     });

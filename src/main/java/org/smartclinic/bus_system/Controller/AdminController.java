@@ -103,6 +103,8 @@ public class AdminController {
                     student.getBoardingStation() != null ? student.getBoardingStation().getId() : null);
             m.put("boardingStationName",
                     student.getBoardingStation() != null ? student.getBoardingStation().getName() : null);
+            m.put("routeId", student.getRoute() != null ? student.getRoute().getId() : null);
+            m.put("routeName", student.getRoute() != null ? student.getRoute().getName() : null);
             return m;
         }).collect(Collectors.toList());
         return ResponseEntity.ok(result);
@@ -144,6 +146,10 @@ public class AdminController {
         if (savedUser.getRole() == Role.STUDENT) {
             Student student = new Student();
             student.setUser(savedUser);
+            if (dto.getRouteId() != null) {
+                Route route = routeRepository.findById(dto.getRouteId()).orElse(null);
+                student.setRoute(route);
+            }
             studentRepository.save(student);
         } else if (savedUser.getRole() == Role.DRIVER) {
             Driver driver = new Driver();
@@ -172,7 +178,18 @@ public class AdminController {
         if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
             user.setEncodedPassword(passwordEncoder.encode(dto.getPassword()));
         }
-        return ResponseEntity.ok(mapToDTO(userRepository.save(user)));
+        
+        User savedUser = userRepository.save(user);
+
+        if (savedUser.getRole() == Role.STUDENT && dto.getRouteId() != null) {
+            studentRepository.findByUserId(id).ifPresent(student -> {
+                Route route = routeRepository.findById(dto.getRouteId()).orElse(null);
+                student.setRoute(route);
+                studentRepository.save(student);
+            });
+        }
+        
+        return ResponseEntity.ok(mapToDTO(savedUser));
     }
 
     @DeleteMapping("/students/{id}")
@@ -203,6 +220,15 @@ public class AdminController {
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
         dto.setRole(user.getRole().name());
+
+        if (user.getRole() == Role.STUDENT) {
+            studentRepository.findByUserId(user.getId()).ifPresent(student -> {
+                if (student.getRoute() != null) {
+                    dto.setRouteId(student.getRoute().getId());
+                    dto.setRouteName(student.getRoute().getName());
+                }
+            });
+        }
         return dto;
     }
 }

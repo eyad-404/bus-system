@@ -6,30 +6,31 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StationRepository extends JpaRepository<Station, Long> {
 
+    Optional<Station> findByNameIgnoreCase(String name);
+
     @Query("""
-        SELECT rs.station
-        FROM RouteStation rs
-        WHERE rs.route.id = :routeId
-        ORDER BY rs.orderIndex ASC
-    """)
+                SELECT rs.station
+                FROM RouteStation rs
+                WHERE rs.route.id = :routeId
+                ORDER BY rs.orderIndex ASC
+            """)
     List<Station> findAllByRouteIdOrderByOrderIndexAsc(@Param("routeId") Long routeId);
 
-
     @Query("""
-        SELECT st.boardingStation
-        FROM Student st
-        WHERE st.id = :studentId
-    """)
+                SELECT st.boardingStation
+                FROM Student st
+                WHERE st.id = :studentId
+            """)
     Station findBoardingStationByStudentId(@Param("studentId") Long studentId);
 
-
     @Query("""
-        SELECT COUNT(rs)
-        FROM RouteStation rs
-        WHERE rs.route.id = :routeId
-    """)
+                SELECT COUNT(rs)
+                FROM RouteStation rs
+                WHERE rs.route.id = :routeId
+            """)
     long countByRouteId(@Param("routeId") Long routeId);
 }

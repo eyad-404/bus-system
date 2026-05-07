@@ -33,6 +33,8 @@ public class TripService {
     private final TripProgressRepository tripProgressRepository;
     private final NotificationService notificationService;
     private final org.smartclinic.bus_system.Repository.StudentRepository studentRepository;
+    private final org.smartclinic.bus_system.Repository.DriverRepository driverRepository;
+    private final org.smartclinic.bus_system.Repository.RouteRepository routeRepository;
 
     @org.springframework.beans.factory.annotation.Value("${bus.average-minutes-between-stations:5}")
     private int averageMinutes;
@@ -41,12 +43,62 @@ public class TripService {
             RouteStationRepository routeStationRepository,
             TripProgressRepository tripProgressRepository,
             NotificationService notificationService,
-            org.smartclinic.bus_system.Repository.StudentRepository studentRepository) {
+            org.smartclinic.bus_system.Repository.StudentRepository studentRepository,
+            org.smartclinic.bus_system.Repository.DriverRepository driverRepository,
+            org.smartclinic.bus_system.Repository.RouteRepository routeRepository) {
         this.tripRepository = tripRepository;
         this.routeStationRepository = routeStationRepository;
         this.tripProgressRepository = tripProgressRepository;
         this.notificationService = notificationService;
         this.studentRepository = studentRepository;
+        this.driverRepository = driverRepository;
+        this.routeRepository = routeRepository;
+    }
+
+    @Transactional
+    public TripResponseDTO startTrip(Long userId) {
+        org.smartclinic.bus_system.Entity.Driver driver = driverRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Driver not found"));
+
+        Optional<Trip> existing = tripRepository.findByDriverIdAndStatus(driver.getId(), TripStatus.IN_PROGRESS);
+        if (existing.isPresent()) {
+            TripResponseDTO dto = TripMapper.toDTO(existing.get());
+            dto.setStationProgress(buildStationProgress(existing.get()));
+            return dto;
+        }
+
+        org.smartclinic.bus_system.Entity.Route route = routeRepository.findByDriverId(driver.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "No route assigned to driver"));
+
+        Optional<Trip> notStarted = tripRepository.findByDriverIdAndStatus(driver.getId(), TripStatus.NOT_STARTED);
+        Trip trip = notStarted.orElseGet(() -> {
+            Trip t = new Trip();
+            t.setRoute(route);
+            t.setDriver(driver);
+            return t;
+        });
+
+        trip.setStatus(TripStatus.IN_PROGRESS);
+        trip.setStartTime(LocalDateTime.now());
+        trip.setCurrentStationIndex(0);
+
+        Trip saved = tripRepository.save(trip);
+
+        // Create the first progress marker for the 1-minute wait rule
+        routeStationRepository.findByRouteIdAndOrderIndex(route.getId(), 0)
+                .ifPresent(rs -> updateTripProgress(saved, rs.getStation()));
+
+        // Notify all students on the route
+        notificationService.notifyAllStudentsOnRoute(route, saved, "Trip Started", "Your bus has started its trip and is on the way!");
+
+        TripResponseDTO dto = TripMapper.toDTO(saved);
+        dto.setStationProgress(buildStationProgress(saved));
+        if (saved.getRoute() != null) {
+            routeStationRepository
+                    .findByRouteIdAndOrderIndex(saved.getRoute().getId(), 0)
+                    .ifPresent(rs -> dto.setCurrentStationName(rs.getStation().getName()));
+        }
+        return dto;
     }
 
     @Transactional
@@ -88,6 +140,11 @@ public class TripService {
         updateTripProgress(trip, nextStation);
         notificationService.notifyStudentsForStation(nextStation, trip, false);
 
+        Station approachingStation = getNextStation(tripId);
+        if (approachingStation != null) {
+            notificationService.notifyStudentsForStation(approachingStation, trip, true);
+        }
+
         Trip savedTrip = tripRepository.save(trip);
 
         TripResponseDTO response = TripMapper.toDTO(savedTrip);
@@ -117,6 +174,12 @@ public class TripService {
 
         tripProgressRepository.findByTripIdAndStatus(trip.getId(), ProgressStatus.CURRENT)
                 .ifPresent(currentProgress -> {
+                    if (currentProgress.getArrivalTime() != null) {
+                        long secondsElapsed = java.time.Duration.between(currentProgress.getArrivalTime(), LocalDateTime.now()).getSeconds();
+                        if (secondsElapsed < 60) {
+                            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please wait at least 1 minute before updating to the next station.");
+                        }
+                    }
                     currentProgress.setStatus(ProgressStatus.COMPLETED);
                     tripProgressRepository.save(currentProgress);
                 });
@@ -345,7 +408,16 @@ public class TripService {
             return eta;
         }
 
-        int etaMinutes = remainingStations * averageMinutes;
+        TripProgress currentProgress = tripProgressRepository.findByTripIdAndStatus(trip.getId(), ProgressStatus.CURRENT).orElse(null);
+        int elapsedMinutes = 0;
+        if (currentProgress != null && currentProgress.getArrivalTime() != null) {
+            elapsedMinutes = (int) java.time.Duration.between(currentProgress.getArrivalTime(), LocalDateTime.now()).toMinutes();
+        }
+
+        int etaMinutes = (remainingStations * averageMinutes) - elapsedMinutes;
+        if (etaMinutes < 0) {
+            etaMinutes = 0;
+        }
 
         org.smartclinic.bus_system.DTOs.EtaResponseDTO eta = new org.smartclinic.bus_system.DTOs.EtaResponseDTO();
         eta.setStudentId(studentId);

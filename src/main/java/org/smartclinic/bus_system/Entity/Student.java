@@ -20,4 +20,9 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "boarding_station_id")
     private Station boardingStation;
+
+    @ManyToOne
+    @JoinColumn(name = "route_id")
+    private Route route;
 }
+

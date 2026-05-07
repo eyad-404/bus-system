@@ -179,7 +179,16 @@
 
       var icon = isCompleted ? '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>' : (i + 1);
       var currentBadge = isCurrent ? ' <span class="badge-current-small">Current</span>' : '';
-      var timeText = isCompleted ? formatTime(s.arrivalTime) : (isCurrent ? 'Current' : 'Pending');
+      var timeText = '';
+      if (isCompleted) {
+        timeText = formatTime(s.arrivalTime);
+      } else if (isCurrent) {
+        timeText = 'Current';
+      } else {
+        var remaining = i - currentIdx;
+        var futureMs = Date.now() + (remaining * 5 * 60000);
+        timeText = '~ ' + new Date(futureMs).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      }
 
       timeline.innerHTML += 
         '<div class="' + cls + '">' +
