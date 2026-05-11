@@ -4,27 +4,161 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Notifications Bus System</title>
+  <title>Notifications | Bus System</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="../../assets/css/main.css" />
-  <link rel="stylesheet" href="../../assets/css/admin.css" />
-  <link rel="stylesheet" href="../../assets/css/notifications.css" />
+  <link rel="stylesheet" href="../../assets/css/student-dashboard.css" />
+
+  <style>
+    .notif-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .notif-filter-bar {
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .notif-filter-bar input {
+      flex: 1;
+      min-width: 180px;
+      padding: 9px 14px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      outline: none;
+    }
+    .notif-filter-bar input:focus { border-color: #b30000; }
+
+    .btn-mark-all {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 1.5px solid #b30000;
+      color: #b30000;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .btn-mark-all:hover { background: #fef2f2; }
+    .btn-mark-all svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+    .notif-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+
+    .notif-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 20px;
+      border-bottom: 1px solid #f3f4f6;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .notif-row:last-child { border-bottom: none; }
+    .notif-row:hover { background: #fafafa; }
+    .notif-row.unread { background: #fef9f9; border-left: 3px solid #b30000; padding-left: 17px; }
+
+    .notif-row-icon {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .notif-row-icon.read-icon   { background: #f3f4f6; }
+    .notif-row-icon.unread-icon { background: #b30000; }
+    .notif-row-icon svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .notif-row-icon.read-icon svg   { color: #9ca3af; }
+    .notif-row-icon.unread-icon svg { color: #fff; }
+
+    .notif-row-body { flex: 1; min-width: 0; }
+    .notif-row-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #111827;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+    .notif-row-dot { width: 7px; height: 7px; background: #b30000; border-radius: 50%; flex-shrink: 0; }
+    .notif-row-msg { font-size: 0.82rem; color: #4b5563; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .notif-row-time {
+      font-size: 0.72rem;
+      color: #9ca3af;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .notif-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 24px;
+      color: #9ca3af;
+      gap: 10px;
+    }
+    .notif-empty svg { width: 40px; height: 40px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+    .notif-empty p { margin: 0; font-size: 0.9rem; }
+
+    .notif-pagination {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      padding: 14px 20px;
+      border-top: 1px solid #f3f4f6;
+    }
+    .page-btn {
+      width: 32px; height: 32px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .page-btn:hover { background: #f3f4f6; }
+    .page-btn.active { background: #b30000; color: #fff; border-color: #b30000; }
+  </style>
 </head>
 
 <body>
 
   <div class="dashboard-layout">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar__header">
         <svg class="sidebar__logo-icon" viewBox="0 0 24 24">
-          <path
-            d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" />
+          <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 6h12v5H6V6z" />
         </svg>
         <div class="sidebar__brand">
           <span class="sidebar__title">BUS SYSTEM</span>
@@ -34,77 +168,52 @@
 
       <nav class="sidebar__nav">
         <a href="student-dashboard.html" class="nav-item">
-          <svg viewBox="0 0 24 24">
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" /></svg>
           Dashboard
         </a>
         <a href="view-route.html" class="nav-item">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" /></svg>
           View Route
         </a>
-
         <a href="student-notifications.html" class="nav-item active">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z" />
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z" /></svg>
           Notifications
         </a>
       </nav>
 
       <div class="sidebar__footer">
         <a href="#" onclick="logout(); return false;" class="nav-item">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" /></svg>
           Logout
         </a>
       </div>
     </aside>
 
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    <!-- NOTIFICATION SIDEBAR -->
+
     <aside class="notification-sidebar" id="notificationSidebar">
       <div class="notif-sidebar-header">
         <h3>Notifications</h3>
         <button id="closeNotifBtn" class="notif-close-btn">&times;</button>
       </div>
       <div class="notif-sidebar-content">
-        <div class="notif-sidebar-item">
-          <strong>System Update</strong>
-          <p>Route schedule updated for University Route.</p>
-          <span>10 min ago</span>
-        </div>
-        <div class="notif-sidebar-item">
-          <strong>New Driver Assigned</strong>
-          <p>Mohamed Ali has been assigned to Route R1.</p>
-          <span>1 hour ago</span>
-        </div>
+        <!-- Loaded dynamically by components.js -->
       </div>
       <div class="notif-sidebar-footer">
         <a href="student-notifications.html">View all Notifications</a>
       </div>
     </aside>
 
-    <!-- MAIN WRAPPER -->
     <div class="main-wrapper">
 
-      <!-- TOP NAVBAR -->
       <header class="topbar">
         <div class="page-title">
           <button class="hamburger-btn" id="hamburgerBtn">
-            <svg viewBox="0 0 24 24">
-              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-            </svg>
+            <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" /></svg>
           </button>
-          <div class="page-title-text">
+          <div>
             <h1>Notifications</h1>
-            <p>View all your alerts and updates about your trip.</p>
+            <p>Your bus alerts and arrival updates</p>
           </div>
         </div>
         <div class="topbar-actions">
@@ -113,98 +222,52 @@
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
-            <span class="notification-badge">3</span>
+            <span class="notification-badge" style="display:none;"></span>
           </button>
         </div>
       </header>
 
-      <!-- CONTENT -->
       <main class="content">
 
-        <!-- 1) SUMMARY CARDS -->
-        <div class="summary-grid-2">
-          <!-- Card 1 -->
+        <!-- Summary cards -->
+        <div class="notif-summary-grid">
           <div class="stat-card">
-            <div class="stat-icon icon-red-soft">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            <div class="stat-icon" style="background:#fee2e2;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#b30000" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
               </svg>
             </div>
             <div class="stat-info">
-              <div class="stat-val" id="summaryUnreadCount">—</div>
-              <div class="stat-label">Unread Notifications</div>
-              <a href="#" id="filterUnreadLink" class="stat-link text-red">View unread</a>
+              <span class="stat-label">Unread Notifications</span>
+              <strong class="stat-val" id="summaryUnreadCount">—</strong>
             </div>
           </div>
-          <!-- Card 2 -->
           <div class="stat-card">
-            <div class="stat-icon icon-blue-soft">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                <line x1="9" y1="9" x2="15" y2="9" />
-                <line x1="9" y1="13" x2="15" y2="13" />
+            <div class="stat-icon" style="background:#eff6ff;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
             </div>
             <div class="stat-info">
-              <div class="stat-val" id="summaryTotalCount">—</div>
-              <div class="stat-label">All Notifications</div>
-              <a href="#" id="filterAllLink" class="stat-link text-blue">View all</a>
+              <span class="stat-label">Total Notifications</span>
+              <strong class="stat-val" id="summaryTotalCount">—</strong>
             </div>
           </div>
         </div>
 
-        <!-- 2) FILTER BAR -->
-        <div class="filters-bar">
-          <div class="search-box">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-            <input type="text" placeholder="Search notifications..." />
-          </div>
-          <div class="select-group">
-            <select class="custom-select">
-              <option>All Types</option>
-            </select>
-            <select class="custom-select">
-              <option>All Status</option>
-            </select>
-            <div class="date-picker-wrap">
-              <svg class="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
-              <select class="custom-select date-select">
-                <option>May 6, 2025 - May 12, 2025</option>
-              </select>
-            </div>
-          </div>
-          <button class="btn-outline-red" id="markAllReadBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
-            Mark All as Read
+        <!-- Filter bar -->
+        <div class="notif-filter-bar">
+          <input type="text" id="notifSearch" placeholder="Search notifications…" />
+          <button class="btn-mark-all" id="markAllReadBtn">
+            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Mark all as read
           </button>
         </div>
 
-        <!-- 3) NOTIFICATIONS LIST -->
-        <div class="table-card">
-          <div class="table-responsive">
-            <div class="notifications-list" id="notificationsContainer" style="display:flex; flex-direction:column; gap:12px; padding:24px;">
-              <!-- Notifications injected by JS -->
-            </div>
-          </div>
-
-          <!-- Pagination Footer -->
-          <div class="table-footer" style="padding: 16px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end;">
-            <div id="paginationContainer" class="pagination">
-              <!-- Pagination injected by JS -->
-            </div>
-          </div>
+        <!-- Notifications list -->
+        <div class="notif-card">
+          <div id="notificationsContainer"></div>
+          <div class="notif-pagination" id="paginationContainer"></div>
         </div>
 
       </main>

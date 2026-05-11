@@ -2,6 +2,7 @@
   var currentRouteId = null;
   var dragSrcIndex = null;
   var stationsCache = [];
+  var isSaving = false;  // guard against duplicate station submissions
 
   function renderRouteOptions(routes) {
     var sel = document.getElementById('routeSelect');
@@ -147,15 +148,23 @@
   }
 
   function closeModal() {
+    isSaving = false;
+    var btn = document.getElementById('saveStationBtn');
+    if (btn) { btn.disabled = false; btn.textContent = 'Save'; }
     document.getElementById('stationModal').classList.remove('open');
   }
 
   function saveStation() {
+    if (isSaving) return;  // prevent double submission
     var name = document.getElementById('stationNameInput').value.trim();
     if (!name) {
       document.getElementById('stationNameInput').focus();
       return;
     }
+    isSaving = true;
+    var saveBtn = document.getElementById('saveStationBtn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving...'; }
+
     var rsId = document.getElementById('editingStationRsId').value;
     var promise = rsId
       ? apiPut('/api/routes/' + currentRouteId + '/stations/' + rsId, { name: name })
@@ -164,7 +173,11 @@
     promise.then(function () {
       closeModal();
       loadStations();
-    }).catch(handleError);
+    }).catch(function (err) {
+      isSaving = false;
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save'; }
+      handleError(err);
+    });
   }
 
   function initDragDrop() {

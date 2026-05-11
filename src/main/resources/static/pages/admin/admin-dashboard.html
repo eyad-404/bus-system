@@ -110,16 +110,7 @@
         <button id="closeNotifBtn" class="notif-close-btn">&times;</button>
       </div>
       <div class="notif-sidebar-content">
-        <div class="notif-sidebar-item">
-          <strong>System Update</strong>
-          <p>Route schedule updated for University Route.</p>
-          <span>10 min ago</span>
-        </div>
-        <div class="notif-sidebar-item">
-          <strong>New Driver Assigned</strong>
-          <p>Mohamed Ali has been assigned to Route R1.</p>
-          <span>1 hour ago</span>
-        </div>
+        <!-- Notifications loaded dynamically by components.js -->
       </div>
       <div class="notif-sidebar-footer">
         <a href="admin-notifications.html">View all Notifications</a>
@@ -148,7 +139,7 @@
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
-            <span class="notification-badge">3</span>
+            <span class="notification-badge" style="display:none;"></span>
           </button>
         </div>
       </header>
@@ -249,38 +240,34 @@
           </div>
         </div>
 
-        <!-- 2) MIDDLE GRID: ACTIVE TRIPS & NOTIFICATIONS -->
+        <!-- 2) ROUTE MONITORING + RECENT NOTIFICATIONS -->
         <div class="middle-grid">
 
-          <!-- Active Trips Table -->
+          <!-- Live Route Monitoring -->
           <div class="card">
             <div class="card-header">
-              <h2 class="card-title">Active Trips</h2>
-              <a href="#" class="card-link">
+              <h2 class="card-title">🚌 Live Route Monitoring</h2>
+              <a href="trips-management.html" class="card-link">
                 View all trips
-                <svg viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
               </a>
             </div>
-            <div id="activeTripsContainer" style="padding:16px;">
-              <p class="text-muted" style="text-align:center;">Loading active trips...</p>
+            <div id="activeTripsContainer" style="padding: 0 16px 16px;">
+              <p class="text-muted" style="text-align:center; padding: 24px;">Loading active trips...</p>
             </div>
           </div>
 
           <!-- System Notifications -->
           <div class="card">
             <div class="card-header">
-              <h2 class="card-title">System Notifications</h2>
-              <a href="#" class="card-link">
-                View all notifications
-                <svg viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+              <h2 class="card-title">🔔 Recent Notifications</h2>
+              <a href="admin-notifications.html" class="card-link">
+                View all
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
               </a>
             </div>
-            <div id="recentActivityContainer" class="notification-list" style="padding:16px;">
-              <p class="text-muted" style="text-align:center;">Loading...</p>
+            <div id="recentActivityContainer" class="notification-list">
+              <p class="text-muted" style="text-align:center; padding: 24px;">Loading...</p>
             </div>
           </div>
 

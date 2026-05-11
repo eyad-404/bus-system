@@ -21,5 +21,6 @@ public class TripResponseDTO {
     private String status;
     private Integer currentStationIndex;
     private String currentStationName;
+    private Integer passengerCount;
     private List<StationProgressDTO> stationProgress;
 }

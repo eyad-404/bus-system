@@ -74,16 +74,7 @@
         <button id="closeNotifBtn" class="notif-close-btn">&times;</button>
       </div>
       <div class="notif-sidebar-content">
-        <div class="notif-sidebar-item">
-          <strong>System Update</strong>
-          <p>Route schedule updated for University Route.</p>
-          <span>10 min ago</span>
-        </div>
-        <div class="notif-sidebar-item">
-          <strong>New Driver Assigned</strong>
-          <p>Mohamed Ali has been assigned to Route R1.</p>
-          <span>1 hour ago</span>
-        </div>
+        <!-- Notifications loaded dynamically by components.js -->
       </div>
       <div class="notif-sidebar-footer">
         <a href="student-notifications.html">View all Notifications</a>
@@ -112,7 +103,7 @@
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
-            <span class="notification-badge">3</span>
+            <span class="notification-badge" style="display:none;"></span>
           </button>
         </div>
       </header>

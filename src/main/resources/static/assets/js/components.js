@@ -1,3 +1,17 @@
+// Restore from bfcache (back/forward) can leave the dimmed overlay active with no sidebar open.
+(function resetDriverPortalChrome() {
+  function dismissChromeOverlay() {
+    const sb = document.getElementById('sidebar');
+    const ns = document.getElementById('notificationSidebar');
+    const ov = document.getElementById('sidebarOverlay');
+    if (sb) sb.classList.remove('open');
+    if (ns) ns.classList.remove('open');
+    if (ov) ov.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  window.addEventListener('pageshow', dismissChromeOverlay);
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const sidebar = document.getElementById('sidebar');
@@ -63,9 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show loading state
     container.innerHTML = '<div style="padding: 20px; text-align: center; color: #94a3b8;">Loading...</div>';
 
-    fetch(`/api/notifications/user/${userId}`)
-      .then(res => res.json())
+    // Use apiGet so the JWT Authorization header is included
+    apiGet('/api/notifications/user/' + userId)
       .then(notifs => {
+        notifs = notifs || [];
         container.innerHTML = '';
         const recent = notifs.slice(0, 5);
         if (recent.length === 0) {
@@ -78,28 +93,38 @@ document.addEventListener('DOMContentLoaded', () => {
           item.className = 'notif-sidebar-item' + (n.read ? '' : ' unread');
           item.style.cursor = 'pointer';
           item.innerHTML = `
-            <strong>${n.title || 'Notification'}</strong>
-            <p>${n.message}</p>
+            <strong>${escHtml(n.title || 'Notification')}</strong>
+            <p>${escHtml(n.message)}</p>
             <span>${timeAgo(n.createdAt)}</span>
           `;
           item.onclick = () => {
             if (!n.read) {
-              fetch(`/api/notifications/${n.id}/read`, { method: 'PUT' })
+              // Use apiPut so the JWT Authorization header is included
+              apiPut('/api/notifications/' + n.id + '/read', {})
                 .then(() => {
+                  n.read = true;
+                  item.classList.remove('unread');
+                  updateGlobalUnreadCount();
                   if (window.refreshNotifications) {
                     window.refreshNotifications();
                   } else {
                     loadSidebarNotifications();
                   }
-                });
+                })
+                .catch(err => console.error('Failed to mark notification as read:', err));
             }
           };
           container.appendChild(item);
         });
       })
       .catch(err => {
+        console.error('Failed to load sidebar notifications:', err);
         container.innerHTML = '<div style="padding: 20px; text-align: center; color: #ef4444;">Error loading notifications</div>';
       });
+  }
+
+  function escHtml(s) {
+    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   function timeAgo(dateStr) {
@@ -128,20 +153,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Global unread count
+  // Global unread count — uses apiGet so JWT header is included
   function updateGlobalUnreadCount() {
     const userId = localStorage.getItem('userId');
     if (!userId) return;
 
-    fetch(`/api/notifications/user/${userId}/unread-count`)
-      .then(res => res.json())
+    apiGet('/api/notifications/user/' + userId + '/unread-count')
       .then(data => {
         const badge = document.querySelector('.notification-badge');
         if (badge) {
-          if (data.unreadCount > 0) {
+          if (data && data.unreadCount > 0) {
             badge.textContent = data.unreadCount;
             badge.style.display = 'flex';
           } else {
+            badge.textContent = '';
             badge.style.display = 'none';
           }
         }
@@ -152,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateGlobalUnreadCount();
 
   // Expose global refresh
-  window.refreshNotifications = function() {
+  window.refreshNotifications = function () {
     updateGlobalUnreadCount();
     if (notificationSidebar && notificationSidebar.classList.contains('open')) {
       loadSidebarNotifications();

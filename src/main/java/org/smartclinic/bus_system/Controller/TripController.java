@@ -62,20 +62,14 @@ public class TripController {
         Optional<Trip> inProgress = tripRepository.findByDriverIdAndStatus(driver.getId(), TripStatus.IN_PROGRESS);
         if (inProgress.isPresent()) {
             TripResponseDTO dto = TripMapper.toDTO(inProgress.get());
-            dto.setStationProgress(tripService.buildStationProgress(inProgress.get()));
-            if (inProgress.get().getRoute() != null) {
-                routeStationRepository
-                        .findByRouteIdAndOrderIndex(inProgress.get().getRoute().getId(),
-                                inProgress.get().getCurrentStationIndex())
-                        .ifPresent(rs -> dto.setCurrentStationName(rs.getStation().getName()));
-            }
+            tripService.enrichTripResponse(inProgress.get(), dto);
             return ResponseEntity.ok(dto);
         }
 
         Optional<Trip> notStarted = tripRepository.findByDriverIdAndStatus(driver.getId(), TripStatus.NOT_STARTED);
         if (notStarted.isPresent()) {
             TripResponseDTO dto = TripMapper.toDTO(notStarted.get());
-            dto.setStationProgress(tripService.buildStationProgress(notStarted.get()));
+            tripService.enrichTripResponse(notStarted.get(), dto);
             return ResponseEntity.ok(dto);
         }
 
@@ -141,5 +135,12 @@ public class TripController {
     @GetMapping("/{tripId}/eta/{studentId}")
     public ResponseEntity<EtaResponseDTO> getEta(@PathVariable Long tripId, @PathVariable Long studentId) {
         return ResponseEntity.ok(tripService.getEtaForStudent(tripId, studentId));
+    }
+
+    @PostMapping("/{tripId}/arrived")
+    @Transactional
+    public ResponseEntity<Void> notifyArrival(@PathVariable Long tripId) {
+        tripService.notifyArrivedAtCurrentStation(tripId);
+        return ResponseEntity.noContent().build();
     }
 }

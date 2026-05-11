@@ -13,4 +13,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findAllByBoardingStationId(Long stationId);
 
     List<Student> findAllByBoardingStationIsNull();
+
+    int countByRouteId(Long routeId);
 }

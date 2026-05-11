@@ -12,4 +12,5 @@ public class StationProgressDTO {
     private String stationName;
     private String status;
     private LocalDateTime arrivalTime;
+    private Boolean hasArrived;
 }

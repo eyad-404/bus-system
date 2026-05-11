@@ -25,4 +25,6 @@ public class TripProgress {
     private ProgressStatus status;
 
     private LocalDateTime arrivalTime;
+
+    private Boolean hasArrived = false;
 }

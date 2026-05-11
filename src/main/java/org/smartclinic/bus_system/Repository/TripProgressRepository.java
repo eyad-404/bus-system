@@ -13,5 +13,7 @@ public interface TripProgressRepository extends JpaRepository<TripProgress, Long
 
     Optional<TripProgress> findByTripIdAndStatus(Long tripId, ProgressStatus status);
 
+    List<TripProgress> findAllByTripIdAndStatus(Long tripId, ProgressStatus status);
+
     Optional<TripProgress> findByTripIdAndStationId(Long tripId, Long stationId);
 }

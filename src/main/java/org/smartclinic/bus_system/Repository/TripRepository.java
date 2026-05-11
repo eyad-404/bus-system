@@ -10,6 +10,9 @@ import java.util.Optional;
 
 public interface TripRepository extends JpaRepository<Trip, Long> {
 
+    @Query("SELECT DISTINCT t FROM Trip t LEFT JOIN FETCH t.route WHERE t.id = :id")
+    Optional<Trip> findByIdWithRoute(@Param("id") Long id);
+
     Optional<Trip> findByDriverIdAndStatus(Long driverId, TripStatus status);
 
     List<Trip> findAllByStatus(TripStatus status);

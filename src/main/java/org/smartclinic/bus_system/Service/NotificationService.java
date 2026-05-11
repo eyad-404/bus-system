@@ -7,6 +7,7 @@ import org.smartclinic.bus_system.Entity.Student;
 import org.smartclinic.bus_system.Entity.Trip;
 import org.smartclinic.bus_system.MAPPER.NotificationMapper;
 import org.smartclinic.bus_system.Repository.NotificationRepository;
+import org.smartclinic.bus_system.Repository.RouteStationRepository;
 import org.smartclinic.bus_system.Repository.StudentRepository;
 import org.smartclinic.bus_system.enums.NotificationType;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,14 @@ public class NotificationService {
 
     private final StudentRepository studentRepository;
     private final NotificationRepository notificationRepository;
+    private final RouteStationRepository routeStationRepository;
 
     public NotificationService(StudentRepository studentRepository,
-            NotificationRepository notificationRepository) {
+            NotificationRepository notificationRepository,
+            RouteStationRepository routeStationRepository) {
         this.studentRepository = studentRepository;
         this.notificationRepository = notificationRepository;
+        this.routeStationRepository = routeStationRepository;
     }
 
     @Transactional
@@ -38,13 +42,28 @@ public class NotificationService {
             return;
         }
 
-        List<Student> students = studentRepository.findAllByBoardingStationId(station.getId());
+        List<Student> students;
+        if (trip != null && trip.getRoute() != null && trip.getRoute().getId() != null) {
+            Long routeId = trip.getRoute().getId();
+            boolean stationOnTripRoute = routeStationRepository.findByRouteIdAndStationId(routeId, station.getId())
+                    .isPresent();
+            if (!stationOnTripRoute) {
+                return;
+            }
+            // Arrival: notify every student boarding at this stop (it is on this trip's path).
+            // Approaching: same boarding stop, but only students assigned to this route (or unassigned).
+            students = studentRepository.findAllByBoardingStationId(station.getId()).stream()
+                    .filter(s -> !approaching || s.getRoute() == null || s.getRoute().getId().equals(routeId))
+                    .toList();
+        } else {
+            students = studentRepository.findAllByBoardingStationId(station.getId());
+        }
         LocalDateTime now = LocalDateTime.now();
         NotificationType type = approaching ? NotificationType.ALERT : NotificationType.ARRIVAL;
         String message = approaching
-                ? "Bus is approaching " + station.getName()
-                : "Bus arrived at " + station.getName();
-        String title = approaching ? "Bus approaching" : "Bus arrival";
+                ? "🚌 Bus is approaching " + station.getName() + " — get ready!"
+                : "🚏 Bus has arrived at " + station.getName() + "!";
+        String title = approaching ? "Bus Approaching" : "Bus Arrived";
 
         for (Student student : students) {
             if (student.getUser() == null) {
@@ -67,30 +86,20 @@ public class NotificationService {
     @Transactional
     public void notifyAllStudentsOnRoute(org.smartclinic.bus_system.Entity.Route route, Trip trip, String title,
             String message) {
-        if (route == null || route.getId() == null)
-            return;
+        if (route == null || route.getId() == null) return;
 
-        List<org.smartclinic.bus_system.Entity.RouteStation> routeStations = ((org.smartclinic.bus_system.Repository.RouteStationRepository) org.springframework.web.context.support.WebApplicationContextUtils
-                .getWebApplicationContext(
-                        org.springframework.web.context.request.RequestContextHolder.currentRequestAttributes() == null
-                                ? null
-                                : ((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder
-                                        .currentRequestAttributes()).getRequest().getServletContext())
-                .getBean(org.smartclinic.bus_system.Repository.RouteStationRepository.class))
-                .findByRouteIdOrderByOrderIndexAsc(route.getId());
+        List<Long> stationIds = routeStationRepository
+                .findByRouteIdOrderByOrderIndexAsc(route.getId())
+                .stream()
+                .map(rs -> rs.getStation().getId())
+                .toList();
 
-        List<Long> stationIds = routeStations.stream().map(rs -> rs.getStation().getId()).toList();
         List<Student> students = studentRepository.findAll();
         LocalDateTime now = LocalDateTime.now();
 
         for (Student student : students) {
-            boolean matchesRoute = false;
-            if (student.getRoute() != null && student.getRoute().getId().equals(route.getId())) {
-                matchesRoute = true;
-            } else if (student.getBoardingStation() != null
-                    && stationIds.contains(student.getBoardingStation().getId())) {
-                matchesRoute = true;
-            }
+            boolean matchesRoute = (student.getRoute() != null && student.getRoute().getId().equals(route.getId()))
+                    || (student.getBoardingStation() != null && stationIds.contains(student.getBoardingStation().getId()));
 
             if (matchesRoute && student.getUser() != null) {
                 Notification notification = new Notification();

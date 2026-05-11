@@ -1,6 +1,7 @@
 (function () {
   var allRoutes = [];
   var searchQuery = '';
+  var isSaving = false;  // guard against duplicate route submissions
 
   function escHtml(str) {
     return String(str)
@@ -102,16 +103,24 @@
   }
 
   function closeModal() {
+    isSaving = false;
+    var btn = document.getElementById('saveRouteBtn');
+    if (btn) { btn.disabled = false; btn.textContent = 'Save'; }
     document.getElementById('routeModal').classList.remove('open');
   }
 
   function saveRoute() {
+    if (isSaving) return;  // prevent double submission
     var name = document.getElementById('routeNameInput').value.trim();
     var code = document.getElementById('routeCodeInput').value.trim();
     var editId = document.getElementById('editingRouteId').value;
 
     if (!name) { document.getElementById('routeNameInput').focus(); return; }
     if (!code) { document.getElementById('routeCodeInput').focus(); return; }
+
+    isSaving = true;
+    var saveBtn = document.getElementById('saveRouteBtn');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving...'; }
 
     var body = { name: name, code: code };
     var promise = editId
@@ -123,6 +132,8 @@
       loadRoutes();
       showToast(editId ? 'Route updated successfully' : 'Route created successfully', false);
     }).catch(function (err) {
+      isSaving = false;
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save'; }
       handleError(err);
     });
   }
